@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFO5992 Module 3 & Week 10 Cheatsheet</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 10mm; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.3;
+            max-width: 100%;
+            margin: 0;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #2563eb;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 20pt;
+            margin: 0 0 5px 0;
+        }
+        
+        .header h2 {
+            color: #4b5563;
+            font-size: 14pt;
+            margin: 0 0 3px 0;
+        }
+        
+        .header p {
+            color: #6b7280;
+            font-size: 9pt;
+            margin: 0;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 13pt;
+            font-weight: bold;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        .red-section { background: #fef2f2; color: #991b1b; border-left: 4px solid #dc2626; }
+        .blue-section { background: #eff6ff; color: #1e40af; border-left: 4px solid #2563eb; }
+        .green-section { background: #f0fdf4; color: #166534; border-left: 4px solid #16a34a; }
+        .purple-section { background: #faf5ff; color: #6b21a8; border-left: 4px solid #9333ea; }
+        .orange-section { background: #fff7ed; color: #9a3412; border-left: 4px solid #ea580c; }
+        .yellow-section { background: #fefce8; color: #854d0e; border-left: 4px solid #eab308; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        
+        .box {
+            border: 2px solid #d1d5db;
+            border-radius: 5px;
+            padding: 8px;
+            background: white;
+            page-break-inside: avoid;
+        }
+        
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1f2937;
+        }
+        
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 2px 0;
+        }
+        
+        .emphasis {
+            background: #fef3c7;
+            padding: 8px;
+            border-left: 3px solid #f59e0b;
+            margin: 8px 0;
+        }
+        
+        .highlight {
+            background: #dcfce7;
+            padding: 8px;
+            border-left: 3px solid #16a34a;
+            margin: 8px 0;
+        }
+        
+        .warning {
+            background: #fee2e2;
+            padding: 8px;
+            border-left: 3px solid #dc2626;
+            margin: 8px 0;
+        }
+        
+        .info {
+            background: #dbeafe;
+            padding: 8px;
+            border-left: 3px solid #2563eb;
+            margin: 8px 0;
+        }
+        
+        strong { color: #1f2937; }
+        
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14pt;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <button class="download-btn no-print" onclick="downloadPDF()">📥 Download as PDF</button>
+    
+    <div id="content">
+        <div class="header">
+            <h1>INFO5992 Understanding IT Innovations</h1>
+            <h2>Complete Module 3 & Week 10 Study Guide</h2>
+            <p>Commercialization, Organizational Culture, Structures & Judging Innovation</p>
+        </div>
+
+        <!-- PART 1: STARTUP FAILURES -->
+        <div class="section">
+            <div class="section-title red-section">📉 PART 1: STARTUP FAILURES & THE J-CURVE</div>
+            
+            <div class="grid-3">
+                <div class="box">
+                    <div class="box-title" style="color: #dc2626;">1. No Market Need ⚠️</div>
+                    <p><strong>Definition:</strong> Building a product/service for which there is no significant demand.</p>
+                    <p><strong>Why it Happens:</strong></p>
+                    <ul>
+                        <li>Founders caught up in their solution</li>
+                        <li>Don't validate problem matters to users</li>
+                        <li>Assume innovation = success</li>
+                        <li>Build before testing customer demand</li>
+                    </ul>
+                    <p><strong>Key Insight:</strong> Even highly innovative ideas will NOT succeed if they don't solve a REAL problem for a VIABLE customer segment.</p>
+                    <p><strong>Prevention:</strong> Validate customer pain points FIRST, test willingness to pay, build MVP.</p>
+                </div>
+
+                <div class="box">
+                    <div class="box-title" style="color: #dc2626;">2. Running Out of Cash 💸</div>
+                    <p><strong>Definition:</strong> Underestimating costs or overestimating revenue growth, leading to cash starvation.</p>
+                    <p><strong>The "Valley of Death":</strong></p>
+                    <ul>
+                        <li>Period between startup launch and revenue generation</li>
+                        <li>High early-stage costs (R&D, team, infrastructure)</li>
+                        <li>Before product-market fit established</li>
+                        <li>Before recurring revenue streams exist</li>
+                        <li>Most startups die here in the J-curve</li>
+                    </ul>
+                    <p><strong>Common Causes:</strong> Underestimating burn rate, overestimating sales cycles, failing to raise sufficient capital, poor financial planning.</p>
+                </div>
+
+                <div class="box">
+                    <div class="box-title" style="color: #dc2626;">3. Team/Founding Issues 👥</div>
+                    <p><strong>Definition:</strong> Team dysfunction, lack of key skills, or breakdowns in founder relationships.</p>
+                    <p><strong>Specific Problems:</strong></p>
+                    <ul>
+                        <li>Lack of trust between founders</li>
+                        <li>Missing diverse expertise</li>
+                        <li>Poor cohesive decision-making</li>
+                        <li>Founder conflicts & equity disputes</li>
+                        <li>Wrong technical/business skills mix</li>
+                    </ul>
+                    <p><strong>Consequences:</strong> Slow execution, strategic drift, inability to respond to challenges, missed opportunities.</p>
+                    <p><strong>Paul Graham's Advice:</strong> Trust, diverse expertise, and cohesive decision-making determine success.</p>
+                </div>
+            </div>
+
+            <div class="emphasis">
+                <strong>📋 CASE STUDY: DAQRI (AR Startup, 2019)</strong><br>
+                <strong>Background:</strong> Developed AR hardware/software, raised hundreds of millions, shut down 2019.<br>
+                <strong>Mistakes:</strong> (1) No Market Need - targeted industrial AR without validating willingness to pay; (2) Cash Burn - R&D extremely expensive before sustainable revenue; (3) Team/Execution - scaling hardware + enterprise sales with limited traction strained team.
+            </div>
+        </div>
+
+        <!-- PART 2: ORGANIZATIONAL CULTURE -->
+        <div class="section">
+            <div class="section-title blue-section">🏛️ PART 2: ORGANIZATIONAL CULTURE & INNOVATION</div>
+            
+            <div class="grid-2">
+                <div class="box">
+                    <div class="box-title">📊 TAYLORISM (Scientific Management) - 1911</div>
+                    <p><strong>Creator:</strong> Frederick Winslow Taylor - "In the past, the man was first. In the future, the system will be first."</p>
+                    <p><strong>Core Principles:</strong></p>
+                    <ol>
+                        <li><strong>Standardize work</strong> into separate, distinct tasks</li>
+                        <li><strong>Scientifically study</strong> each task for optimization</li>
+                        <li><strong>Continually measure</strong> performance of each task</li>
+                        <li><strong>Compensate workers</strong> based on performance metrics</li>
+                    </ol>
+                    <p><strong>Organizational Influence:</strong> Gantt charts, budgets for accountability, KPIs, performance-linked incentives, used in most modern organizations.</p>
+                    <div class="warning">
+                        <strong>❌ WHY TAYLORISM FAILS FOR INNOVATION:</strong>
+                        <ul>
+                            <li>Designed for repetitive work with known functions (e.g., factory production)</li>
+                            <li>NOT suitable for creative work with many unknowns (e.g., tech innovation)</li>
+                            <li>Does NOT promote new ideas or thinking</li>
+                            <li>Stifles experimentation and risk-taking</li>
+                            <li>Focuses on efficiency over exploration</li>
+                            <li>NOT appropriate for startups</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">💡 CREATING CULTURE FOR NEW IDEAS</div>
+                    <p><strong>Steven Johnson:</strong> "Where Good Ideas Come From" (TED Talk, 2010)</p>
+                    
+                    <div class="highlight">
+                        <strong>1. Liquid Networks 🌊</strong><br>
+                        <strong>Definition:</strong> Having a diversity of expertise where ideas bounce between different fields/disciplines.<br>
+                        <strong>Why it Works:</strong> Cross-pollination triggers breakthroughs, different perspectives reveal new solutions, prevents groupthink.<br>
+                        <strong>Implementation:</strong> Create spaces for diverse experts to interact.
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>2. Slow Hunch 🐢</strong><br>
+                        <strong>Definition:</strong> Great ideas slowly fade into view over LONG period (not eureka moments).<br>
+                        <strong>Why it Matters:</strong> Innovation is incremental, ideas need time to mature, pressure for quick results kills innovation.<br>
+                        <strong>Implementation:</strong> Allocate TIME for exploration.
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>3. Connecting vs Protecting 🔗</strong><br>
+                        <strong>Core Principle:</strong> Interaction leads to best results; keeping ideas to oneself leads to stagnation.<br>
+                        <strong>Why Sharing Wins:</strong> Our experiences/genetics take us down same thought paths. Others' perspectives break mental loops.<br>
+                        <strong>Implementation:</strong> Encourage open collaboration.
+                    </div>
+                </div>
+            </div>
+
+            <div class="emphasis">
+                <strong>📈 INNOVATION SOURCES: STEVEN JOHNSON'S QUADRANT ANALYSIS (1800-Now)</strong><br><br>
+                <div class="grid-4">
+                    <div><strong>Q1: Individual + Market</strong><br>Solo inventor for profit<br>OUTPUT: LOWEST</div>
+                    <div><strong>Q2: Networked + Market</strong><br>Collaborative teams for profit<br>OUTPUT: MODERATE</div>
+                    <div><strong>Q3: Individual + Non-Market</strong><br>Solo work not for profit<br>OUTPUT: MODERATE</div>
+                    <div style="background: #dcfce7;"><strong>Q4: Networked + Non-Market ⭐</strong><br>Collaborative not for profit<br>OUTPUT: HIGHEST!</div>
+                </div>
+                <br><strong>🔑 KEY INSIGHTS:</strong> (1) Non-market > Market - freedom to explore without ROI pressure; (2) Networked > Individual - collaboration multiplies outcomes; (3) Q4 supports liquid networks, slow hunch, and connection.<br>
+                <strong>Design Principles:</strong> Be FLEXIBLE (diversity), Allocate TIME (long-term), Stay CONNECTED (open collaboration).
+            </div>
+        </div>
+
+        <!-- PART 3: COMPANY STRUCTURE -->
+        <div class="section">
+            <div class="section-title orange-section">🏢 PART 3: COMPANY STRUCTURE SUPPORTING INNOVATION</div>
+            
+            <div class="grid-2">
+                <div class="box">
+                    <div class="box-title">📏 SIZE AND STRUCTURAL DIMENSIONS</div>
+                    <div class="warning">
+                        <strong>❌ LARGE COMPANY DISADVANTAGES:</strong>
+                        <ul>
+                            <li><strong>Decreased R&D Efficiency:</strong> Loss of managerial control as organization grows</li>
+                            <li><strong>Bureaucratic Inertia:</strong> Established processes slow response time, risk-averse culture</li>
+                            <li><strong>Commitment to Current Technologies:</strong> Learning effects lock into existing tech, hard to cannibalize</li>
+                            <li><strong>Complex Stakeholder Management:</strong> Must satisfy shareholders, boards, multiple divisions</li>
+                        </ul>
+                    </div>
+                    <div class="highlight">
+                        <strong>✅ SMALL FIRM ADVANTAGES:</strong>
+                        <ul>
+                            <li><strong>Flexibility & Agility:</strong> Can change direction quickly, pivot rapidly without bureaucracy</li>
+                            <li><strong>Entrepreneurial Culture:</strong> Everyone close to decision-makers, faster execution</li>
+                            <li><strong>Focus:</strong> Singular vision, all resources directed at one goal</li>
+                            <li><strong>Direct Customer Feedback:</strong> Closer to customers, can iterate quickly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">🔧 THREE KEY STRUCTURAL DIMENSIONS</div>
+                    <p><strong>1. FORMALIZATION:</strong> Degree of using rules/procedures to structure employee behavior.</p>
+                    <ul>
+                        <li>High: Detailed SOPs, good for consistency, bad for creativity</li>
+                        <li>Low: Flexible roles, good for innovation, bad for standardization</li>
+                    </ul>
+                    <p><strong>2. STANDARDIZATION:</strong> Degree to which activities performed uniformly.</p>
+                    <ul>
+                        <li>High: Same processes everywhere, good for scaling, bad for adaptation</li>
+                        <li>Low: Customized approaches, good for innovation, bad for consistency</li>
+                    </ul>
+                    <p><strong>3. CENTRALIZATION:</strong></p>
+                    <ul>
+                        <li><strong>Authority:</strong> Decision-making kept at top (high) vs distributed (low)</li>
+                        <li><strong>Activities:</strong> Performed at HQ (high) vs regional autonomy (low)</li>
+                        <li><strong>For Innovation:</strong> Want LOW centralization → empowered teams</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="emphasis">
+                <strong>⚖️ MECHANISTIC VS ORGANIC STRUCTURES</strong><br><br>
+                <div class="grid-2">
+                    <div>
+                        <strong>MECHANISTIC 🏭</strong><br>
+                        <strong>Characteristics:</strong> HIGH formalization, HIGH standardization, clear hierarchy, rigid procedures<br>
+                        <strong>✅ Advantages:</strong> Operational efficiency, reliability, quality control, cost reduction<br>
+                        <strong>❌ Disadvantages:</strong> Stifles creativity, slow to adapt, bureaucratic<br>
+                        <strong>Best Use:</strong> Manufacturing, operations, mature products
+                    </div>
+                    <div>
+                        <strong>ORGANIC 🌿</strong><br>
+                        <strong>Characteristics:</strong> LOW formalization, LOW standardization, flat hierarchy, flexible<br>
+                        <strong>✅ Advantages:</strong> Encourages creativity, supports experimentation, rapid adaptation<br>
+                        <strong>❌ Disadvantages:</strong> Low consistency, reduced reliability, can be chaotic<br>
+                        <strong>Best Use:</strong> R&D, new product development, startups
+                    </div>
+                </div>
+                <br><strong>🎯 THE SOLUTION:</strong> Hybrid approach - R&D divisions (small, organic) + Manufacturing divisions (large, mechanistic). Can alternate over time.
+            </div>
+
+            <div class="info">
+                <strong>🤹 AMBIDEXTROUS ORGANIZATION (Tushman & O'Reilly, 1996)</strong><br>
+                <strong>Core Concept:</strong> Ability to simultaneously EXPLORE (innovate) and EXPLOIT (optimize existing business).<br><br>
+                <strong>EXPLORATION 🔭:</strong> New products/markets/technologies, risk-taking, long-term focus, organic structure<br>
+                <strong>EXPLOITATION ⚙️:</strong> Refining existing, efficiency focus, short-term focus, mechanistic structure<br><br>
+                <strong>How to "Feel Small":</strong> (1) Break into subunits; (2) Different cultures/controls per unit; (3) "Skunk works" teams<br>
+                <strong>Examples:</strong> Meta (Facebook core + Oculus/WhatsApp), Microsoft (Windows/Office + Xbox/LinkedIn/OpenAI)
+            </div>
+        </div>
+
+        <!-- PART 4: CASE STUDIES -->
+        <div class="section">
+            <div class="section-title purple-section">📚 PART 4: CASE STUDIES - SUCCESSFUL INNOVATION CULTURES</div>
+            
+            <div class="grid-2">
+                <div class="box">
+                    <div class="box-title">MICROSOFT - Cultural Transformation (Satya Nadella)</div>
+                    <p><strong>Philosophy:</strong> "The concept that made you successful will run out of gas. You need culture to enable continuous capability building."</p>
+                    <p><strong>1. Annual Microsoft Hackathon:</strong></p>
+                    <ul>
+                        <li>Problem: Separate Windows offices siloed, in competition</li>
+                        <li>Solution: Encourage cross-area collaboration on projects</li>
+                        <li>Result: Fast-moving, collaborative organization for digital-first world</li>
+                    </ul>
+                    <p><strong>2. Fewer, Bigger Bets:</strong> Doubled down on cloud (Azure) and AI, focus resources</p>
+                    <p><strong>3. Partner-Positive Thinking:</strong> Fast-moving specialists deliver expertise better than large legacy org, ecosystem approach</p>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">LOCKHEED MARTIN - Skunk Works® (1940s)</div>
+                    <p><strong>Philosophy:</strong> "No mission is impossible. Committed to quickly developing disruptive solutions."</p>
+                    <p><strong>Founder:</strong> Kelly Johnson (Engineer) - Created unique approach with small empowered teams, streamlined processes, culture valuing bold attempts</p>
+                    <p><strong>Kelly's 14 Rules (Key Selections):</strong></p>
+                    <ul>
+                        <li><strong>Rule 1:</strong> Manager has practically complete control, reports to division president or higher</li>
+                        <li><strong>Rule 3:</strong> Restrict personnel viciously - use 10-25% compared to "normal" systems</li>
+                        <li><strong>Rule 4:</strong> Simple drawing system with great flexibility for changes</li>
+                        <li><strong>Rule 11:</strong> Timely funding so contractor doesn't run to bank</li>
+                        <li><strong>Rule 14:</strong> Reward performance NOT based on # supervised</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="box">
+                    <div class="box-title">APPLE - Renegade Team & Macintosh (1980s)</div>
+                    <p><strong>Context:</strong> Apple producing Apple II for technical users. Corporate environment structured for efficient manufacturing.</p>
+                    <p><strong>Jobs' Vision:</strong> Intuitive computer usable by everyone (not just technical people), based on mouse + desktop icons from Xerox PARC</p>
+                    <p><strong>The Solution - Renegade Culture:</strong></p>
+                    <ul>
+                        <li>Started new product development group for Macintosh</li>
+                        <li>Renegade = consciously different from mainstream practices</li>
+                        <li>Hidden in building OFF main campus</li>
+                        <li>"Hijacked" best people from another project</li>
+                        <li>Different culture with more flexibility than corporate Apple</li>
+                    </ul>
+                    <p><strong>⚠️ Modern Question:</strong> "Apple is no longer innovative" (Forbes, 2019) - criticized for not leading in folding phones, AI, retail innovation</p>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">GOOGLE - Maintaining Small Company Benefits at Scale</div>
+                    <p><strong>Eric Schmidt's Philosophy:</strong> "Avoid divisional structure that prevents collaboration. If people understand company values, they should self-organize to work on interesting problems."</p>
+                    <p><strong>1. Google's "20% Time":</strong></p>
+                    <ul>
+                        <li>Encourages employees to spend 20% time on what benefits Google</li>
+                        <li>Success Stories: Gmail, Google News, AdSense</li>
+                        <li>Reality: ~10% actually use it (Laszlo Bock, 2015)</li>
+                        <li>Why It Matters: "Idea of 20% time more important than reality"</li>
+                    </ul>
+                    <p><strong>2. Solve for X / X (Moonshot Factory):</strong></p>
+                    <ul>
+                        <li>Run at hardest parts of problem, try to prove can't be done</li>
+                        <li>Actively embrace failure: mistakes = progress</li>
+                        <li><strong>3 Requirements:</strong> Big Problem + Radical Solution + Breakthrough Tech (exists today)</li>
+                        <li>Tackle with research riskiness + startup speed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 5: JUDGING INNOVATIONS -->
+        <div class="section">
+            <div class="section-title red-section">🏆 PART 5: JUDGING IT INNOVATIONS</div>
+            
+            <div class="info">
+                <strong>❓ WHY JUDGING MATTERS:</strong> Many innovations released daily without evidence of success. Need framework to evaluate potential value, understand our own innovations, make investment decisions.
+            </div>
+
+            <div class="emphasis">
+                <strong>📋 STANDARD JUDGING CRITERIA (5 Core Dimensions)</strong><br><br>
+                <div class="grid-5">
+                    <div>
+                        <strong>1. TECHNOLOGY 🔧</strong><br>
+                        Engineering qualities: availability, security, safety, reliability, performance, scalability
+                    </div>
+                    <div>
+                        <strong>2. DESIGN 🎨</strong><br>
+                        Aesthetic & UX: vision, hearing, perceptual design, intuitive interface
+                    </div>
+                    <div>
+                        <strong>3. INNOVATION 💡</strong><br>
+                        Novelty: new product/service, unique approach, novel features
+                    </div>
+                    <div>
+                        <strong>4. FEASIBILITY 📊</strong><br>
+                        Business viability: business model, market competitiveness, sustainability
+                    </div>
+                    <div>
+                        <strong>5. CONCEPT/IMPACT 🌍</strong><br>
+                        Value & reach: user value, broad appeal, global impact, social benefits
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="box">
+                    <div class="box-title">🏅 MICROSOFT IMAGINE CUP</div>
+                    <strong>Overview:</strong>
+                    <ul>
+                        <li>World's premier student tech competition</li>
+                        <li>20+ years, dozens of countries</li>
+                        <li>$100,000 prize for World Champion</li>
+                        <li>All-expenses paid to World Finals</li>
+                    </ul>
+                    <strong>Criteria:</strong> 5 standard criteria
+                    <strong>Unique Aspects:</strong>
+                    <ul>
+                        <li>Encourages MS technology use</li>
+                        <li>Think "blue sky" - big claims</li>
+                        <li>Maximize student engagement</li>
+                        <li>Mentors & industry leaders</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">🎓 HARVARD i3</div>
+                    <strong>Overview:</strong>
+                    <ul>
+                        <li>Harvard's premier startup competition</li>
+                        <li>Year-long program</li>
+                        <li>Project grants + incubator space</li>
+                    </ul>
+                    <strong>Two-Stage Judging:</strong>
+                    <ul>
+                        <li>Pre-Proposal: Creative solution to social problem</li>
+                        <li>Full Proposals: Potential social impact & viability</li>
+                    </ul>
+                    <strong>Three Core Criteria:</strong>
+                    <ul>
+                        <li><strong>IMPACT:</strong> Innovative, measurable</li>
+                        <li><strong>PLAN:</strong> Realistic, financially sustainable</li>
+                        <li><strong>TEAM:</strong> Skills, commitment, complementary talent</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">📱 CES INNOVATION AWARDS</div>
+                    <strong>Overview:</strong>
+                    <ul>
+                        <li>Consumer Electronics Show</li>
+                        <li>World's gathering for consumer tech</li>
+                        <li>Proving ground for innovators</li>
+                    </ul>
+                    <strong>Judging Panel (per category):</strong>
+                    <ul>
+                        <li>Independent industrial designer</li>
+                        <li>Independent engineer</li>
+                        <li>Member of trade press</li>
+                    </ul>
+                    <strong>Criteria:</strong> 5 standard criteria
+                    <strong>Special Category:</strong> Accessible Technologies (ease of use for disabled persons, seniors)
+                    <strong>Awards:</strong> Trophy, exhibition invite, logo usage rights
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>👥 JUDGING PANEL BEST PRACTICES:</strong><br>
+                <strong>Composition:</strong> Diverse pool (business executives, industry experts, academics) with complementary expertise<br>
+                <strong>Key Considerations:</strong> Judge training CRITICAL for uniformity; Judgment subjective but criteria enable fair comparison; Criteria varies by category/event<br>
+                <strong>Judge Incentives:</strong> (1) Giving back - most committed; (2) Professional networking; (3) Professional courtesy - least reliable
+            </div>
+        </div>
+
+        <!-- PART 6: EXAM FOCUS -->
+        <div class="section">
+            <div class="section-title red-section" style="border: 4px solid #991b1b;">⚠️ CRITICAL EXAM FOCUS: BIG COMPANY DISADVANTAGES</div>
+            
+            <div class="warning" style="border: 3px solid #dc2626; padding: 10px;">
+                <strong>SCENARIO:</strong> The Apple Vision Pro is a mixed-reality (MR) headset creating "spatial computing" experience. Features ultra-high-resolution displays, advanced eye/hand tracking, custom Apple silicon. Aims to redefine how users work, collaborate, consume media - potential disruptor in computing and wearable technology.
+            </div>
+
+            <div class="grid-2">
+                <div class="box" style="border: 3px solid #dc2626; background: #fef2f2;">
+                    <div class="box-title" style="color: #991b1b;">DISADVANTAGE 1: Bureaucratic Inertia & Slow Decision-Making</div>
+                    
+                    <p><strong>Definition/Explanation:</strong></p>
+                    <ul>
+                        <li>Large companies like Apple have <strong>established structures, processes, hierarchies</strong> built over decades</li>
+                        <li>These systems <strong>favor incremental improvements</strong> to existing products rather than radical innovation</li>
+                        <li>"Bureaucratic inertia" = organizational resistance to change due to established ways</li>
+                        <li>Multiple approval layers, committees, stakeholders slow decision-making</li>
+                        <li>Process compliance takes priority over speed</li>
+                    </ul>
+                    
+                    <p><strong>Impact on Innovation-Driven Markets:</strong>

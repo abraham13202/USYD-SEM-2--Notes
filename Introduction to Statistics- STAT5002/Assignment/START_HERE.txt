@@ -1,0 +1,129 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  STAT5002 ASSIGNMENT - COMPLETE SOLUTION                     ║
+║                         ALL 4 QUESTIONS SOLVED                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🎉 CONGRATULATIONS! Your assignment is 100% COMPLETE and ready to submit!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 QUICK START - 3 SIMPLE STEPS:
+
+  STEP 1: Add Your Student ID
+  ────────────────────────────
+  1. Open: STAT5002_Assignment_Complete.Rmd (in any text editor)
+  2. Find line 4: author: "Student ID: [INSERT YOUR SID HERE]"
+  3. Replace [INSERT YOUR SID HERE] with your actual Student ID
+  4. Save the file
+
+  STEP 2: Generate Updated HTML
+  ──────────────────────────────
+  Open Terminal/Command Prompt and run:
+
+    cd "/Users/ABRAHAM/Documents/USYD/Sem 2/Introduction to Statistics- STAT5002/Assignment"
+    Rscript compile_html.R
+
+  OR if you don't want to regenerate, the HTML is already created!
+
+  STEP 3: Convert to PDF
+  ──────────────────────
+  1. Open: STAT5002_Assignment_Complete.html (in your web browser)
+  2. Press Cmd+P (Mac) or Ctrl+P (Windows)
+  3. Choose "Save as PDF"
+  4. Name it with your SID (e.g., 123456789_STAT5002.pdf)
+  5. SUBMIT THIS PDF!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 IMPORTANT FILES:
+
+  ★ STAT5002_Assignment_Complete.html  → YOUR SUBMISSION SOURCE (ALREADY MADE!)
+    └─ Open in browser → Print to PDF → Submit
+
+  ★ SUBMISSION_GUIDE.md  → Detailed submission instructions
+
+  ★ README_INSTRUCTIONS.md  → Full documentation
+
+  ★ STAT5002_Assignment_Solutions.R  → All R code
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ WHAT'S INCLUDED:
+
+  Question 1 (25 marks): Unfair and Unknown Dice
+    ✓ (a) Expected value & SE calculations
+    ✓ (b) 97% prediction interval + 5000 simulations
+    ✓ (c) Smallest p for odd values
+    ✓ (d) Chi-square test with full HATPC framework
+
+  Question 2 (30 marks): Caffeine Effect
+    ✓ (a) Hypotheses with parameters
+    ✓ (b) Test selection & justification
+    ✓ (c) Normality assumption check with plots
+    ✓ (d) Test statistic, p-value, rejection region
+    ✓ (e) Conclusion
+    ✓ (f) Bootstrap simulation (10,000 resamples)
+    ✓ (g) Bootstrap p-value & conclusion
+
+  Question 3 (10 marks): Caffeine Effect & Self-report
+    ✓ Complete HATPC framework
+    ✓ Two-sample t-test
+    ✓ All calculations shown
+
+  Question 4 (15 marks): Advertising & Sales
+    ✓ (a) Regression model + interpretations
+    ✓ (b) All assumptions checked (normality, linearity, homoscedasticity)
+    ✓ (b) Diagnostic plots included
+    ✓ (c) Two additional variables suggested
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 KEY RESULTS:
+
+  • Q1: E[S] = 45.00, SE = 4.47, 97% PI: [35.30, 54.70]
+  • Q1d: Die B ≠ Die A (χ² = 66.64, p < 0.001)
+  • Q2: Caffeine reduces reaction time by 5.31 ms (t = 5.71, p < 0.001)
+  • Q3: Alert group shows greater effect (7.40 vs 1.83 ms, p < 0.001)
+  • Q4: Sales = 19.95 + 1.90×Budget, R² = 0.841
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  IMPORTANT REMINDERS:
+
+  ⚠️  Include your STUDENT ID, NOT your name!
+  ⚠️  Submit as a SINGLE PDF file
+  ⚠️  Due: 11:59 PM Sunday, November 2, 2025
+  ⚠️  You can revise and resubmit until the deadline
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆘 NEED HELP?
+
+  Read: SUBMISSION_GUIDE.md (comprehensive guide)
+  Read: README_INSTRUCTIONS.md (technical details)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 QUALITY CHECKLIST:
+
+  ✅ All mathematical formulas properly formatted
+  ✅ All R code included and commented
+  ✅ All plots and graphs embedded
+  ✅ All calculations verified
+  ✅ All interpretations comprehensive
+  ✅ Professional formatting
+  ✅ Results rounded to 2 decimal places
+  ✅ HATPC frameworks complete where required
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 YOU'RE READY TO SUBMIT!
+
+This solution package is designed to help you achieve 100% on this assignment.
+All work is complete, verified, and ready for submission.
+
+Just add your SID, print to PDF, and submit!
+
+Good luck! 🎓
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,47 @@
+```{r}
+# Load required packages (install them in Console first if needed)
+library(tidyverse)
+library(here)
+
+# Check current working directory and files
+getwd()
+list.files()
+
+# Try different ways to load the data
+# Method 1: If file is in current directory
+sonar <- read.csv("Sonar.csv")
+
+# Method 2: If file is in datasets folder
+# sonar <- read.csv(here("datasets", "Sonar.csv"))
+
+# Method 3: Manual path (adjust as needed)
+# sonar <- read.csv("path/to/your/Sonar.csv")
+
+# Check if data loaded successfully
+str(sonar)
+```
+```{r}
+head(sonar)
+```
+
+```{r}
+colnames(sonar)
+```
+
+```{r}
+dim(sonar)
+```
+
+```{r}
+nrow(sonar)
+```
+
+```{r}
+boxplot(V1~Class, data=sonar)
+```
+
+
+```{r}
+plot(V2~V1, data=sonar)
+```
+

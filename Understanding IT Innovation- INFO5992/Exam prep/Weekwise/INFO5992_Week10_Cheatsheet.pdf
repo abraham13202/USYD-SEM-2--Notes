@@ -1,0 +1,1362 @@
+import React from 'react';
+
+const ComprehensiveCheatSheet = () => {
+  return (
+    <div className="min-h-screen bg-white p-6 font-sans text-xs">
+      <div className="max-w-full mx-auto">
+        {/* Header */}
+        <div className="text-center mb-4 border-b-4 border-blue-600 pb-3">
+          <h1 className="text-2xl font-bold text-blue-600 mb-1">INFO5992 Understanding IT Innovations</h1>
+          <h2 className="text-lg font-semibold text-gray-700">Complete Module 3 & Week 10 Study Guide</h2>
+          <p className="text-gray-600 text-xs">Commercialization, Organizational Culture, Structures & Judging Innovation</p>
+        </div>
+
+        {/* PART 1: STARTUP FAILURES & J-CURVE */}
+        <div className="mb-4 border-2 border-red-600 rounded p-3 bg-red-50">
+          <h2 className="text-lg font-bold text-red-700 mb-2">📉 PART 1: STARTUP FAILURES & THE J-CURVE</h2>
+          
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="bg-white p-2 rounded border border-red-300">
+              <h3 className="font-bold text-red-600 mb-1">1. No Market Need ⚠️</h3>
+              <p className="mb-1 font-semibold">Definition:</p>
+              <p className="mb-1">Building a product/service for which there is no significant demand.</p>
+              
+              <p className="mb-1 font-semibold mt-2">Why it Happens:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Founders get caught up in their solution</li>
+                <li>Don't validate the problem matters to users</li>
+                <li>Assume innovation = success</li>
+                <li>Build before testing customer demand</li>
+              </ul>
+              
+              <p className="mb-1 font-semibold mt-2">Key Insight:</p>
+              <p>Even highly innovative ideas will NOT succeed if they don't solve a REAL problem for a VIABLE customer segment. Solution without problem validation = failure.</p>
+              
+              <p className="mb-1 font-semibold mt-2">Prevention:</p>
+              <ul className="list-disc list-inside">
+                <li>Validate customer pain points FIRST</li>
+                <li>Test willingness to pay</li>
+                <li>Build MVP to test assumptions</li>
+              </ul>
+            </div>
+
+            <div className="bg-white p-2 rounded border border-red-300">
+              <h3 className="font-bold text-red-600 mb-1">2. Running Out of Cash 💸</h3>
+              <p className="mb-1 font-semibold">Definition:</p>
+              <p className="mb-1">Underestimating costs or overestimating revenue growth, leading to cash starvation.</p>
+              
+              <p className="mb-1 font-semibold mt-2">The "Valley of Death":</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Period between startup launch and revenue generation</li>
+                <li>High early-stage costs (R&D, team, infrastructure)</li>
+                <li>Before product-market fit established</li>
+                <li>Before recurring revenue streams exist</li>
+                <li>Most startups die here in the J-curve</li>
+              </ul>
+              
+              <p className="mb-1 font-semibold mt-2">Common Causes:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Underestimating burn rate</li>
+                <li>Overestimating sales cycles</li>
+                <li>Failing to raise sufficient capital</li>
+                <li>Poor financial planning</li>
+                <li>Investor support drying up</li>
+              </ul>
+              
+              <p className="mb-1 font-semibold mt-2">Tech Venture Challenges:</p>
+              <p>Especially high costs before PMF due to R&D, hardware development, infrastructure needs.</p>
+            </div>
+
+            <div className="bg-white p-2 rounded border border-red-300">
+              <h3 className="font-bold text-red-600 mb-1">3. Team/Founding Issues 👥</h3>
+              <p className="mb-1 font-semibold">Definition:</p>
+              <p className="mb-1">Team dysfunction, lack of key skills, or breakdowns in founder relationships.</p>
+              
+              <p className="mb-1 font-semibold mt-2">Specific Problems:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Lack of trust between founders</li>
+                <li>Missing diverse expertise</li>
+                <li>Poor cohesive decision-making</li>
+                <li>Founder conflicts & equity disputes</li>
+                <li>Wrong mix of technical/business skills</li>
+                <li>Inability to attract/retain talent</li>
+              </ul>
+              
+              <p className="mb-1 font-semibold mt-2">Consequences:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Slow execution</li>
+                <li>Strategic drift</li>
+                <li>Inability to respond to challenges</li>
+                <li>Missed opportunities</li>
+                <li>Cultural toxicity</li>
+              </ul>
+              
+              <p className="mb-1 font-semibold mt-2">Paul Graham's Advice:</p>
+              <p>Emphasizes importance of trust, diverse expertise, and cohesive decision-making. Team quality often determines success/failure.</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-3 rounded border border-red-400">
+            <h3 className="font-bold text-red-700 mb-2">📋 CASE STUDY: DAQRI (AR Startup, 2019)</h3>
+            <div className="grid grid-cols-3 gap-2">
+              <div>
+                <p className="font-semibold">Background:</p>
+                <p>Developed augmented reality hardware and software. Raised hundreds of millions. Shut down 2019.</p>
+              </div>
+              <div>
+                <p className="font-semibold">Mistakes Made:</p>
+                <ul className="list-disc list-inside text-xs">
+                  <li><span className="font-semibold">No Market Need:</span> Targeted industrial AR without validating customer willingness to pay. Adoption lagged.</li>
+                  <li><span className="font-semibold">Cash Burn:</span> R&D and hardware extremely expensive before sustainable revenue.</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold">Lessons:</p>
+                <ul className="list-disc list-inside text-xs">
+                  <li>Deep-tech requires longer runway</li>
+                  <li>Hardware + enterprise sales = high risk</li>
+                  <li>Market traction crucial before scaling</li>
+                  <li>Difficult to pivot with limited traction</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PART 2: ORGANIZATIONAL CULTURE */}
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-blue-700 mb-2 bg-blue-100 p-2 rounded">🏛️ PART 2: ORGANIZATIONAL CULTURE & INNOVATION</h2>
+          
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <div className="border-2 border-gray-500 rounded p-2">
+              <h3 className="font-bold text-gray-700 mb-2">📊 TAYLORISM (Scientific Management) - 1911</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold">Creator: Frederick Winslow Taylor</p>
+                <p className="italic">"In the past, the man was first. In the future, the system will be first."</p>
+              </div>
+              
+              <div className="mb-2">
+                <p className="font-semibold">Core Principles:</p>
+                <ol className="list-decimal list-inside space-y-0.5">
+                  <li><span className="font-semibold">Standardize work</span> into separate, distinct tasks</li>
+                  <li><span className="font-semibold">Scientifically study</span> each task for optimization</li>
+                  <li><span className="font-semibold">Continually measure</span> performance of each task</li>
+                  <li><span className="font-semibold">Compensate workers</span> based on performance metrics</li>
+                </ol>
+              </div>
+              
+              <div className="mb-2">
+                <p className="font-semibold">Organizational Influence:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Gantt charts (Henry Gantt - Taylor's colleague)</li>
+                  <li>Budgets for accountability & performance measurement</li>
+                  <li>Key Performance Indicators (KPIs)</li>
+                  <li>Performance-linked incentives</li>
+                  <li>Used in most modern organizations, not just factories</li>
+                </ul>
+              </div>
+              
+              <div className="bg-red-50 p-2 rounded border border-red-300">
+                <p className="font-bold text-red-600 mb-1">❌ WHY TAYLORISM FAILS FOR INNOVATION:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Designed for <span className="font-semibold">repetitive work with known functions</span> (e.g., factory production)</li>
+                  <li>NOT suitable for <span className="font-semibold">creative work with many unknowns</span> (e.g., tech innovation)</li>
+                  <li>Does NOT promote new ideas or thinking</li>
+                  <li>Stifles experimentation and risk-taking</li>
+                  <li>Focuses on efficiency over exploration</li>
+                  <li>NOT appropriate for startups</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-2 border-green-600 rounded p-2">
+              <h3 className="font-bold text-green-700 mb-2">💡 CREATING CULTURE FOR NEW IDEAS</h3>
+              <p className="italic mb-2">Steven Johnson: "Where Good Ideas Come From" (TED Talk, 2010)</p>
+              
+              <div className="mb-2 bg-green-50 p-2 rounded">
+                <p className="font-bold text-green-700 mb-1">1. Liquid Networks 🌊</p>
+                <p className="font-semibold">Definition:</p>
+                <p className="mb-1">Having a diversity of expertise where ideas bounce between different fields/disciplines.</p>
+                <p className="font-semibold">Why it Works:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Cross-pollination of ideas triggers breakthroughs</li>
+                  <li>Different perspectives reveal new solutions</li>
+                  <li>Diverse expertise prevents groupthink</li>
+                  <li>Serendipitous connections spark innovation</li>
+                </ul>
+                <p className="font-semibold mt-1">Implementation:</p>
+                <p>Create spaces/processes for diverse experts to interact informally and formally.</p>
+              </div>
+              
+              <div className="mb-2 bg-green-50 p-2 rounded">
+                <p className="font-bold text-green-700 mb-1">2. Slow Hunch 🐢</p>
+                <p className="font-semibold">Definition:</p>
+                <p className="mb-1">Great ideas slowly fade into view over a LONG period of time (not eureka moments).</p>
+                <p className="font-semibold">Why it Matters:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Innovation is incremental, not instantaneous</li>
+                  <li>Ideas need time to mature and connect</li>
+                  <li>Pressure for quick results kills innovation</li>
+                  <li>Best solutions emerge from prolonged exploration</li>
+                </ul>
+                <p className="font-semibold mt-1">Implementation:</p>
+                <p>Allocate TIME for exploration. Don't demand immediate results from innovation projects.</p>
+              </div>
+              
+              <div className="bg-green-50 p-2 rounded">
+                <p className="font-bold text-green-700 mb-1">3. Connecting vs Protecting 🔗</p>
+                <p className="font-semibold">Core Principle:</p>
+                <p className="mb-1">Interaction leads to overall best results; keeping ideas to oneself leads to stagnation.</p>
+                <p className="font-semibold">Why Sharing Wins:</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Our experiences/genetics take us down same thought paths repeatedly</li>
+                  <li>Others' perspectives break our mental loops</li>
+                  <li>Collaboration multiplies possibilities</li>
+                  <li>Open sharing accelerates innovation</li>
+                </ul>
+                <p className="font-semibold mt-1">Implementation:</p>
+                <p>Encourage open collaboration. Don't reward secrecy or hoarding of ideas.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-2 border-purple-600 rounded p-3 bg-purple-50">
+            <h3 className="font-bold text-purple-700 mb-2">📈 INNOVATION SOURCES: STEVEN JOHNSON'S QUADRANT ANALYSIS (1800-Now)</h3>
+            
+            <div className="grid grid-cols-4 gap-2 mb-2">
+              <div className="bg-white border-2 border-gray-400 p-2 rounded">
+                <p className="font-bold text-center mb-1">Q1: Individual + Market</p>
+                <p className="text-center text-xs mb-1">Solo inventor working for financial gain</p>
+                <p className="font-semibold">Examples:</p>
+                <p>Independent entrepreneurs, patent holders</p>
+                <p className="font-semibold mt-1">Innovation Output:</p>
+                <p className="text-red-600">LOWEST - Limited perspective, resource-constrained</p>
+              </div>
+              
+              <div className="bg-white border-2 border-blue-400 p-2 rounded">
+                <p className="font-bold text-center mb-1">Q2: Networked + Market</p>
+                <p className="text-center text-xs mb-1">Collaborative teams working for profit</p>
+                <p className="font-semibold">Examples:</p>
+                <p>Corporate R&D, tech companies, VC-backed startups</p>
+                <p className="font-semibold mt-1">Innovation Output:</p>
+                <p className="text-orange-600">MODERATE - Collaborative but profit-focused</p>
+              </div>
+              
+              <div className="bg-white border-2 border-gray-400 p-2 rounded">
+                <p className="font-bold text-center mb-1">Q3: Individual + Non-Market</p>
+                <p className="text-center text-xs mb-1">Solo work not driven by financial gain</p>
+                <p className="font-semibold">Examples:</p>
+                <p>Hobbyists, amateur scientists, individual academics</p>
+                <p className="font-semibold mt-1">Innovation Output:</p>
+                <p className="text-orange-600">MODERATE - Freedom but limited resources</p>
+              </div>
+              
+              <div className="bg-green-100 border-2 border-green-600 p-2 rounded">
+                <p className="font-bold text-center mb-1">Q4: Networked + Non-Market ⭐</p>
+                <p className="text-center text-xs mb-1">Collaborative work not driven by profit</p>
+                <p className="font-semibold">Examples:</p>
+                <p>Open source, academic research, Wikipedia, scientific communities</p>
+                <p className="font-semibold mt-1">Innovation Output:</p>
+                <p className="text-green-700 font-bold">HIGHEST - Most innovation comes from here!</p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-2 rounded border border-purple-400">
+              <p className="font-bold mb-1">🔑 KEY INSIGHTS FROM ANALYSIS:</p>
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <p className="font-semibold">1. Non-Market > Market</p>
+                  <p>Non-market focused approaches produce MUCH MORE innovation than market-focused approaches. Why? Freedom to explore without ROI pressure.</p>
+                </div>
+                <div>
+                  <p className="font-semibold">2. Networked > Individual</p>
+                  <p>Network is MUCH more valuable than individual. Consistent with open innovation concept. Collaboration multiplies outcomes.</p>
+                </div>
+                <div>
+                  <p className="font-semibold">3. Quadrant 4 Dominance</p>
+                  <p>Supports 'liquid network', 'slow hunch', and 'connected'. Q4 can lead to many NEW market opportunities despite non-market origin.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-2 bg-purple-100 p-2 rounded">
+              <p className="font-bold mb-1">🎯 DESIGN PRINCIPLES FOR INNOVATION CULTURE:</p>
+              <div className="flex gap-4">
+                <div><span className="font-semibold">Be FLEXIBLE:</span> Liquid networks (diversity of expertise)</div>
+                <div><span className="font-semibold">Allocate TIME:</span> Slow hunch (long-term thinking)</div>
+                <div><span className="font-semibold">Stay CONNECTED:</span> Open collaboration (not siloed)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PART 3: COMPANY STRUCTURE */}
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-orange-700 mb-2 bg-orange-100 p-2 rounded">🏢 PART 3: COMPANY STRUCTURE SUPPORTING INNOVATION</h2>
+          
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <div className="border-2 border-orange-500 rounded p-2">
+              <h3 className="font-bold text-orange-700 mb-2">📏 SIZE AND STRUCTURAL DIMENSIONS</h3>
+              
+              <div className="mb-2 bg-red-50 p-2 rounded border border-red-300">
+                <p className="font-bold text-red-700 mb-1">❌ LARGE COMPANY DISADVANTAGES:</p>
+                <div className="space-y-1">
+                  <div>
+                    <p className="font-semibold">1. Decreased R&D Efficiency</p>
+                    <p>Loss of managerial control as organization grows. Harder to coordinate innovation efforts. More layers = slower decisions.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">2. Bureaucratic Inertia</p>
+                    <p>Established processes, hierarchies, and approval chains slow response time. Red tape kills agility. Risk-averse culture.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">3. Commitment to Current Technologies</p>
+                    <p>Learning effects (Week 3) lock companies into existing tech. Sunk costs, installed base, complementary assets create switching costs. Hard to cannibalize successful products.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">4. Complex Stakeholder Management</p>
+                    <p>Must satisfy shareholders, boards, multiple divisions. Short-term earnings pressure limits long-term innovation bets.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-green-50 p-2 rounded border border-green-400">
+                <p className="font-bold text-green-700 mb-1">✅ SMALL FIRM ADVANTAGES:</p>
+                <div className="space-y-1">
+                  <div>
+                    <p className="font-semibold">1. Flexibility & Agility</p>
+                    <p>Can change direction quickly based on changing circumstances or new observations. Pivot rapidly without bureaucracy.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">2. Entrepreneurial Culture</p>
+                    <p>Everyone close to decision-makers. Faster execution. Higher risk tolerance. Innovation as core mission, not side project.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">3. Focus</p>
+                    <p>Singular vision. All resources directed at one goal. No competing priorities or legacy products to protect.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">4. Direct Customer Feedback</p>
+                    <p>Closer to customers. Can iterate based on real feedback without layers of management filtering information.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-2 border-blue-500 rounded p-2">
+              <h3 className="font-bold text-blue-700 mb-2">🔧 THREE KEY STRUCTURAL DIMENSIONS</h3>
+              
+              <div className="mb-2 bg-blue-50 p-2 rounded">
+                <p className="font-bold text-blue-700 mb-1">1. FORMALIZATION</p>
+                <p className="font-semibold">Definition:</p>
+                <p className="mb-1">The degree to which the company uses rules and procedures to structure the behavior of employees.</p>
+                <p className="font-semibold">High Formalization:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Detailed job descriptions, SOPs, compliance requirements</li>
+                  <li>✅ Good for: Consistency, quality control, risk management</li>
+                  <li>❌ Bad for: Creativity, experimentation, rapid change</li>
+                </ul>
+                <p className="font-semibold mt-1">Low Formalization:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Flexible roles, few rigid procedures</li>
+                  <li>✅ Good for: Innovation, adaptation, employee autonomy</li>
+                  <li>❌ Bad for: Standardization, predictability</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-blue-50 p-2 rounded">
+                <p className="font-bold text-blue-700 mb-1">2. STANDARDIZATION</p>
+                <p className="font-semibold">Definition:</p>
+                <p className="mb-1">The degree to which company activities are performed uniformly.</p>
+                <p className="font-semibold">High Standardization:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Same processes everywhere, uniform outputs</li>
+                  <li>✅ Good for: Efficiency, scaling, quality assurance</li>
+                  <li>❌ Bad for: Local adaptation, creative problem-solving</li>
+                </ul>
+                <p className="font-semibold mt-1">Low Standardization:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Customized approaches, varied methods</li>
+                  <li>✅ Good for: Innovation, context-specific solutions</li>
+                  <li>❌ Bad for: Consistency, knowledge transfer</li>
+                </ul>
+              </div>
+              
+              <div className="bg-blue-50 p-2 rounded">
+                <p className="font-bold text-blue-700 mb-1">3. CENTRALIZATION</p>
+                <p className="font-semibold">Two Types:</p>
+                <div className="ml-2 space-y-1">
+                  <div>
+                    <p className="font-semibold">A. Centralized Authority</p>
+                    <p className="text-xs">Degree to which decision-making authority is kept at top levels.</p>
+                    <p className="text-xs">High = Few people make decisions. Low = Distributed decision-making.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">B. Centralized Activities</p>
+                    <p className="text-xs">Degree to which activities are performed at a central location.</p>
+                    <p className="text-xs">High = HQ does everything. Low = Regional autonomy.</p>
+                  </div>
+                </div>
+                <p className="font-semibold mt-1">For Innovation:</p>
+                <p className="text-xs">Generally want LOW centralization → empowered teams making decisions close to problems.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-2 border-teal-600 rounded p-3 bg-teal-50 mb-3">
+            <h3 className="font-bold text-teal-700 mb-2">⚖️ MECHANISTIC VS ORGANIC STRUCTURES</h3>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white p-2 rounded border-2 border-gray-600">
+                <p className="font-bold text-gray-800 text-center mb-2">MECHANISTIC STRUCTURES 🏭</p>
+                
+                <div className="mb-2">
+                  <p className="font-semibold">Characteristics:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>HIGH formalization</li>
+                    <li>HIGH standardization</li>
+                    <li>Clear hierarchy</li>
+                    <li>Rigid procedures</li>
+                    <li>Vertical communication</li>
+                    <li>Specialized roles</li>
+                  </ul>
+                </div>
+                
+                <div className="mb-2">
+                  <p className="font-semibold text-green-700">✅ Advantages:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>Operational efficiency</li>
+                    <li>Reliability & consistency</li>
+                    <li>Quality control</li>
+                    <li>Cost reduction</li>
+                    <li>Predictable outcomes</li>
+                  </ul>
+                </div>
+                
+                <div className="mb-2">
+                  <p className="font-semibold text-red-700">❌ Disadvantages:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>Minimizes variation → stifles creativity</li>
+                    <li>Slow to adapt</li>
+                    <li>Bureaucratic</li>
+                    <li>Discourages experimentation</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-gray-100 p-1 rounded">
+                  <p className="font-semibold">Best Use:</p>
+                  <p className="text-xs">Manufacturing, operations, mature product lines, regulated industries</p>
+                </div>
+              </div>
+
+              <div className="bg-white p-2 rounded border-2 border-green-600">
+                <p className="font-bold text-green-800 text-center mb-2">ORGANIC STRUCTURES 🌿</p>
+                
+                <div className="mb-2">
+                  <p className="font-semibold">Characteristics:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>LOW formalization</li>
+                    <li>LOW standardization</li>
+                    <li>Flat hierarchy</li>
+                    <li>Flexible processes</li>
+                    <li>Horizontal communication</li>
+                    <li>Generalist roles</li>
+                    <li>"Free-flowing" structure</li>
+                  </ul>
+                </div>
+                
+                <div className="mb-2">
+                  <p className="font-semibold text-green-700">✅ Advantages:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>Encourages creativity</li>
+                    <li>Supports experimentation</li>
+                    <li>Rapid adaptation</li>
+                    <li>Employee autonomy</li>
+                    <li>Innovation-friendly</li>
+                  </ul>
+                </div>
+                
+                <div className="mb-2">
+                  <p className="font-semibold text-red-700">❌ Disadvantages:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5">
+                    <li>Low consistency</li>
+                    <li>Reduced reliability</li>
+                    <li>Can be chaotic</li>
+                    <li>Harder to scale</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-green-100 p-1 rounded">
+                  <p className="font-semibold">Best Use:</p>
+                  <p className="text-xs">R&D, new product development, startups, creative industries</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-2 bg-yellow-50 p-2 rounded border border-yellow-400">
+              <p className="font-bold">🎯 THE SOLUTION: HYBRID APPROACH</p>
+              <p className="text-xs">Organizations can have DIFFERENT structures in DIFFERENT divisions:</p>
+              <ul className="list-disc list-inside text-xs">
+                <li>R&D divisions: Small, organic → encourage innovation</li>
+                <li>Manufacturing divisions: Larger, mechanistic → ensure quality/efficiency</li>
+                <li>Can alternate structures over TIME as product matures</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-2 border-indigo-600 rounded p-3 bg-indigo-50">
+            <h3 className="font-bold text-indigo-700 mb-2">🤹 AMBIDEXTROUS ORGANIZATION (Tushman & O'Reilly, 1996)</h3>
+            
+            <div className="mb-2">
+              <p className="font-semibold">Core Concept:</p>
+              <p className="mb-1">The ability of a firm to simultaneously EXPLORE (innovate) and EXPLOIT (optimize existing business).</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <div className="bg-white p-2 rounded border border-indigo-400">
+                <p className="font-bold text-indigo-700">EXPLORATION 🔭</p>
+                <p className="text-xs mb-1">Searching for new opportunities</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>New products, markets, technologies</li>
+                  <li>Risk-taking, experimentation</li>
+                  <li>Long-term focus</li>
+                  <li>Organic structure</li>
+                  <li>Examples: R&D, innovation labs</li>
+                </ul>
+              </div>
+              <div className="bg-white p-2 rounded border border-indigo-400">
+                <p className="font-bold text-indigo-700">EXPLOITATION ⚙️</p>
+                <p className="text-xs mb-1">Optimizing current operations</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Refining existing products/processes</li>
+                  <li>Efficiency, cost reduction</li>
+                  <li>Short-term focus</li>
+                  <li>Mechanistic structure</li>
+                  <li>Examples: Manufacturing, sales</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="bg-white p-2 rounded mb-2">
+              <p className="font-semibold mb-1">How Companies "Feel Small" While Being Big:</p>
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                <div>
+                  <p className="font-semibold">1. Break into Subunits</p>
+                  <p>Divide large company into smaller, focused units with different missions</p>
+                </div>
+                <div>
+                  <p className="font-semibold">2. Different Cultures/Controls</p>
+                  <p>Allow different units to have appropriate cultures (some innovative, some operational)</p>
+                </div>
+                <div>
+                  <p className="font-semibold">3. "Skunk Works" Teams</p>
+                  <p>Special teams for new product development, isolated from main operations</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-indigo-100 p-2 rounded">
+              <p className="font-bold mb-1">Real-World Examples:</p>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <p className="font-semibold">Meta/Facebook:</p>
+                  <ul className="list-disc list-inside">
+                    <li>Core: Social networking platform (exploit)</li>
+                    <li>Explore: Oculus VR, WhatsApp acquisitions</li>
+                    <li>Different teams, different goals</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-semibold">Microsoft:</p>
+                  <ul className="list-disc list-inside">
+                    <li>Core: Windows, Office (exploit)</li>
+                    <li>Explore: Xbox, LinkedIn, GitHub, OpenAI</li>
+                    <li>Investments in future technologies</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PART 4: CASE STUDIES */}
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-purple-700 mb-2 bg-purple-100 p-2 rounded">📚 PART 4: CASE STUDIES - SUCCESSFUL INNOVATION CULTURES</h2>
+          
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <div className="border-2 border-blue-600 rounded p-2 bg-blue-50">
+              <h3 className="font-bold text-blue-700 mb-2">MICROSOFT - Cultural Transformation under Satya Nadella</h3>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Context & Philosophy:</p>
+                <p className="text-xs italic mb-1">"At some point, the concept that made you successful is going to run out of gas. You need new capability to go after new concepts."</p>
+                <p className="text-xs">The only thing enabling continuous capability building is CULTURE. When Nadella became CEO, Microsoft was 40 years old - culture needed to become first-class, explicit conversation.</p>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">1. Annual Microsoft Hackathon</p>
+                <p className="text-xs mb-1">"Largest private hackathon in the world"</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">Problem:</span> Separate Windows offices were siloed, in constant competition</li>
+                  <li><span className="font-semibold">Solution:</span> Encourage employees from different business areas to work together on projects</li>
+                  <li><span className="font-semibold">Result:</span> Created fast-moving, collaborative organization needed for digital-first world</li>
+                  <li><span className="font-semibold">Impact:</span> Broke down silos, fostered cross-functional innovation</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">2. Fewer, Bigger Bets</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Doubled down on future technologies</li>
+                  <li>Major investments in cloud (Azure) and AI</li>
+                  <li>Focus resources instead of spreading thin</li>
+                  <li>Strategic clarity over scattered initiatives</li>
+                </ul>
+              </div>
+              
+              <div className="bg-white p-2 rounded">
+                <p className="font-semibold mb-1">3. Partner-Positive Thinking</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Understanding that fast-moving specialists can deliver expertise</li>
+                  <li>Partners handle specific challenges better than large legacy org</li>
+                  <li>Ecosystem approach rather than "not invented here" syndrome</li>
+                  <li>Open to collaboration instead of building everything internally</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-2 border-gray-700 rounded p-2 bg-gray-50">
+              <h3 className="font-bold text-gray-800 mb-2">LOCKHEED MARTIN - Skunk Works® (1940s)</h3>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Philosophy:</p>
+                <p className="text-xs italic">"No mission is impossible. Committed to quickly developing disruptive solutions to ensure our nation has an absolute advantage."</p>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Founder: Kelly Johnson (Engineer)</p>
+                <p className="text-xs">Created unique approach still evidenced today by:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Small empowered teams</li>
+                  <li>Streamlined processes</li>
+                  <li>Culture that values lessons learned from bold attempts</li>
+                  <li>Attempting things that haven't been done before</li>
+                </ul>
+              </div>
+              
+              <div className="bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Kelly's 14 Rules & Practices (Key Selections):</p>
+                <div className="space-y-1 text-xs">
+                  <div>
+                    <p className="font-semibold">Rule 1: Complete Control</p>
+                    <p>Skunk Works manager must be delegated practically complete control of program in all aspects. Should report to division president or higher.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Rule 3: Restrict Personnel Viciously</p>
+                    <p>Number of people having any connection must be restricted in almost vicious manner. Use small number of good people (10-25% compared to "normal" systems).</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Rule 4: Simple Drawing System</p>
+                    <p>Very simple drawing and drawing release system with great flexibility for making changes must be provided.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Rule 11: Timely Funding</p>
+                    <p>Funding must be timely so contractor doesn't have to keep running to bank to support government projects.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Rule 14: Reward Performance, Not Hierarchy</p>
+                    <p>Because only few people used, must provide ways to reward good performance NOT based on number of personnel supervised.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <div className="border-2 border-red-500 rounded p-2 bg-red-50">
+              <h3 className="font-bold text-red-700 mb-2">APPLE - Renegade Team & Macintosh (1980s)</h3>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Context (1980):</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Apple producing Apple II at high volumes for technical users</li>
+                  <li>Corporate environment structured for sound, efficient manufacturing</li>
+                  <li>Steve Jobs wanted radically different computer</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Jobs' Vision for New Computer:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Very intuitive to use</li>
+                  <li>Self-contained</li>
+                  <li>Usable by everyone, not just technical people</li>
+                  <li>Based on mouse + desktop icons (saw at Xerox PARC)</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">The Solution - Renegade Culture:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">Problem:</span> Corporate structure wasn't appropriate for new product type</li>
+                  <li><span className="font-semibold">Jobs' Approach:</span> Started new product development group specifically for Macintosh</li>
+                  <li><span className="font-semibold">Definition:</span> Renegade = consciously and intentionally different from mainstream practices</li>
+                  <li><span className="font-semibold">Location:</span> Hidden away in building OFF main campus</li>
+                  <li><span className="font-semibold">Team:</span> "Hijacked" best people from another project</li>
+                  <li><span className="font-semibold">Freedom:</span> Different culture with more flexibility than corporate Apple</li>
+                </ul>
+              </div>
+              
+              <div className="bg-yellow-50 p-2 rounded border border-yellow-400">
+                <p className="font-semibold mb-1">⚠️ Modern Question:</p>
+                <p className="text-xs italic">"Apple is no longer innovative across any category" (Forbes, 2019)</p>
+                <p className="text-xs mt-1">Areas where Apple criticized for not leading:</p>
+                <ul className="list-disc list-inside text-xs">
+                  <li>Folding phones</li>
+                  <li>AI and smart technology</li>
+                  <li>Retail store innovation</li>
+                  <li>Apple Watch advancements</li>
+                  <li>Services innovation</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-2 border-green-600 rounded p-2 bg-green-50">
+              <h3 className="font-bold text-green-700 mb-2">GOOGLE - Maintaining Small Company Benefits at Scale</h3>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">Eric Schmidt's Philosophy (CEO until 2011):</p>
+                <p className="text-xs italic mb-1">"One of the things we've tried very hard to avoid at Google is the sort of divisional structure and business unit structure that prevents collaboration across units."</p>
+                <p className="text-xs">Divisional structure cuts down informal ties that drive collaboration in open culture. If people understand company values, they should self-organize to work on interesting problems.</p>
+              </div>
+              
+              <div className="mb-2 bg-white p-2 rounded">
+                <p className="font-semibold mb-1">1. Google's "20% Time"</p>
+                <p className="text-xs italic mb-1">"We encourage employees, in addition to regular projects, to spend 20% of their time working on what they think will most benefit Google."</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">Purpose:</span> Empowers employees to be more creative and innovative</li>
+                  <li><span className="font-semibold">Success Stories:</span> Gmail, Google News, AdSense all came from 20% time</li>
+                  <li><span className="font-semibold">Reality:</span> Only ~10% of Googlers actually use it (Laszlo Bock, "Work Rules!" 2015)</li>
+                  <li><span className="font-semibold">Why It Still Matters:</span> "The idea of 20% time is more important than the reality. It operates outside formal management oversight because most talented/creative people can't be forced to work."</li>
+                </ul>
+              </div>
+              
+              <div className="bg-white p-2 rounded">
+                <p className="font-semibold mb-1">2. Solve for X / X (Moonshot Factory)</p>
+                <p className="text-xs italic mb-1">"Run as fast as we can at all the hardest parts of a problem, try to prove something can't be done. We want to force ourselves to learn."</p>
+                
+                <div className="mt-1 space-y-1 text-xs">
+                  <div>
+                    <p className="font-semibold">Core Principle:</p>
+                    <p>Actively embrace failure: by making mistakes, we make progress. Ideas get stronger faster, or we discard and move to new ones.</p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold">The Intersection (3 Requirements):</p>
+                    <ul className="list-disc list-inside ml-2">
+                      <li><span className="font-semibold">Big Problem:</span> If solved, could improve lives of millions/billions</li>
+                      <li><span className="font-semibold">Radical Solution:</span> Sounds impossible today, almost science fiction</li>
+                      <li><span className="font-semibold">Breakthrough Tech:</span> Technology that exists TODAY gives hope solution is possible (even if 5-10 years away)</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold">Approach:</p>
+                    <p>Tackle ideas with riskiness/ambition of early-stage research with focus/speed of startup. Develop and de-risk early ideas into proven technologies.</p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold">Team Composition:</p>
+                    <p>Inventors and entrepreneurs from wide variety of backgrounds. Makers, engineers, scientists with deep technical expertise bringing creations from lab to real world.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-purple-100 p-2 rounded border-2 border-purple-500">
+            <p className="font-bold text-purple-800 mb-1">🎯 SUMMARY: Key Cultural Elements for Innovation</p>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <p className="font-semibold">Culture in Digital Age:</p>
+                <ul className="list-disc list-inside">
+                  <li>Virtuous cycle from ideas/concepts</li>
+                  <li>Culture as explicit conversation</li>
+                  <li>Reinvent continuously</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold">Appetite for Risk:</p>
+                <ul className="list-disc list-inside">
+                  <li>People comfortable trying things that might fail</li>
+                  <li>Embrace failure as learning</li>
+                  <li>Celebrate bold attempts</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold">Making Bold Bets:</p>
+                <ul className="list-disc list-inside">
+                  <li>Decisive actions enabling rapid pivots</li>
+                  <li>Aggressive goal-setting</li>
+                  <li>Nimble resource reallocation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PART 5: JUDGING INNOVATIONS */}
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-red-700 mb-2 bg-red-100 p-2 rounded">🏆 PART 5: JUDGING IT INNOVATIONS</h2>
+          
+          <div className="mb-3 bg-yellow-50 p-2 rounded border border-yellow-400">
+            <p className="font-bold mb-1">❓ WHY JUDGING MATTERS:</p>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <p className="font-semibold">The Challenge:</p>
+                <p>Many new innovations released daily without evidence of success yet. Need framework to evaluate potential value.</p>
+              </div>
+              <div>
+                <p className="font-semibold">Benefits of Understanding Judging:</p>
+                <ul className="list-disc list-inside">
+                  <li>Evaluate value of innovations</li>
+                  <li>Understand our own innovations</li>
+                  <li>Make investment decisions</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold">Who Judges:</p>
+                <ul className="list-disc list-inside">
+                  <li>Business executives</li>
+                  <li>Industry experts</li>
+                  <li>Academics</li>
+                  <li>Diverse pool critical</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-2 border-red-600 rounded p-3 bg-white mb-3">
+            <h3 className="font-bold text-red-700 mb-2">📋 STANDARD JUDGING CRITERIA (5 Core Dimensions)</h3>
+            
+            <div className="grid grid-cols-5 gap-2 text-xs">
+              <div className="border-2 border-blue-500 p-2 rounded bg-blue-50">
+                <p className="font-bold text-center mb-1">1. TECHNOLOGY 🔧</p>
+                <p className="font-semibold mb-1">Engineering Qualities</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Availability</li>
+                  <li>Security</li>
+                  <li>Safety</li>
+                  <li>Reliability</li>
+                  <li>Performance</li>
+                  <li>Scalability</li>
+                </ul>
+                <p className="mt-1 font-semibold">Question:</p>
+                <p>Is product crafted to address quality attributes?</p>
+              </div>
+
+              <div className="border-2 border-purple-500 p-2 rounded bg-purple-50">
+                <p className="font-bold text-center mb-1">2. DESIGN 🎨</p>
+                <p className="font-semibold mb-1">Aesthetic & Design Qualities</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>User experience (UX)</li>
+                  <li>Vision design</li>
+                  <li>Hearing design</li>
+                  <li>Perceptual design (touch)</li>
+                  <li>Intuitive interface</li>
+                  <li>Visual appeal</li>
+                </ul>
+                <p className="mt-1 font-semibold">Question:</p>
+                <p>Does design enhance user interaction?</p>
+              </div>
+
+              <div className="border-2 border-green-500 p-2 rounded bg-green-50">
+                <p className="font-bold text-center mb-1">3. INNOVATION 💡</p>
+                <p className="font-semibold mb-1">Novelty & Advancement</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>New product/service</li>
+                  <li>Innovates beyond existing</li>
+                  <li>Novel features</li>
+                  <li>Unique approach</li>
+                  <li>Solves problem differently</li>
+                  <li>Attractive to consumers</li>
+                </ul>
+                <p className="mt-1 font-semibold">Question:</p>
+                <p>How does it demonstrate new/adaptive problem-solving?</p>
+              </div>
+
+              <div className="border-2 border-orange-500 p-2 rounded bg-orange-50">
+                <p className="font-bold text-center mb-1">4. FEASIBILITY 📊</p>
+                <p className="font-semibold mb-1">Business & Market Viability</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>Business model</li>
+                  <li>Market competitiveness</li>
+                  <li>Market potential</li>
+                  <li>Understanding of competitors</li>
+                  <li>Realistic implementation</li>
+                  <li>Financial sustainability</li>
+                </ul>
+                <p className="mt-1 font-semibold">Question:</p>
+                <p>Can it succeed in marketplace?</p>
+              </div>
+
+              <div className="border-2 border-teal-500 p-2 rounded bg-teal-50">
+                <p className="font-bold text-center mb-1">5. CONCEPT/IMPACT 🌍</p>
+                <p className="font-semibold mb-1">Value & Reach</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  <li>User value</li>
+                  <li>Broad appeal</li>
+                  <li>Global impact</li>
+                  <li>Product use/function</li>
+                  <li>Social impact</li>
+                  <li>Measurable benefits</li>
+                </ul>
+                <p className="mt-1 font-semibold">Question:</p>
+                <p>Who benefits and how much?</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <div className="border-2 border-blue-600 rounded p-2">
+              <h3 className="font-bold text-blue-700 mb-2">🏅 MICROSOFT IMAGINE CUP</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Overview:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>World's premier student technology competition</li>
+                  <li>20+ years running</li>
+                  <li>Dozens of countries worldwide</li>
+                  <li>$100,000 cash prize for World Champion</li>
+                  <li>All-expenses paid trip to World Finals</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Specific Judging Criteria:</p>
+                <p className="text-xs">Uses 5 standard criteria (Technology, Design, Innovation, Feasibility, Concept)</p>
+              </div>
+              
+              <div className="bg-blue-50 p-1 rounded">
+                <p className="font-semibold text-xs">Unique Aspects:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Encourages Microsoft technology use</li>
+                  <li>Think "blue sky" - big claims & big achievements</li>
+                  <li>Maximize student engagement (core aim)</li>
+                  <li>Students work with mentors & industry leaders</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border-2 border-red-600 rounded p-2">
+              <h3 className="font-bold text-red-700 mb-2">🎓 HARVARD i3 (invent-imagine-impact)</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Overview:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Harvard's premier student startup competition</li>
+                  <li>Year-long program</li>
+                  <li>Project grants + incubator space</li>
+                  <li>Technology & Entrepreneurship Centre</li>
+                  <li>All houses, class years, concentrations participate</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Two-Stage Judging:</p>
+                <div className="text-xs space-y-1">
+                  <div>
+                    <p className="font-semibold">Pre-Proposal Round:</p>
+                    <p>Focus on creative solution to social problem & intended social impact</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Full Proposals:</p>
+                    <p>Judged on project's potential social impact & viability of plans</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-red-50 p-1 rounded">
+                <p className="font-semibold text-xs mb-1">Three Core Criteria:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">IMPACT:</span> Innovative approach, substantial & measurable impact</li>
+                  <li><span className="font-semibold">PLAN:</span> Realistic, financially sustainable</li>
+                  <li><span className="font-semibold">TEAM:</span> Skills, commitment, complementary talent & resources</li>
+                </ul>
+              </div>
+              
+              <div className="mt-1 text-xs">
+                <p className="font-semibold">Framework:</p>
+                <p>Renegade—Regulation—Resource—Requirement</p>
+              </div>
+            </div>
+
+            <div className="border-2 border-yellow-600 rounded p-2">
+              <h3 className="font-bold text-yellow-700 mb-2">📱 CES INNOVATION AWARDS</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Overview:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Consumer Electronics Show - world's gathering for consumer tech</li>
+                  <li>Celebrates outstanding product design & engineering</li>
+                  <li>Proving ground for innovators & breakthrough tech</li>
+                  <li>Brand-new consumer technology products</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Judging Panel:</p>
+                <p className="text-xs">Each product category has 3-member team:</p>
+                <ul className="list-disc list-inside text-xs">
+                  <li>Independent industrial designer</li>
+                  <li>Independent engineer</li>
+                  <li>Member of trade press</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-yellow-50 p-1 rounded">
+                <p className="font-semibold text-xs mb-1">Five Criteria (2019):</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li>Engineering qualities</li>
+                  <li>Aesthetic and design qualities</li>
+                  <li>Product use/function and user value</li>
+                  <li>Innovation (new/adaptive problem-solving)</li>
+                  <li>Market potential (competitors, marketplace comparison)</li>
+                </ul>
+              </div>
+              
+              <div className="text-xs">
+                <p className="font-semibold">Special Category:</p>
+                <p><span className="font-semibold">Accessible Technologies:</span> Products/services with innovative features enabling ease of use by disabled persons, improving accessibility for seniors and persons with disabilities.</p>
+              </div>
+              
+              <div className="mt-1 text-xs">
+                <p className="font-semibold">Awards:</p>
+                <ul className="list-disc list-inside">
+                  <li>Best of Innovation Awards honorees invited to exhibition</li>
+                  <li>Receive Innovation Awards trophy</li>
+                  <li>Can display CES Innovation Awards logo on packaging/marketing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-2 border-purple-600 rounded p-2 bg-purple-50 mb-3">
+          <h3 className="font-bold text-purple-700 mb-2">👥 JUDGING PANEL BEST PRACTICES</h3>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <p className="font-semibold mb-1">Panel Composition:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Diverse pool of industry and academic experts</li>
+                <li>Mix of business executives, industry experts, academics</li>
+                <li>Complementary expertise and knowledge</li>
+                <li>Different perspectives ensure balanced evaluation</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-semibold mb-1">Key Considerations:</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Judge training is CRITICAL to ensure uniformity</li>
+                <li>Judgment is subjective but criteria enable fair comparison</li>
+                <li>Criteria varies by user/product category/event</li>
+                <li>Important to NOT invent attributions if uncertain</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-2 bg-white p-2 rounded">
+            <p className="font-semibold text-xs mb-1">Judge Incentives (Berkeley Big Ideas Example):</p>
+            <div className="grid grid-cols-3 gap-1 text-xs">
+              <div>
+                <p className="font-semibold">1. Giving Back</p>
+                <p>First-hand look at most innovative student ideas as they develop. Most committed judges.</p>
+              </div>
+              <div>
+                <p className="font-semibold">2. Professional Networking</p>
+                <p>Build networks at events/mixers with other judges, mentors, faculty, students.</p>
+              </div>
+              <div>
+                <p className="font-semibold">3. Professional Courtesy</p>
+                <p>To category sponsor. Less reliable than other motivations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-100 p-2 rounded border border-gray-400 mb-3">
+          <p className="font-bold text-xs mb-1">🎯 CES HISTORIC INNOVATIONS - Defining Tech Through Decades:</p>
+          <div className="grid grid-cols-5 gap-1 text-xs">
+            <div>
+              <p className="font-semibold">1970s:</p>
+              <p>Sony Video Cassette Recorder, Atari home gaming</p>
+            </div>
+            <div>
+              <p className="font-semibold">1980s:</p>
+              <p>Commodore 64 (1982), Nintendo NES (1985)</p>
+            </div>
+            <div>
+              <p className="font-semibold">1990s:</p>
+              <p>Sony PlayStation (1991), DVDs (1996), HDTV (1998)</p>
+            </div>
+            <div>
+              <p className="font-semibold">2000s:</p>
+              <p>Blu-ray (2004), OLED TVs (2007)</p>
+            </div>
+            <div>
+              <p className="font-semibold">2010s:</p>
+              <p>Electric vehicles (2015), Smart homes (2017), Self-driving (2018)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* PART 6: EXAM FOCUS */}
+        <div className="border-4 border-red-700 rounded p-3 bg-red-50 mb-3">
+          <h2 className="text-lg font-bold text-red-800 mb-2 text-center">⚠️ CRITICAL EXAM FOCUS: BIG COMPANY DISADVANTAGES</h2>
+          <p className="text-center text-xs italic mb-2">Example Scenario: Apple Vision Pro (Mixed Reality Headset)</p>
+          
+          <div className="bg-white p-3 rounded border-2 border-red-600 mb-2">
+            <p className="font-bold text-xs mb-2">SCENARIO CONTEXT:</p>
+            <p className="text-xs">The Apple Vision Pro is a mixed-reality (MR) headset creating a "spatial computing" experience. Features ultra-high-resolution displays, advanced eye/hand tracking, custom Apple silicon chip. Aims to redefine how users work, collaborate, consume media - positioning as potential disruptor in computing and wearable technology.</p>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-red-100 p-2 rounded border-2 border-red-600">
+              <h3 className="font-bold text-red-800 mb-2">DISADVANTAGE 1: Bureaucratic Inertia & Slow Decision-Making</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Definition/Explanation:</p>
+                <ul className="list-disc list-inside text-xs space-y-1">
+                  <li>Large companies like Apple have <span className="font-semibold">established structures, processes, and hierarchies</span> built over decades</li>
+                  <li>These systems <span className="font-semibold">favor incremental improvements</span> to existing products rather than radical innovation</li>
+                  <li>"Bureaucratic inertia" = organizational resistance to change due to established ways of working</li>
+                  <li>Multiple approval layers, committees, and stakeholders slow decision-making</li>
+                  <li>Process compliance takes priority over speed</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-white p-1 rounded">
+                <p className="font-semibold text-xs">Impact on Innovation-Driven Markets:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">Slows ability to pivot:</span> Can't quickly change direction when market feedback suggests changes</li>
+                  <li><span className="font-semibold">Prevents rapid experimentation:</span> Testing new ideas requires approval through multiple channels</li>
+                  <li><span className="font-semibold">Essential in MR markets:</span> Mixed reality is fast-moving, requires constant iteration</li>
+                  <li><span className="font-semibold">Competitive disadvantage:</span> Leaner startups focused entirely on MR innovation can move faster</li>
+                </ul>
+              </div>
+              
+              <div className="bg-red-200 p-1 rounded">
+                <p className="font-semibold text-xs">Vision Pro Example:</p>
+                <p className="text-xs">Could mean slow adaptation to emerging user needs. By the time Apple's approval process validates a change, market may have moved on. Unable to quickly iterate on technology compared to agile MR startups.</p>
+              </div>
+            </div>
+
+            <div className="bg-red-100 p-2 rounded border-2 border-red-600">
+              <h3 className="font-bold text-red-800 mb-2">DISADVANTAGE 2: Focus on Current Successful Products & Markets</h3>
+              
+              <div className="mb-2">
+                <p className="font-semibold text-xs">Definition/Explanation:</p>
+                <ul className="list-disc list-inside text-xs space-y-1">
+                  <li>Apple has <span className="font-semibold">significant investments and revenue</span> in legacy product lines (iPhone, MacBook, iPad)</li>
+                  <li>These products generate <span className="font-semibold">massive cash flows</span> - iPhone alone is >50% of Apple revenue</li>
+                  <li>Creates <span className="font-semibold">internal pressure to protect</span> these revenue streams</li>
+                  <li>Success breeds conservatism - "don't kill the golden goose"</li>
+                  <li>Resource allocation favors proven winners over uncertain new ventures</li>
+                </ul>
+              </div>
+              
+              <div className="mb-2 bg-white p-1 rounded">
+                <p className="font-semibold text-xs">Specific Challenges:</p>
+                <ul className="list-disc list-inside text-xs space-y-0.5">
+                  <li><span className="font-semibold">Cannibalization Fear:</span> Vision Pro replacing MacBooks/iPads = revenue loss from existing products</li>
+                  <li><span className="font-semibold">New Business Model:</span> MR may require different pricing, distribution, support models - risky to change</li>
+                  <li><span className="font-semibold">Resource Competition:</span> Best engineers want to work on iPhone (proven winner) not risky MR project</li>
+                  <li><span className="font-semibold">Investor Pressure:</span> Wall Street rewards quarterly results from existing products, not long-term MR bets</li>
+                </ul>
+              </div>
+              
+              <div className="bg-red-200 p-1 rounded">
+                <p className="font-semibold text-xs">Vision Pro Example:</p>
+                <p className="text-xs">Need to balance innovation with protecting iPhone/Mac profits constrains risk-taking. Might delay necessary changes or under-invest in Vision Pro. Startups unconstrained by legacy commitments can make bolder moves. Apple at disadvantage vs competitors with nothing to lose.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-2 bg-yellow-100 p-2 rounded border-2 border-yellow-600">
+            <p className="font-bold text-xs mb-1">📝 EXAM ANSWER STRUCTURE:</p>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <p className="font-semibold">1. Identify</p>
+                <p>Clearly name the disadvantage (e.g., "Bureaucratic Inertia")</p>
+              </div>
+              <div>
+                <p className="font-semibold">2. Explain</p>
+                <p>Define what it means and WHY it happens in large companies</p>
+              </div>
+              <div>
+                <p className="font-semibold">3. Apply</p>
+                <p>Connect specifically to the scenario (Vision Pro/MR market)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SUMMARY SECTION */}
+        <div className="border-4 border-green-700 rounded p-3 bg-green-50">
+          <h2 className="text-lg font-bold text-green-800 mb-2 text-center">✅ COMPREHENSIVE SUMMARY & KEY TAKEAWAYS</h2>
+          
+          <div className="grid grid-cols-3 gap-3 mb-2">
+            <div className="bg-white p-2 rounded border border-green-500">
+              <p className="font-bold text-green-700 mb-1">Startup Failures</p>
+              <ul className="list-disc list-inside text-xs space-y-0.5">
+                <li>Top 3: No market need, cash starvation, team issues</li>
+                <li>Valley of Death = critical period</li>
+                <li>Must validate before building</li>
+                <li>Team quality = success predictor</li>
+                <li>Deep-tech especially challenging</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white p-2 rounded border border-green-500">
+              <p className="font-bold text-green-700 mb-1">Culture for Innovation</p>
+              <ul className="list-disc list-inside text-xs space-y-0.5">
+                <li>Taylorism ≠ Innovation</li>
+                <li>Need: Liquid networks, slow hunch, connecting</li>
+                <li>Networked + Non-market = most innovation</li>
+                <li>Appetite for risk essential</li>
+                <li>Bold bets + rapid pivots</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white p-2 rounded border border-green-500">
+              <p className="font-bold text-green-700 mb-1">Structure for Innovation</p>
+              <ul className="list-disc list-inside text-xs space-y-0.5">
+                <li>Organic for R&D, mechanistic for operations</li>
+                <li>Ambidextrous = explore + exploit</li>
+                <li>Small teams, empowered decisions</li>
+                <li>Skunk works for breakthroughs</li>
+                <li>Avoid divisional silos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 mb-2">
+            <div className="bg-white p-2 rounded border border-green-500">
+              <p className="font-bold text-green-700 mb-1">Case Study Lessons</p>
+              <div className="text-xs space-y-1">
+                <p><span className="font-semibold">Microsoft:</span> Culture as explicit conversation, hackathons break silos, fewer bigger bets, partner-positive</p>
+                <p><span className="font-semibold">Skunk Works:</span> Small teams (10-25%), complete control, simple systems, reward performance not hierarchy</p>
+                <p><span className="font-semibold">Apple Mac:</span> Renegade teams off campus, different culture for radical innovation</p>
+                <p><span className="font-semibold">Google:</span> 20% time, avoid divisional structure, self-organization, moonshot factory (big problem + radical solution + breakthrough tech)</p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-2 rounded border border-green-500">
+              <p className="font-bold text-green-700 mb-1">Judging Innovations</p>
+              <div className="text-xs space-y-1">
+                <p><span className="font-semibold">5 Criteria:</span> Technology, Design, Innovation, Feasibility, Concept/Impact</p>
+                <p><span className="font-semibold">Panel:</span> Diverse experts (business, industry, academic), training critical for uniformity</p>
+                <p><span className="font-semibold">Competitions:</span> Imagine Cup (students, MS tech), Harvard i3 (impact/plan/team), CES (consumer products)</p>
+                <p><span className="font-semibold">Judgment:</span> Subjective but criteria enable fair comparison, varies by category/event</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-green-200 p-2 rounded border-2 border-green-700">
+            <p className="font-bold text-green-800 mb-1 text-center">🎯 EXAM SUCCESS FORMULA</p>
+            <div className="grid grid-cols-4 gap-2 text-xs">
+              <div>
+                <p className="font-semibold">Know Definitions</p>
+                <p>Taylorism, mechanistic/organic, ambidextrous, liquid networks, slow hunch</p>
+              </div>
+              <div>
+                <p className="font-semibold">Apply to Cases</p>
+                <p>Connect theory to real examples (Vision Pro, DAQRI, case studies)</p>
+              </div>
+              <div>
+                <p className="font-semibold">Identify Trade-offs</p>
+                <p>Large vs small, explore vs exploit, speed vs control</p>
+              </div>
+              <div>
+                <p className="font-semibold">Explain WHY</p>
+                <p>Don't just list - explain mechanisms and consequences</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* QUICK REFERENCE */}
+        <div className="mt-3 border-2 border-blue-600 rounded p-2 bg-blue-50">
+          <h3 className="font-bold text-blue-700 mb-2 text-center">📚 QUICK REFERENCE GUIDE</h3>
+          
+          <div className="grid grid-cols-4 gap-2 text-xs">
+            <div>
+              <p className="font-bold mb-1">Key Terms</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Valley of Death</li>
+                <li>Bureaucratic inertia</li>
+                <li>Product-market fit</li>
+                <li>Ambidextrous org</li>
+                <li>Skunk works</li>
+                <li>Renegade team</li>
+                <li>20% time</li>
+                <li>Moonshot factory</li>
+              </ul>
+            </div>
+            
+            <div>
+              <p className="font-bold mb-1">Key People</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Frederick Taylor (Taylorism)</li>
+                <li>Steven Johnson (Ideas)</li>
+                <li>Kelly Johnson (Skunk Works)</li>
+                <li>Satya Nadella (Microsoft)</li>
+                <li>Eric Schmidt (Google)</li>
+                <li>Laszlo Bock (Work Rules)</li>
+                <li>Tushman & O'Reilly (Ambidextrous)</li>
+              </ul>
+            </div>
+            
+            <div>
+              <p className="font-bold mb-1">Frameworks</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Individual vs Networked</li>
+                <li>Market vs Non-market</li>
+                <li>Formalization levels</li>
+                <li>Standardization levels</li>
+                <li>Centralization types</li>
+                <li>Mechanistic vs Organic</li>
+                <li>Explore vs Exploit</li>
+                <li>5 judging criteria</li>
+              </ul>
+            </div>
+            
+            <div>
+              <p className="font-bold mb-1">Remember</p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Validate before building</li>
+                <li>Team quality matters most</li>
+                <li>Non-market drives innovation</li>
+                <li>Networks beat individuals</li>
+                <li>Different structures for different functions</li>
+                <li>Culture enables innovation</li>
+                <li>Large = resources but slow</li>
+                <li>Small = fast but limited</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-4 text-center text-xs text-gray-500 border-t pt-2">
+          <p className="font-semibold">INFO5992 Understanding IT Innovations | Semester 2, 2025 | Module 3 & Week 10</p>
+          <p>Comprehensive Study Guide - Commercialization, Organizational Culture, Structures & Judging Innovation</p>
+          <p className="mt-1 italic">Print this page to PDF (Ctrl/Cmd + P) for offline study reference</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ComprehensiveCheatSheet;

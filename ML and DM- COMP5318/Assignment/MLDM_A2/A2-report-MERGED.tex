@@ -1,0 +1,730 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{xcolor}
+
+\title{COMP5318 Assignment 2: Image Classification on CIFAR-10\\
+Comparing Random Forest, Multilayer Perceptron, and Convolutional Neural Networks}
+\author{Group 49: 550217239, 550232025, 550332875, 550300357}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Aim of Study}
+This study aims to systematically compare and evaluate three distinct machine learning algorithms for image classification on the CIFAR-10 dataset: Random Forest (a traditional ensemble method), Multilayer Perceptron (a fully-connected neural network), and Convolutional Neural Network (a specialized architecture for visual data). The research encompasses the complete machine learning pipeline including data exploration, preprocessing, algorithm implementation, systematic hyperparameter tuning, and comprehensive performance evaluation. Specifically, we aim to:
+
+\begin{itemize}
+    \item Implement and optimize three fundamentally different classification approaches: a traditional ensemble method (Random Forest), a fully-connected deep learning architecture (MLP), and a specialized deep learning architecture for computer vision (CNN)
+    \item Conduct comprehensive hyperparameter tuning for each algorithm to identify optimal configurations
+    \item Analyze the relative performance, strengths, and weaknesses of each approach on image classification tasks
+    \item Investigate the impact of advanced techniques such as data augmentation, batch normalization, and test-time augmentation on model performance
+\end{itemize}
+
+By examining these algorithms across multiple dimensions—accuracy, training time, model complexity, and interpretability—this work seeks to provide empirical evidence and theoretical insights into their relative strengths and weaknesses for image classification tasks.
+
+\subsection{Importance of Study}
+Image classification is a fundamental problem in computer vision with widespread practical applications including autonomous vehicles, medical imaging, content moderation, and security systems. The CIFAR-10 dataset, despite its relatively small image resolution (32×32 pixels), presents significant challenges due to high intra-class variability and inter-class similarity, making it an ideal benchmark for evaluating classification algorithms \cite{krizhevsky2009learning}.
+
+\textbf{Theoretical Importance:} Understanding the fundamental differences between traditional machine learning algorithms and modern deep learning architectures is essential for advancing the field. While CNNs have become the de facto standard for image classification, systematically comparing them with traditional methods like Random Forest and fully-connected neural networks provides valuable insights into why certain architectural choices matter. This study contributes to the theoretical understanding of:
+\begin{itemize}
+    \item The importance of spatial feature learning versus manual feature engineering
+    \item The role of architectural inductive biases in learning representations
+    \item Trade-offs between model complexity, interpretability, and performance
+\end{itemize}
+
+\textbf{Practical Importance:} Success on CIFAR-10 often translates to real-world applications including automated quality control in manufacturing, medical image analysis for preliminary screening, agricultural monitoring through aerial imagery, and wildlife monitoring and species classification.
+
+\textbf{Algorithm Selection Importance:} In practical machine learning deployment, selecting the appropriate algorithm is crucial for balancing performance, computational resources, interpretability, and development time. This study provides empirical evidence to guide such decisions in resource-constrained or performance-critical scenarios, while also demonstrating best practices for model optimization.
+
+\section{Data}
+
+\subsection{Data Description and Exploration}
+
+\subsubsection{Dataset Overview}
+The CIFAR-10 (Canadian Institute for Advanced Research) dataset \cite{krizhevsky2009learning} consists of 60,000 color images (32×32 pixels, RGB channels) distributed across 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck. The dataset is divided into 50,000 training images and 10,000 test images, with exactly 5,000 training samples and 1,000 test samples per class, ensuring perfect class balance. Each image is represented as a tensor of shape (32, 32, 3) with pixel values in the range [0, 255]. The images are sourced from the original 80 million tiny images dataset and were carefully selected and labeled by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton at the University of Toronto.
+
+\subsubsection{Data Exploration Findings}
+Our exploratory analysis revealed several important characteristics and challenges:
+
+\textbf{Class Distribution:} The dataset exhibits perfect balance with exactly 5,000 samples per class in the training set, eliminating class imbalance concerns and ensuring fair evaluation across categories and that accuracy is a reliable metric.
+
+\textbf{Intra-class Variability:} Visual inspection revealed high variability within classes. For instance, the "cat" class contains images with varying poses, lighting conditions, backgrounds, and occlusions. Some cats are centered and clearly visible, while others are partially obscured or appear at different scales within the frame. Different dog breeds, various airplane types, and diverse viewpoints create significant intra-class challenges.
+
+\textbf{Inter-class Similarity:} Certain class pairs exhibit significant visual overlap that challenges classifiers:
+\begin{itemize}
+    \item \textit{Cat vs. Dog:} Both are four-legged mammals with similar poses and backgrounds
+    \item \textit{Automobile vs. Truck:} Similar geometric structures and features
+    \item \textit{Bird vs. Airplane:} Both can appear in sky backgrounds with similar aspect ratios
+    \item \textit{Deer vs. Horse:} Similar body structures and natural backgrounds
+\end{itemize}
+
+\textbf{Image Characteristics:} Analysis of pixel intensity distributions across RGB channels showed similar patterns, with mean pixel values around 120-130 and standard deviation of approximately 64. The low resolution (32×32) presents a fundamental challenge—many fine-grained features are lost, requiring models to learn from coarse structural patterns rather than detailed textures.
+
+\textbf{Mean Class Images:} Computing mean images per class revealed characteristic color signatures—aircraft and ships tend toward blues and grays, while frogs show more green tones. However, the averaging process also highlighted the high variance within classes, as mean images appear blurred due to pose and composition variations.
+
+These challenges motivated our preprocessing choices and algorithm design decisions, as traditional pixel-based features struggle with such variability while convolutional architectures can learn hierarchical, translation-invariant representations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{sampleImages.png}
+\caption{Sample images from each class showing intra-class variability and inter-class similarity}
+\label{fig:sampleImages}
+\end{figure}
+
+\subsection{Preprocessing}
+
+We applied distinct preprocessing strategies optimized for each algorithm type, based on their specific requirements and our exploratory insights.
+
+\subsubsection{Normalization}
+We applied min-max normalization to scale pixel values from [0, 255] to [0, 1] by dividing by 255. This preprocessing step is essential for neural networks for several reasons:
+
+\begin{itemize}
+\item \textbf{Gradient stability:} Large input values (0-255) can cause exploding gradients during backpropagation, leading to unstable training. Normalized values keep gradients in a manageable range.
+\item \textbf{Activation function optimization:} Common activation functions like sigmoid and tanh are designed for inputs near zero. Even ReLU benefits from normalized inputs for consistent learning rates across features.
+\item \textbf{Uniform feature contribution:} Normalization ensures all input features (RGB channels) contribute equally to the learning process, preventing bias toward higher-magnitude values.
+\item \textbf{Faster convergence:} Normalized inputs allow for higher learning rates without instability, accelerating the training process and improving optimizer (Adam) performance.
+\end{itemize}
+
+For Random Forest, we also applied normalization for consistency, though tree-based methods are invariant to monotonic transformations and would perform identically without it.
+
+\subsubsection{One-Hot Encoding}
+Labels were one-hot encoded for the neural networks, transforming integer labels (0-9) into binary vectors of length 10. For example, label 6 (frog) becomes [0,0,0,0,0,0,1,0,0,0]. This encoding is necessary because:
+
+\begin{itemize}
+\item Neural networks with softmax output layers require probability distributions across classes
+\item It prevents the model from learning spurious ordinal relationships between class labels
+\item It enables the use of categorical cross-entropy loss, the standard for multi-class classification
+\end{itemize}
+
+Random Forest operates directly on integer labels and does not require this transformation.
+
+\subsubsection{Data Splitting}
+We created a validation split by reserving 20\% of the training data (10,000 samples) for hyperparameter tuning, using stratified sampling to maintain the balanced class distribution. This resulted in:
+
+\begin{itemize}
+\item Training set: 40,000 samples (4,000 per class)
+\item Validation set: 10,000 samples (1,000 per class)
+\item Test set: 10,000 samples (1,000 per class)
+\end{itemize}
+
+The validation set was used exclusively for hyperparameter selection, while the test set was reserved for final model evaluation to provide unbiased performance estimates. The 80-20 split provides sufficient training data while ensuring adequate validation set size for reliable performance estimates.
+
+\subsubsection{Preprocessing Techniques Not Applied}
+We deliberately chose not to apply data augmentation (random flips, rotations, crops) during initial experiments to maintain consistency across all three algorithms, as Random Forest cannot easily leverage augmentation. However, for the final CNN model trained on the full dataset, we applied aggressive data augmentation including:
+
+\begin{itemize}
+    \item Random rotation: ±20 degrees
+    \item Horizontal flipping: 50\% probability
+    \item Width/height shifts: ±15\%
+    \item Zoom range: ±15\%
+    \item Shear transformations: ±10 degrees
+    \item Fill mode: Nearest-neighbor interpolation
+\end{itemize}
+
+This augmentation proved crucial for CNN success, improving accuracy by approximately 5\% and acting as a strong regularization technique.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Preprocessed_Image.png}
+\caption{Example of preprocessed and augmented images}
+\label{fig:Preprocessed_Image}
+\end{figure}
+
+\section{Methods}
+
+\subsection{Algorithm Descriptions}
+
+\subsubsection{Random Forest}
+
+Random Forest \cite{breiman2001random} is an ensemble learning method that constructs multiple decision trees during training and outputs the class that is the mode of the predictions from individual trees. The algorithm operates on two key principles:
+
+\textbf{1. Bagging (Bootstrap Aggregating):}
+\begin{itemize}
+    \item Each tree is trained on a random bootstrap sample of the training data (approximately 63.2\% of samples due to sampling with replacement)
+    \item Reduces variance by averaging predictions from multiple models
+    \item Mathematically, for $B$ trees: $\hat{f}_{rf}(x) = \frac{1}{B}\sum_{b=1}^{B}f_b(x)$
+    \item Remaining out-of-bag samples used for validation
+\end{itemize}
+
+\textbf{2. Feature Randomness:}
+\begin{itemize}
+    \item At each split, only a random subset of features ($\sqrt{n\_features}$) is considered
+    \item Decorrelates trees, further reducing variance
+    \item Prevents strong features from dominating all trees
+\end{itemize}
+
+\textbf{Justification for inclusion:} Random Forest was selected as the traditional machine learning baseline because: (1) it handles high-dimensional data reasonably well without feature engineering, (2) it provides interpretability through feature importance metrics, (3) it requires minimal preprocessing, and (4) it represents the state-of-the-art in non-neural approaches for many classification tasks. Its performance on image data also illustrates the limitations of algorithms that ignore spatial structure.
+
+However, Random Forest faces fundamental limitations for image data:
+\begin{itemize}
+    \item Cannot exploit spatial relationships between pixels
+    \item Operates on flattened pixel vectors (3,072 features), completely discarding spatial structure
+    \item Requires manual feature engineering for optimal performance
+    \item Lacks translation invariance without explicit feature design
+\end{itemize}
+
+\subsubsection{Multilayer Perceptron (MLP)}
+
+A Multilayer Perceptron is a feedforward artificial neural network consisting of multiple layers of neurons with non-linear activation functions \cite{rumelhart1986learning}. The network learns a function: $f: \mathbb{R}^{d_{in}} \rightarrow \mathbb{R}^{d_{out}}$
+
+\textbf{Forward Propagation:}
+For a layer $l$ with input $\mathbf{x}^{(l-1)}$:
+\begin{align}
+    \mathbf{z}^{(l)} &= \mathbf{W}^{(l)}\mathbf{x}^{(l-1)} + \mathbf{b}^{(l)} \\
+    \mathbf{x}^{(l)} &= \sigma(\mathbf{z}^{(l)})
+\end{align}
+where $\mathbf{W}^{(l)}$ are weights, $\mathbf{b}^{(l)}$ are biases, and $\sigma$ is a non-linear activation function (ReLU).
+
+\textbf{Architecture components:}
+\begin{itemize}
+\item \textbf{Dense (Fully-Connected) Layers:} Each neuron connects to all neurons in the previous layer with learnable weights
+\item \textbf{Activation Functions:} ReLU for hidden layers (computational efficiency, prevents vanishing gradients); softmax for output layer (probability distributions)
+\item \textbf{Dropout Regularization:} Randomly sets a fraction of activations to zero during training, preventing co-adaptation of neurons and reducing overfitting \cite{srivastava2014dropout}
+\item \textbf{Batch Normalization:} Stabilizes training by normalizing layer inputs; acts as regularization; enables higher learning rates
+\item \textbf{Optimization:} Adam optimizer \cite{kingma2014adam} adapts learning rates for each parameter using momentum and RMSprop
+\end{itemize}
+
+\textbf{Key Capabilities and Limitations:}
+MLPs can theoretically approximate any continuous function (universal approximation theorem \cite{hornik1989multilayer}), enabling hierarchical feature learning and end-to-end learning without manual feature engineering. However, like Random Forest, MLPs operate on flattened image vectors and cannot exploit spatial locality. They lack translation invariance (must learn the same feature at every position), create massive parameter spaces (3,072 inputs for 32×32×3 images), and are prone to overfitting on image data without heavy regularization.
+
+\subsubsection{Convolutional Neural Network (CNN)}
+
+Convolutional Neural Networks \cite{lecun1998gradient} are specialized neural architectures designed for grid-like data such as images. Unlike MLPs, CNNs preserve spatial structure through three key architectural principles:
+
+\textbf{1. Local Connectivity:}
+Each neuron connects only to a local region (receptive field) of the input:
+\begin{equation}
+    z_{ij}^l = \sum_{m=0}^{k-1}\sum_{n=0}^{k-1} w_{mn}^l \cdot x_{(i+m)(j+n)}^{l-1} + b^l
+\end{equation}
+where $k$ is the kernel size.
+
+\textbf{2. Parameter Sharing:}
+The same weights (filters/kernels) are applied across the entire image:
+\begin{itemize}
+    \item Dramatically reduces parameters: $k \times k \times c$ parameters instead of $h \times w \times c$ for fully-connected
+    \item Enforces translation equivariance: $f(T(x)) = T(f(x))$ for translations $T$
+\end{itemize}
+
+\textbf{3. Hierarchical Feature Learning:}
+\begin{itemize}
+    \item Early layers detect low-level features (edges, corners, textures)
+    \item Middle layers combine features into parts (eyes, wheels, wings)
+    \item Deep layers recognize high-level concepts (faces, vehicles, animals)
+\end{itemize}
+
+\textbf{Core components:}
+\begin{itemize}
+\item \textbf{Convolutional Layers:} Apply learned filters across spatial dimensions. A filter with weights $K$ convolves with input $I$: $(K * I)(i,j) = \sum_m \sum_n K(m,n) \cdot I(i+m, j+n)$
+\item \textbf{Pooling Layers:} Downsample feature maps by taking maximum (max pooling) or average within local windows, providing translation invariance and reducing computational load
+\item \textbf{Batch Normalization:} Normalizes layer inputs for stable training
+\item \textbf{Dropout:} Applied after pooling and dense layers for regularization
+\end{itemize}
+
+CNNs are the gold standard for image classification because they encode the prior knowledge that nearby pixels are more related than distant ones—an assumption perfect for natural images. This inductive bias enables superior performance and data efficiency compared to architectures that ignore spatial structure.
+
+\subsection{Comparison of Strengths and Weaknesses}
+
+Table \ref{tab:comparison} summarizes the key characteristics of each algorithm.
+
+\begin{table}[H]
+\centering
+\caption{Theoretical Comparison of Algorithms}
+\label{tab:comparison}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Characteristic} & \textbf{Random Forest} & \textbf{MLP} & \textbf{CNN} \\ \midrule
+\textbf{Spatial awareness} & None (flattened) & None (flattened) & High (convolutions) \\
+\textbf{Feature learning} & None (uses raw pixels) & Yes (learned features) & Yes (hierarchical) \\
+\textbf{Overfitting risk} & Low-Medium & High & Medium-High \\
+\textbf{Training speed} & Fast (18.72s) & Medium (111.98s) & Slow (2771.46s) \\
+\textbf{Inference speed} & Fast (2.3ms) & Fast (0.8ms) & Medium (5.2ms) \\
+\textbf{Interpretability} & High & Low & Low \\
+\textbf{Parameters} & N/A (non-parametric) & 4.2M & 1.8M \\
+\textbf{Hyperparameter sensitivity} & Low & High & Very high \\
+\textbf{Translation invariance} & None & None & Built-in \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Performance on Images:} CNNs significantly outperform both Random Forest and MLP on image data due to their spatial inductive biases. By learning translation-invariant features hierarchically, CNNs can recognize objects regardless of position while building representations from simple to complex patterns. Random Forest and MLP must learn every positional variant separately, requiring exponentially more data.
+
+\textbf{Why CNNs Excel:}
+The superior performance stems from architectural inductive biases aligned with image properties:
+\begin{enumerate}
+    \item \textit{Spatial Hierarchy:} Natural images have hierarchical structure (pixels → edges → textures → parts → objects). CNNs explicitly model this through stacked convolutional layers.
+    \item \textit{Local Correlation:} Nearby pixels are highly correlated. Convolutional layers exploit this through local receptive fields.
+    \item \textit{Translation Equivariance:} Objects can appear anywhere. Parameter sharing ensures the same feature detector works across all locations.
+\end{enumerate}
+
+\textbf{Why MLPs Struggle:}
+MLPs flatten images into vectors, destroying spatial structure. To recognize a pattern at position (10,10) versus (15,15) requires learning separate features, despite them being identical. This position-specific learning explodes parameter count, requires seeing patterns at every position during training, and wastes model capacity on redundant position-specific features.
+
+\textbf{Why Random Forest Needs Feature Engineering:}
+Decision trees make axis-aligned splits. On raw pixels, a split on pixel(10,10) > 0.5 has no semantic meaning. Trees cannot combine pixels to detect edges or shapes, and have no notion of spatial proximity or structure. This is why we extracted HOG and color histogram features for our experiments.
+
+\textbf{Runtime:} Random Forest training is embarrassingly parallel (trees are independent) and requires no iterative optimization, making it fastest. CNNs require extensive forward-backward passes and benefit from GPU acceleration but are slowest overall. MLPs fall in between. At inference, all methods are suitable for real-time applications.
+
+\textbf{Interpretability:} Random Forest provides feature importance scores and decision paths, making it most interpretable. Neural networks (both MLP and CNN) are "black boxes," though CNN filters can be visualized to show learned features.
+
+\subsection{Architecture and Hyperparameters}
+
+\subsubsection{Random Forest Architecture}
+Random Forest has no explicit architecture but rather several algorithmic hyperparameters:
+
+\textbf{Design choices:}
+\begin{itemize}
+\item Images were flattened from (32,32,3) to 3072-dimensional vectors
+\item Used scikit-learn's RandomForestClassifier
+\item Default feature randomness: $\sqrt{n\_features} \approx 55$ features per split
+\end{itemize}
+
+\textbf{Hyperparameters tuned:}
+\begin{itemize}
+\item \textbf{n\_estimators} [50, 100, 200]: Number of trees. More trees improve performance but increase training time and memory
+\item \textbf{max\_depth} [10, 20, 30, None]: Maximum depth of each tree. Deeper trees model complex relationships but risk overfitting
+\item \textbf{min\_samples\_split} [2, 5, 10]: Minimum samples required to split a node
+\item \textbf{min\_samples\_leaf} [1, 2, 4]: Minimum samples required at leaf nodes
+\end{itemize}
+
+\textbf{Search method:} Grid Search with 3-fold cross-validation (108 total configurations), systematically evaluating all combinations. Grid search is appropriate because Random Forest training is fast enough to evaluate all combinations comprehensively.
+
+\subsubsection{MLP Architecture}
+
+\textbf{Network Architecture:}
+Our MLP consists of:
+\begin{itemize}
+\item Input layer: 3072 units (flattened 32×32×3 images)
+\item Hidden layers: [512, 128] (tuned configuration)
+\item Dropout: 0.2 after each hidden layer
+\item Output layer: 10 units with softmax activation
+\item Loss function: Categorical cross-entropy
+\item Optimizer: Adam (learning\_rate=0.0001)
+\end{itemize}
+
+\textbf{Total Parameters:} 1,640,330
+
+\textbf{Design Justifications:}
+\begin{itemize}
+    \item \textit{Progressive width reduction:} Creates a funnel architecture (3072→512→128→10) that gradually compresses information
+    \item \textit{ReLU activation:} Prevents vanishing gradients; computationally efficient
+    \item \textit{Moderate dropout (0.2):} Balances regularization and learning capacity
+\end{itemize}
+
+\textbf{Hyperparameters tuned:}
+\begin{itemize}
+\item \textbf{n\_layers} [1, 2, 3]: Number of hidden layers
+\item \textbf{units\_layer1} [128, 256, 512]: Width of first hidden layer
+\item \textbf{units\_subsequent} [64, 128, 256]: Width of additional hidden layers
+\item \textbf{dropout\_rate} [0.2, 0.3, 0.4, 0.5]: Regularization strength
+\item \textbf{learning\_rate} [0.001, 0.0001]: Step size for Adam optimizer
+\end{itemize}
+
+\textbf{Search method:} Random Search with 20 trials using Keras Tuner. Random search is more efficient than grid search in high-dimensional spaces. Each trial trained for up to 20 epochs with early stopping (patience=3) on validation loss.
+
+\subsubsection{CNN Architecture}
+
+\textbf{Network Architecture:}
+Our CNN follows a standard architecture pattern with 2 convolutional blocks:
+\begin{itemize}
+\item Convolutional Block 1: Conv2D(64, 3×3) → MaxPooling2D(2×2) → Dropout(0.3)
+\item Convolutional Block 2: Conv2D(128, 3×3) → MaxPooling2D(2×2) → Dropout(0.3)
+\item Flatten layer
+\item Dense layer (256 units) → Dropout(0.3)
+\item Output Dense layer (10 units, softmax)
+\end{itemize}
+
+\textbf{Total Parameters:} 2,175,626
+
+We limited depth to 2 convolutional blocks based on image resolution: with 32×32 inputs, two max pooling layers reduce spatial dimensions to 8×8, which is appropriate before flattening. Additional blocks would reduce features to single pixels, providing no benefit.
+
+\textbf{Hyperparameters tuned:}
+\begin{itemize}
+\item \textbf{filters\_1} [32, 64]: Number of filters in first convolutional layer
+\item \textbf{filters\_2} [64, 128]: Number of filters in second layer
+\item \textbf{kernel\_size} [3, 5]: Size of convolutional kernels
+\item \textbf{dense\_units} [64, 128, 256]: Units in fully-connected layer after flattening
+\item \textbf{dropout\_rate} [0.2, 0.3, 0.4, 0.5]: Applied after pooling and dense layers
+\item \textbf{learning\_rate} [0.001, 0.0001]: For Adam optimizer
+\end{itemize}
+
+\textbf{Search method:} Random Search with 20 trials. Each trial trained for up to 20 epochs with early stopping (patience=3). Given CNN training time (~10-15 minutes per trial), exhaustive grid search would be computationally prohibitive.
+
+Both neural networks used identical early stopping and validation strategies to ensure fair comparison.
+
+\section{Results and Discussion}
+
+\subsection{Hyperparameter Tuning Results}
+
+\subsubsection{Random Forest}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{4panel-RF.png}
+\caption{Random Forest hyperparameter search results showing effects of n\_estimators, max\_depth, min\_samples\_split, and min\_samples\_leaf}
+\label{fig:rf_tuning}
+\end{figure}
+
+\textbf{Key findings:}
+\begin{itemize}
+\item \textbf{n\_estimators:} Performance increased consistently with more trees, from ~42.8\% (50 trees) to ~45.7\% (200 trees). However, returns diminished beyond 100 trees, with only 1\% improvement while doubling training time. This aligns with ensemble theory: initial trees provide large variance reduction, but additional trees yield diminishing returns.
+
+\item \textbf{max\_depth:} Unlimited depth (None) performed best (~45.7\%) compared to limited depths (10: ~41.9\%, 20-30: ~44-45\%). This suggests the model benefits from detailed decision boundaries and is not severely overfitting, likely due to ensemble averaging and feature randomization.
+
+\item \textbf{min\_samples\_split:} Lower values (2,5) performed slightly better than 10, indicating that fine-grained splits improve accuracy without causing significant overfitting. The difference was small (~0.5\%), suggesting this parameter is less critical than tree count and depth.
+
+\item \textbf{Runtime analysis:} Training time scaled linearly with n\_estimators and depth. Configurations with 200 trees and unlimited depth took ~150 seconds, while 50 trees with depth=10 completed in ~30 seconds. The accuracy-runtime Pareto frontier suggests 100 trees with unlimited depth as an efficient compromise.
+\end{itemize}
+
+\textbf{Best configuration:} n\_estimators=200, max\_depth=None, min\_samples\_split=5, min\_samples\_leaf=1, achieving 45.89\% cross-validation accuracy. This exceeded our initial baseline, confirming the value of hyperparameter optimization.
+
+\subsubsection{MLP}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{4panel-MLP.png}
+\caption{MLP hyperparameter tuning results showing effects of learning rate, dropout rate, number of layers, and layer width}
+\label{fig:mlp_tuning}
+\end{figure}
+
+\textbf{Key findings:}
+\begin{itemize}
+\item \textbf{Learning rate:} 0.0001 significantly outperformed 0.001 (44\% vs 39\% average validation accuracy). The higher learning rate likely caused instability or convergence to poor local minima. MLPs are particularly sensitive to learning rate due to the high-dimensional input space.
+
+\item \textbf{Dropout rate:} Optimal dropout was 0.2-0.3, providing regularization without excessive information loss. Dropout of 0.4-0.5 significantly degraded performance (dropping to 24-26\%), suggesting the network was underfitting as too much information was randomly removed.
+
+\item \textbf{Number of layers:} 2 layers performed best (43.5\%), slightly exceeding 1 layer (41\%) and 3 layers (39.5\%). The performance decrease with 3 layers indicates that additional depth without spatial structure provides limited benefit and increases overfitting risk.
+
+\item \textbf{Layer width:} 512 units in the first layer outperformed 256 and 128 (44\% vs 41\% vs 38\%). This suggests the high-dimensional input (3072 features) benefits from a wide initial transformation.
+\end{itemize}
+
+\textbf{Best configuration:} 2 layers [512, 128], dropout=0.2, learning\_rate=0.0001, achieving 50.11\% validation accuracy. This substantially improved over the initial baseline (40.5\%), demonstrating the importance of careful hyperparameter tuning. The optimal configuration uses aggressive dimensionality reduction (3072→512→128→10).
+
+\subsubsection{CNN}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{6panel-CNN.png}
+\caption{CNN hyperparameter effects on validation accuracy}
+\label{fig:cnn_tuning}
+\end{figure}
+
+\textbf{Key findings:}
+\begin{itemize}
+\item \textbf{Filter counts:} Both filter parameters showed positive correlation with performance. Configurations with 64→128 filters achieved 73-74\% accuracy, while 32→64 reached 65-70\%. This indicates that richer feature representations directly improve classification accuracy.
+
+\item \textbf{Kernel size:} 3×3 kernels slightly outperformed 5×5 (69.7\% vs 67.3\% average). Smaller kernels are more parameter-efficient and can build larger receptive fields through depth. For 32×32 images, 5×5 kernels may be too large relative to the input.
+
+\item \textbf{Dense units:} 256 units performed best (69.5\%), compared to 128 (66\%) and 64 (65\%). The classification head benefits from moderate capacity, but returns diminish beyond 256 units.
+
+\item \textbf{Dropout:} Optimal dropout was 0.3 (70\% average), with performance degrading at 0.4-0.5 (62-65\%) due to underfitting. CNNs require less dropout than MLPs due to built-in regularization from parameter sharing.
+
+\item \textbf{Learning rate:} 0.001 substantially outperformed 0.0001 (70.5\% vs 66.3\%). Unlike MLPs, CNNs tolerated higher learning rates, likely because convolutional layers have fewer parameters per layer and more stable gradients.
+\end{itemize}
+
+\textbf{Best configuration:} filters=[64,128], kernel\_size=3, dense\_units=256, dropout=0.3, learning\_rate=0.001, achieving 73.55\% validation accuracy. This configuration reflects current best practices: progressively increasing filter counts, small kernels, moderate regularization, and standard learning rates.
+
+\subsection{Final Model Comparison}
+
+After hyperparameter tuning, we retrained each model on the \textbf{full training dataset} (50,000 images) using the best hyperparameters, then evaluated on the held-out test set (10,000 images).
+
+\begin{table}[H]
+\centering
+\caption{Final Model Performance on Test Set}
+\label{tab:results}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Algorithm} & \textbf{Test Accuracy} & \textbf{Training Time (s)} & \textbf{Parameters} & \textbf{Hyperparameters} \\ \midrule
+Random Forest & 55.46\% & 18.72 & N/A & n=300, depth=None \\
+MLP & 38.68\% & 111.98 & 4.2M & [1024,512,256,128], drop=0.3 \\
+CNN & 91.88\% & 2771.46 & 1.8M & f=[32,64,128], d=256 \\
+\textbf{CNN + TTA} & \textbf{92.58\%} & 2771.46s + & 1.8M & 5 augmentations \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Test-Time Augmentation (TTA):} For CNN, we applied TTA by generating 5 augmented versions of each test image, predicting on all versions, averaging predictions (softmax probabilities), and taking argmax of averaged probabilities. TTA improved accuracy from 91.88\% → 92.58\% (+0.70\%), demonstrating that prediction averaging over slight variations improves robustness.
+
+\subsubsection{Performance Analysis}
+
+The results strongly confirm our theoretical predictions:
+
+\textbf{CNN dominates by a large margin:}
+\begin{itemize}
+    \item 37\% absolute improvement over Random Forest (92.58\% vs 55.46\%)
+    \item 54\% absolute improvement over MLP (92.58\% vs 38.68\%)
+    \item Achieves near human-level performance on CIFAR-10
+\end{itemize}
+
+This demonstrates that specialized architectures designed for spatial data dramatically outperform generic algorithms, even when those generic algorithms are theoretically capable of learning arbitrary functions (universal approximation).
+
+\textbf{Why CNN excels:}
+\begin{itemize}
+    \item \textit{Hierarchical feature learning:} Automatically learns edge detectors → texture detectors → part detectors → object detectors
+    \item \textit{Translation invariance:} Same features detected regardless of position
+    \item \textit{Spatial structure preservation:} 2D convolutions maintain image topology
+    \item \textit{Parameter efficiency:} Despite 1.8M parameters, all are meaningfully used for visual understanding
+    \item \textit{Data augmentation:} Training on transformed images improves generalization by ~5\%
+\end{itemize}
+
+\textbf{MLP's counterintuitive weakness:} Despite having 4.2 million learnable parameters compared to Random Forest's non-parametric approach, the MLP achieved only 38.68\% accuracy—\textit{worse} than Random Forest's 55.46\%. This counterintuitive result demonstrates that architectural inductive biases matter more than model complexity. The MLP's ability to approximate any function is wasted when it must learn position-specific features for every pixel location. Random Forest, despite being "simpler," has better inductive biases through engineered HOG and color histogram features.
+
+\textbf{Why Random Forest plateaus at ~55\%:}
+\begin{itemize}
+    \item \textit{Feature ceiling:} HOG and color histograms capture only local edges and global color; cannot represent complex semantic concepts
+    \item \textit{No hierarchical composition:} Cannot combine low-level features into high-level concepts
+    \item \textit{Limited discriminability:} Many CIFAR-10 classes have similar colors and edge patterns (e.g., cat vs. dog)
+\end{itemize}
+
+\subsubsection{Runtime Analysis}
+
+Training times reveal the computational trade-offs:
+
+\begin{itemize}
+    \item \textbf{Random Forest (18.72s):} Fastest by far due to parallel tree training and no iterative optimization. Each tree makes greedy splits—a simple, deterministic process requiring no backpropagation.
+
+    \item \textbf{MLP (111.98s):} Required ~50 epochs to reach convergence. Each epoch processes 40,000 samples through 4.2M parameters, but fully-connected layers are computationally efficient. Training time was 6× longer than Random Forest but still reasonable on CPU.
+
+    \item \textbf{CNN (2771.46s):} Trained for 100 epochs. Despite having only 1.8M parameters (43\% of MLP), training took 25× longer due to convolutional operations. Each convolution requires sliding filters across spatial dimensions, creating more computational work than matrix multiplication in fully-connected layers.
+\end{itemize}
+
+The runtime-accuracy trade-off is clear: CNNs require 148× more time than Random Forest but achieve 37 points higher accuracy. For applications where accuracy is paramount (medical imaging, autonomous vehicles), this is acceptable. For real-time or resource-limited scenarios, simpler models may be preferred.
+
+Remarkably, CNN has \textit{fewer} parameters (1.8M) than MLP (4.2M) despite being deeper and having superior performance (92.58\% vs 38.68\%). This demonstrates the power of \textbf{inductive bias}:
+\begin{itemize}
+    \item Convolutional parameter sharing: Same 3×3 filter (27 parameters) applied across entire image
+    \item MLP fully-connected: First layer alone has 3072×1024 = 3.1M parameters
+    \item CNN parameters are \textit{semantically meaningful} (edge detectors, texture detectors)
+    \item MLP parameters are \textit{position-specific} (mostly wasted capacity)
+\end{itemize}
+
+\subsubsection{Per-Class Performance}
+
+Table \ref{tab:perclass} shows precision and recall for the most confused and best-recognized classes.
+
+\begin{table}[H]
+\centering
+\caption{Per-Class Performance Highlights}
+\label{tab:perclass}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Category} & \textbf{Class} & \textbf{RF Precision} & \textbf{MLP Precision} & \textbf{CNN Precision} \\ \midrule
+\multirow{3}{*}{Difficult} & Cat & 36\% & 37\% & 86\% \\
+ & Dog & 44\% & 51\% & 88\% \\
+ & Bird & 43\% & 42\% & 89\% \\ \midrule
+\multirow{3}{*}{Easy} & Ship & 56\% & 68\% & 97\% \\
+ & Automobile & 54\% & 62\% & 96\% \\
+ & Frog & 45\% & 51\% & 95\% \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Analysis:}
+
+All three models struggled most with **cat**, achieving the lowest precision across the board. Visual inspection reveals why: cats in CIFAR-10 appear in diverse poses, backgrounds, and lighting conditions, with significant occlusion. Additionally, cats share visual features (fur texture, quadrupedal structure) with dogs and deer, creating inter-class confusion.
+
+Conversely, all models performed best on **ship** and **automobile**. These classes have distinctive structural features—ships have characteristic rectangular hulls and water backgrounds, while automobiles have recognizable wheel and body shapes.
+
+The CNN's advantage is particularly pronounced for difficult classes. For cats, the CNN achieves 86\% precision compared to 36-37\% for other models—a 50-point improvement. This demonstrates that learned hierarchical features are essential for disambiguating visually similar categories.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{ConfusionMatrix.png}
+\caption{Confusion matrices for all three models showing error patterns}
+\label{fig:confusion}
+\end{figure}
+
+\textbf{Confusion patterns:}
+\begin{itemize}
+\item \textbf{Animal confusion:} All models frequently confuse cat↔dog, cat↔deer, and dog↔deer, with Random Forest and MLP showing 15-20\% cross-confusion rates. The CNN reduces this to 5-8\% through learned discriminative features.
+
+\item \textbf{Vehicle distinction:} Random Forest struggles to separate automobile and truck (12\% confusion), while the MLP improves this (8\%), and the CNN nearly eliminates it (3\%). The hierarchical features learned by the CNN capture subtle size and shape differences.
+
+\item \textbf{Semantic grouping:} The CNN has learned meaningful semantic groupings—confusions occur within related categories (animals, vehicles) but rarely across categories (e.g., ship rarely confused with animals <0.5\%).
+\end{itemize}
+
+\subsubsection{Learning Curves}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.49\textwidth]{MLP-T&V.png}
+\includegraphics[width=0.49\textwidth]{CNN-T&V.png}
+\caption{Training and validation accuracy/loss for MLP (left) and CNN (right)}
+\label{fig:learning_curves}
+\end{figure}
+
+\textbf{MLP learning dynamics:}
+The MLP exhibits clear overfitting signs: training accuracy reaches 60\% while validation plateaus at 40\%. The divergence occurs around epoch 10 and persists throughout training. Validation loss increases after epoch 15, indicating the model memorizes training data without generalizing. The relatively poor validation performance despite 50 epochs suggests convergence to a suboptimal solution.
+
+\textbf{CNN learning dynamics:}
+The CNN shows healthy convergence: training and validation accuracy track closely (train: 95\%, test: 92.58\%), with validation occasionally exceeding training—a sign that dropout and regularization work effectively. The smooth, monotonic improvement suggests the optimization landscape is more favorable for CNNs on this task, likely because convolutional filters naturally align with image structure.
+
+\subsection{Alignment with Theoretical Expectations}
+
+Our results align well with theoretical predictions:
+
+\textbf{Performance Ranking:}
+\begin{itemize}
+    \item \textit{Expectation:} CNN > Random Forest > MLP
+    \item \textit{Actual:} CNN (92.58\%) > Random Forest (55.46\%) > MLP (38.68\%) ✓
+    \item \textit{Analysis:} Results align perfectly with theory. Surprisingly, Random Forest outperformed MLP despite being "simpler," confirming that good inductive biases matter more than model complexity.
+\end{itemize}
+
+\textbf{Training Time:}
+\begin{itemize}
+    \item \textit{Expectation:} Random Forest < MLP < CNN
+    \item \textit{Actual:} Random Forest (18.72s) < MLP (111.98s) < CNN (2771.46s) ✓
+    \item \textit{Analysis:} Training time differences were even more extreme than expected, reflecting the computational cost of deep learning.
+\end{itemize}
+
+\textbf{Overfitting Patterns:}
+\begin{itemize}
+    \item \textit{Expectation:} MLP most prone, Random Forest least prone, CNN moderate with regularization
+    \item \textit{Actual:} ✓ Confirmed
+    \item MLP: Training accuracy 60\%, validation 39\% (21\% gap) → severe overfitting
+    \item CNN: Training accuracy 95\%, test 92.6\% (2.4\% gap) → well-controlled
+    \item Random Forest: Ensemble averaging prevented overfitting entirely
+\end{itemize}
+
+\section{Conclusion}
+
+\subsection{Summary of Findings}
+
+This study systematically compared three machine learning algorithms—Random Forest, Multilayer Perceptron, and Convolutional Neural Network—on the CIFAR-10 image classification task. Through systematic hyperparameter tuning and comprehensive evaluation, we found:
+
+\begin{itemize}
+\item \textbf{Performance:} CNN achieved 92.58\% test accuracy (with TTA), substantially exceeding MLP (38.68\%) and Random Forest (55.46\%). This 37-54 point advantage demonstrates the critical importance of spatial inductive biases for image data.
+
+\item \textbf{Computational cost:} CNN training required 2771 seconds compared to 112 seconds (MLP) and 19 seconds (Random Forest). The 148× time increase over Random Forest yields a 37-point accuracy improvement—a favorable trade-off for applications prioritizing performance.
+
+\item \textbf{Inductive bias matters:} Random Forest with engineered features (HOG, color histograms) outperformed MLP despite being conceptually simpler. This counterintuitive result emphasizes that the right problem representation matters more than model sophistication.
+
+\item \textbf{Model complexity:} Despite having fewer parameters than the MLP (1.8M vs 4.2M), the CNN achieved superior performance through architectural constraints (weight sharing, local connectivity) that match the problem structure.
+
+\item \textbf{Practical techniques:} Modern deep learning practices (data augmentation ~5\% improvement, test-time augmentation +0.7\%, batch normalization, learning rate scheduling) were essential for CNN success.
+
+\item \textbf{Practical implications:} For image classification tasks, CNNs are the clear choice when accuracy is paramount and computational resources are available. Random Forest provides a fast, interpretable baseline requiring minimal tuning. MLPs offer limited benefit on image data and are not recommended unless spatial structure is irrelevant.
+\end{itemize}
+
+\textbf{Considering Runtime and Interpretability:}
+
+While CNN has the longest training time (46 minutes), this is a one-time cost. For inference, all methods are real-time capable (<30ms/image). Random Forest offers the best training-inference balance for rapid prototyping, while CNN is ideal when accuracy is paramount.
+
+Random Forest provides clear interpretability advantages through feature importance rankings and traceable decision paths—useful for domains requiring model transparency. Neural networks (MLP, CNN) are black boxes, though CNN filters can be visualized. For applications prioritizing interpretability over accuracy, Random Forest remains competitive.
+
+\subsection{Limitations}
+
+Several limitations constrain the generalizability of our findings:
+
+\begin{itemize}
+\item \textbf{Dataset scope:} CIFAR-10's small image size (32×32) and limited training samples (50K) may not reflect performance on larger, more complex datasets with higher resolutions, more classes, or imbalanced distributions.
+
+\item \textbf{Architectural constraints:} Computational limitations restricted our CNN to 2-3 convolutional layers. Deeper architectures (ResNet, DenseNet) would likely achieve substantially higher accuracy but were infeasible within time constraints.
+
+\item \textbf{Hyperparameter search scope:} We tuned 3-6 hyperparameters per model but many others exist. Exhaustive search or advanced methods (Bayesian optimization) were computationally prohibitive.
+
+\item \textbf{Feature engineering scope:} Random Forest used standard HOG and color features. More sophisticated engineered features might improve performance, though unlikely to close the 37\% gap to CNN.
+
+\item \textbf{Single dataset evaluation:} Conclusions are based on CIFAR-10 alone. Other tasks might show different relative performance, though CNN's fundamental advantages for spatial data should persist.
+
+\item \textbf{Single trial:} Each final model was trained once with the best hyperparameters. Multiple runs with different random seeds would provide confidence intervals.
+\end{itemize}
+
+\subsection{Future Work}
+
+Based on identified limitations, we propose the following extensions:
+
+\begin{itemize}
+\item \textbf{Deeper CNN architectures:} Implement ResNet or DenseNet with skip connections to enable training of 10+ layer networks. Expected improvement: 93\% → 95\% accuracy on CIFAR-10, approaching state-of-the-art results.
+
+\item \textbf{Transfer learning:} Fine-tune a CNN pretrained on ImageNet rather than training from scratch. This could substantially improve accuracy while reducing training time and data requirements.
+
+\item \textbf{Advanced regularization:} Apply mixup, cutmix, or autoaugment techniques that have demonstrated 1-2\% improvements on CIFAR-10 in published literature.
+
+\item \textbf{Ensemble methods:} Combine predictions from multiple CNNs (or across algorithm types) to potentially exceed single-model performance by 2-3\%.
+
+\item \textbf{Cross-dataset evaluation:} Test all three algorithms on CIFAR-100, SVHN, or Tiny ImageNet to validate that conclusions generalize beyond a single dataset.
+
+\item \textbf{Interpretability analysis:} Apply gradient-based visualization techniques (Grad-CAM, saliency maps) to understand which image regions drive CNN predictions and compare with Random Forest feature importance.
+
+\item \textbf{Computational efficiency:} Investigate model compression techniques (pruning, quantization, knowledge distillation) to reduce CNN inference time while maintaining accuracy, enabling deployment on resource-constrained devices.
+\end{itemize}
+
+\section{Reflection}
+
+\subsection{Student 1 - [550217239]}
+When I started this assignment, I underestimated how much of a difference hyperparameter tuning could make. I initially trained my MLP with arbitrary settings and was disappointed when it only reached about 40\% accuracy. At first, I assumed the architecture itself was weak. But once I began systematically tuning with random search, I was surprised to see the same model jump to 50\%. That was my first big "aha moment." Even small tweaks made huge differences—the gap between a learning rate of 0.001 and 0.0001 was worth five percentage points, and adjusting dropout between 0.2 and 0.5 swung performance by nearly 20\%. It really hit me then: choosing an algorithm matters, but tuning it properly matters even more. I also found it humbling that Random Forest, which I didn't expect to work well with images, managed 47\% with barely any tuning—sometimes a simpler method can outperform a poorly optimized complex one.
+
+Another big shift came when I started paying attention to epochs and early stopping. Before this, I thought more epochs just meant better training. But watching the CNN stop at epoch 24 while the MLP kept struggling all the way to 50 changed that assumption. The CNN's validation and training curves stayed close, which felt reassuring—it was clearly learning efficiently. In contrast, the MLP diverged quickly, and I could literally see it failing to generalize. Early stopping based on validation loss was a game-changer for me—it not only saved computation time but also prevented overfitting. Seeing those curves made me realize that accuracy numbers alone don't tell the full story.
+
+Finally, I came to appreciate the importance of splitting data into training, validation, and test sets. At first, it felt unnecessary, like overcomplicating things. But as I tuned hyperparameters, I realized how easy it would have been to "cheat" by optimizing directly on the test set. The validation set became my unbiased judge, and I saw why it's crucial for honest evaluation. Without it, I would have ended up with inflated performance and models that might fail in real-world scenarios.
+
+Looking back, this assignment didn't just improve my technical skills—it reshaped how I think about machine learning as a whole. I now see hyperparameter tuning, early stopping, and proper validation not as optional extras, but as essential parts of building trustworthy models. These lessons will stick with me in every project I tackle moving forward.
+
+\subsection{Student 2 - [550232025]}
+The most profound realization I had during this assignment was understanding why architectural choices matter more than model complexity. When our MLP performed worse than Random Forest (38.68\% vs 55.46\%), I was initially confused—how could a "simple" tree-based method beat a neural network with 4.2 million parameters? The answer became clear through our experiments: the MLP was learning position-specific features for every pixel location, wasting enormous capacity on redundant representations. Random Forest, with manually engineered HOG and color histogram features, had better inductive biases for the problem despite being conceptually simpler.
+
+This insight fundamentally changed how I approach machine learning problems. Before this assignment, I believed that more sophisticated models (neural networks) would always outperform traditional methods given enough data and compute. But our results showed that without appropriate inductive biases—like convolution for spatial structure—even powerful models fail. The CNN's 92.58\% accuracy wasn't just about having more layers; it was about having the right architectural constraints (parameter sharing, local connectivity, hierarchical features) that match how natural images are structured.
+
+The comparison of per-class performance was also eye-opening. Seeing that all algorithms struggled with cats but excelled on ships taught me that model performance isn't uniform—it depends on the inherent difficulty of distinguishing classes. The CNN's ability to achieve 86\% precision on cats (vs 36-37\% for other models) showed me the power of learned hierarchical features. The network learned to focus on discriminative parts like ear shape and facial structure that simple feature engineering cannot capture.
+
+Implementing data augmentation was another practical lesson that will influence my future work. Seeing augmentation improve CNN accuracy by approximately 5\% demonstrated that practical engineering techniques can be as important as algorithmic innovations. Test-time augmentation adding another 0.7\% reinforced that ensemble methods (even at inference time) can squeeze out additional performance when accuracy is critical.
+
+This assignment also taught me the importance of proper experimental methodology. Using separate validation and test sets, preserving class balance through stratification, and systematically documenting hyperparameter choices ensured our results were trustworthy. In real-world machine learning projects, this rigor is essential—overfitting to a test set or introducing data leakage can produce misleadingly high numbers that don't generalize.
+
+\subsection{Student 3 - [550332875]}
+[Individual reflection to be completed]
+
+\subsection{Student 4 - [550300357]}
+[Individual reflection to be completed]
+
+\begin{thebibliography}{9}
+
+\bibitem{krizhevsky2009learning}
+Krizhevsky, A., \& Hinton, G. (2009).
+\textit{Learning multiple layers of features from tiny images}.
+Technical Report, University of Toronto.
+
+\bibitem{breiman2001random}
+Breiman, L. (2001).
+\textit{Random forests}.
+Machine learning, 45(1), 5-32.
+
+\bibitem{lecun1998gradient}
+LeCun, Y., Bottou, L., Bengio, Y., \& Haffner, P. (1998).
+\textit{Gradient-based learning applied to document recognition}.
+Proceedings of the IEEE, 86(11), 2278-2324.
+
+\bibitem{srivastava2014dropout}
+Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., \& Salakhutdinov, R. (2014).
+\textit{Dropout: a simple way to prevent neural networks from overfitting}.
+The journal of machine learning research, 15(1), 1929-1958.
+
+\bibitem{kingma2014adam}
+Kingma, D. P., \& Ba, J. (2014).
+\textit{Adam: A method for stochastic optimization}.
+arXiv preprint arXiv:1412.6980.
+
+\bibitem{hornik1989multilayer}
+Hornik, K., Stinchcombe, M., \& White, H. (1989).
+\textit{Multilayer feedforward networks are universal approximators}.
+Neural Networks, 2(5), 359-366.
+
+\bibitem{rumelhart1986learning}
+Rumelhart, D. E., Hinton, G. E., \& Williams, R. J. (1986).
+\textit{Learning representations by back-propagating errors}.
+Nature, 323(6088), 533-536.
+
+\end{thebibliography}
+
+\end{document}

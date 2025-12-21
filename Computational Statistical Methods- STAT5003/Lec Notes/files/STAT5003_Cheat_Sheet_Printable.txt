@@ -1,0 +1,185 @@
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+                              STAT5003 CHEAT SHEET - SIDE 1
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ PERFORMANCE METRICS                                                                             │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Total Error = Bias² + Variance + Irreducible Error
+
+REGRESSION:  MSE = (1/n)Σ(yᵢ-ŷᵢ)²  │  RSS = Σ(yᵢ-ŷᵢ)²  │  R² = [Σ(yᵢ-ȳ)² - Σ(yᵢ-ŷᵢ)²]/Σ(yᵢ-ȳ)²
+Adj-R² = 1-[(1-R²)(n-1)/(n-p-1)]  │  Cₚ = (1/n)(RSS+2dσ²)  │  BIC = (1/n)(RSS+log(n)dσ²)
+
+CLASSIFICATION:  Accuracy = (TP+TN)/Total  │  Precision = TP/(TP+FP)  │  Recall = TP/(TP+FN)
+Specificity = TN/(TN+FP)  │  F1 = 2×(Prec×Recall)/(Prec+Recall)  │  Kappa: κ = (p₀-pₑ)/(1-pₑ)
+IMBALANCED DATA: Use Precision, Recall, F1, Kappa, AUC-ROC (NOT Accuracy!)
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ REGRESSION METHODS                                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Linear: Y=β₀+β₁X₁+...+βₚXₚ+ε (minimize RSS) │ Ridge: L2 penalty, α=0, shrinks coefficients
+Lasso: L1 penalty, α=1, feature selection │ Trees: partition space, prone to overfit
+Random Forest: bagging+feature subsample, reduces variance │ Boosting: sequential, fit to residuals
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ CLASSIFICATION METHODS                                                                          │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Logistic: log(p/(1-p))=Xβ → p=1/(1+exp(-Xβ)) │ LDA: Bayes, Gaussian, linear boundary
+kNN: non-parametric, k neighbors vote │ SVM: max margin hyperplane, C↑→margin↓,bias↓,var↑
+Trees: Gini/entropy splits │ RF: bagging+feature subsample │ AdaBoost: reweight errors
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ CROSS-VALIDATION & PROPER WORKFLOW                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+k-Fold: split k parts, train k-1, validate 1, repeat k times │ LOOCV: k=n, unbiased but high var
+Repeated k-Fold: repeat with diff splits, less bias, gives variance estimate
+
+CRITICAL WORKFLOW (avoid data leakage!):
+1. Split → Train|Test FIRST  2. EDA on TRAIN only  3. Preprocess on TRAIN (save params)
+4. Apply TRAIN params to TEST  5. Feature select on TRAIN  6. CV on TRAIN  7. Final eval on TEST
+
+DATA LEAKAGE = using test info in training:
+❌ Impute/scale using full data  ❌ Feature select before split  ❌ Any tuning using test
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ MODEL SELECTION                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Best Subset: try all 2ᵖ models │ Forward: start null, add best │ Backward: start full, remove worst
+Selection: CV error (direct) vs Adj-R², AIC, BIC, Cₚ (indirect, lower=better)
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ BAGGING & BOOSTING                                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Bagging: f̂_bag(x) = (1/B)Σf̂ᵇ*(x), bootstrap+average, reduces variance
+OOB Error: ~37% excluded each bootstrap → use as validation (≈CV error)
+Boosting Hyperparams: #trees (B), learning rate (λ), max_depth (d)
+  More trees/depth → ↓bias ↑variance │ Lower λ → ↑bias ↓variance, better generalization
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ KEY R FUNCTIONS                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+lm(y~.) │ glm(y~.,family=binomial) │ glmnet(X,y,alpha=0/1,lambda) │ rpart(y~.) │ tree(y~.)
+randomForest(y~.,ntree,mtry) │ svm(y~.,kernel="linear"/"radial") │ knn(train,test,cl,k) │ lda(y~.)
+kmeans(data,centers=k,nstart=25) │ hclust(dist(data),method="complete") │ prcomp(data,scale=T)
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+                              STAT5003 CHEAT SHEET - SIDE 2
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ PCA & t-SNE                                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+PCA: linear, finds directions of max variance, PC1⊥PC2⊥..., global structure, deterministic
+Prop variance by PCⱼ = λⱼ/Σλᵢ │ R: prcomp(data,scale=T); summary(); biplot()
+t-SNE: non-linear, preserves local structure, stochastic, mainly visualization, sensitive to perplexity
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ CLUSTERING                                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+K-MEANS: 1)Random assign K clusters 2)Iterate: compute centroids x̄ⱼ, assign to nearest
+  Need to specify K, sensitive to init (use nstart=25), assumes spherical
+HIERARCHICAL: Start each obs=cluster, merge closest, creates dendrogram, cut at height for K clusters
+  Linkage: complete(max dist), single(min dist), average, centroid
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ BOOTSTRAP & RESAMPLING                                                                          │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Bootstrap: resample n WITH replacement B times, compute statistic, θ̂_boot=(1/B)Σθ̂ᵇ
+  Non-parametric, estimates SE and CI, works for complex statistics
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ DENSITY ESTIMATION                                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+MLE: L(θ|x)=Πf(xᵢ|θ), log-likelihood ℓ(θ|x)=Σlog f(xᵢ|θ), θ̂=argmax ℓ(θ|x)
+KDE: f̂(x) = (1/nh)ΣK((x-Xᵢ)/h)
+  Kernel properties: K(x)≥0 (non-neg), K(-x)=K(x) (symmetric), ∫K(x)dx=1 (unit measure)
+  Bandwidth h: larger h = smoother (↑bias ↓variance), smaller h = rougher (↓bias ↑variance)
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ MONTE CARLO & MCMC                                                                              │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Monte Carlo: E[g(X)] ≈ (1/N)Σg(Xᵢ), simulate N samples to estimate distribution/expectation
+  Inverse Transform: X~f → generate U~Unif(0,1), set X=F⁻¹(U)
+  Acceptance-Rejection: sample from proposal, accept/reject to get target
+
+MC Template:
+  n_sim <- 10000                           # Number of simulations
+  results <- numeric(n_sim)
+  for(i in 1:n_sim) {
+    sample <- rnorm(n, mean, sd)           # Generate from appropriate distribution
+    results[i] <- compute_statistic(sample)
+  }
+  estimate <- mean(results > threshold)    # Probability or expectation
+
+MCMC: sample from complex distributions via Markov chain, new point depends only on current
+  Used in Bayesian inference, after burn-in period samples ≈ target distribution
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ MISSING DATA                                                                                    │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Complete case: remove all missing (loses info, may bias)
+Single imputation: mean/median/mode (underestimates variance)
+Multiple imputation: create M datasets, analyze each, pool results (accounts for uncertainty)
+Model-based: regression/kNN/RF imputation (captures relationships)
+⚠️ IMPUTE USING TRAIN ONLY, then apply to test!
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ LOCAL REGRESSION                                                                                │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Model: Yᵢ = f(xᵢ) + εᵢ where f is smooth (differentiable)
+Loess: fit polynomial in local neighborhood, weight nearby points, bandwidth controls smoothness
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ QUICK DECISION GUIDE                                                                            │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Continuous outcome → Regression │ Categorical outcome → Classification
+Linear relationship → Linear/LDA │ Non-linear → Trees/SVM/kNN
+Need interpretability → Linear/Logistic/Trees/LDA │ Don't need → RF/Boosting/SVM
+High-dim (p>>n) → Ridge/Lasso/PCA+model │ Feature selection → Lasso/RF importance
+Small data → Simple models (avoid overfit) │ Large data → Can use complex models
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ SUPERVISED vs UNSUPERVISED                                                                      │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+SUPERVISED (have Y): Linear reg, Ridge, Lasso, Logistic, LDA, kNN, SVM, Trees, RF, Boosting
+UNSUPERVISED (no Y): K-means, Hierarchical clustering, PCA, t-SNE, KDE
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ EXAM TIPS - MULTIPLE CHOICE                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Need BOTH correct answers (2 marks) │ Wrong answer = -1 mark │ Min score per Q = 0
+If unsure between 3+ options → leave blank (0) better than risk (-1 or -2)
+
+Common topics:
+- Supervised vs Unsupervised classification
+- Kernel properties: symmetric, non-negative, integrates to 1
+- Data leakage scenarios (impute before split, feature select before split, scale with full data)
+- SVM: support vectors define boundary, maximize margin, C parameter (↑C=↓margin=↓bias=↑var)
+- Indirect error measures: Cp, BIC, Adj-R² (NOT F1, accuracy, these are direct test metrics)
+- Imbalanced data: need Precision/Recall/F1/Kappa/AUC-ROC not Accuracy
+- Bias-variance: more complexity/trees/depth = ↓bias ↑variance, regularization = ↑bias ↓variance
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ EXAM TIPS - EXTENDED ANSWER                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+Workflow critique - look for:
+  • Data leakage (impute/scale/feature select before split)
+  • Wrong metrics for imbalanced data (using accuracy when 2% positive class)
+  • Improper CV (not stratified for imbalanced, tuning on test set)
+  • Not checking for overfitting (train vs test performance gap)
+
+Algorithm comparison - discuss:
+  • Bias-variance trade-off
+  • Interpretability (simple models vs black box)
+  • Computational cost
+  • Assumptions (linearity, distributions, independence)
+  • When each is appropriate (data size, dimensionality, problem type)
+
+Monte Carlo pseudo code - common blanks:
+  Line 8: n_sim ← 10000 (or 1000, 5000, etc - number of simulations)
+  Line 18: rnorm(n, mean, sd) or appropriate distribution
+  Line 21-22: proper update formulas for the scenario
+
+Always explain WHY, not just WHAT. Show understanding of underlying concepts.
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════

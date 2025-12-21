@@ -1,0 +1,183 @@
+---
+title: "STAT5002 Lab9 Worksheet"
+subtitle: "One-sample T-test"
+author: "© University of Sydney STAT5002"
+date: 
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+Below is the corrected version of the first column of the data (labelled "Dextro-") and the the second column labelled "Laevo-" in R. We will use these two variables in this workshop. 
+
+```{r}
+dextro = c(.7, -1.6, -.2, -1.2, -.1, 3.4, 3.7, .8, 0, 2)
+laevo = c(1.9, .8, 1.1, .1, -.1, 4.4, 5.5, 1.6, 4.6, 3.4)
+```
+
+
+# The `dextro` data
+
+## Determine the sample mean and SD (note the original paper uses the population SD)
+
+```{r}
+# type your code here
+       
+```
+      
+## Is it reasonable to assume that this is a sample from an "approximately normal box"? Use some plots to check this.
+
+```{r}
+# type your code here
+       
+```
+
+## Provide a 95% confidence interval for the average increase in hours' sleep using Dextro-.
+
+```{r}
+# type your code here
+       
+```
+
+## Would we reject a two-sided test that Dextro makes no difference to the duration of sleep at the 5% level of significance? Explain.
+	
+# The `laevo` data
+
+## Verify the calculations of the sample mean and SD
+
+```{r}
+# type your code here
+       
+```
+
+## Is it reasonable to assume that this is a sample from an "approximately normal box"? Use some plots to check this.
+
+```{r}
+# type your code here
+       
+```
+
+## Provide a 95% confidence interval for the average increase in hours' sleep using Laevo-.
+
+```{r}
+# type your code here
+       
+```
+
+## Would we reject a two-side test that Laevo makes no difference to the duration of sleep at the 5% level of significance? Explain.
+
+# Are the two treatments being equally effective? 
+
+Are your results consistent with the two treatments being equally effective? 
+Discuss with reference to **overlap between confidence intervals**.
+
+
+# Test the difference
+
+Repeat the steps of question 1 again but this time using the third column of "Laevo -- Dextro" differences for each patient.
+
+- You can obtain a vector of differences by 
+
+```{r}
+d = laevo - dextro 
+```
+
+## Verify the calculations of the sample mean and SD of the difference
+
+```{r}
+# type your code here
+       
+```
+
+## Is it reasonable to assume that these differences are like a sample from an "approximately normal box"? Use some plots to check this.
+
+```{r}
+# type your code here
+       
+```
+
+## Provide a 95% confidence interval for the average difference in increase in hours' sleep:
+
+```{r}
+# type your code here
+       
+```
+
+## Is this consistent with the two treatments being equally effective? In your answer, refer to your answer to question 3 above.
+
+
+# Perform a formal t-test on the difference.
+
+Perform a formal t-test that the "true" average difference over all (potential) patients is zero. Stating and checking any required assumptions. Will you reject based on a 5\% level of significance? 
+
+## Write down the testing procedure step-by-step
+
+- Write your code below for the P-value
+
+```{r}
+# type your code here
+       
+```
+
+## Check your answers using `t.test()`.
+
+```{r}
+# type your code here
+       
+```
+
+
+## Using simulation
+
+Now use a bootstrap simulation to construct a 95\% confidence interval and perform a test. 
+How do your results here differ from those given by `t.test()`, and why? 
+
+- Simulate T-statistics of 10,000 samples drawn from the surrogate box (the Laevo -- Dextro difference)
+
+```{r}
+n = length(d)
+box.guess = d # this is the surrogate box
+sim.T.stats=0
+# write your code here
+
+```
+
+
+- Plot the histogram of the simulated T-statistics and compare it with the theoretical Student's T-distribution. What is your observation? 
+  - Note that `curve(dt(x, df=*), add=T, lty=2)` plots the Student's T-distribution with `*` degrees of freedoms on top of the histogram
+
+```{r}
+# write your code here
+
+```
+
+- Calculate P-value based on the simulated distribution.
+
+```{r}
+# write your code here
+
+```
+
+- Construct a 95% confidence interval, using the lower and upper 2.5% points of the simulated statistics (note that the simulated distribution is not symmetric).
+
+
+```{r}
+# write your code here
+
+```
+
+

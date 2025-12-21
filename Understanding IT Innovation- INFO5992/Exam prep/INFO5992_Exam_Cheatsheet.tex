@@ -1,0 +1,775 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[landscape,margin=0.5cm]{geometry}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage[compact]{titlesec}
+
+% Compact spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist{noitemsep,topsep=0pt,leftmargin=*}
+
+% Section formatting
+\titleformat{\section}{\normalfont\large\bfseries\color{blue!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{4pt}{2pt}
+\titlespacing*{\subsection}{0pt}{3pt}{1pt}
+
+% Custom commands
+\newcommand{\keyword}[1]{\textbf{\color{red!70!black}#1}}
+\newcommand{\concept}[1]{\textit{\color{blue!60!black}#1}}
+
+\begin{document}
+\begin{multicols}{3}
+\setlength{\columnseprule}{0.4pt}
+
+\begin{center}
+\Large{\textbf{INFO5992 EXAM CHEATSHEET}} \\
+\small{Understanding IT Innovations - Complete Reference}
+\end{center}
+
+\section{1. Innovation Types \& Strategies}
+
+\subsection{Disruptive Innovation}
+\begin{itemize}
+    \item \keyword{Low-End Disruption}: Targets overserved customers with ``good enough'' cheaper solutions → incumbents ignore
+    \item \keyword{New-Market Disruption}: Creates new market serving non-consumers → different value proposition
+    \item \keyword{Sustaining Innovation}: Improves existing products along established dimensions → incumbents excel
+\end{itemize}
+
+\subsection{Innovation Dilemma}
+\begin{itemize}
+    \item Incumbents allocate resources to high-margin customers
+    \item Ignore low-end threats until too late
+    \item Existing capabilities become obsolete
+\end{itemize}
+
+\subsection{Competence Types}
+\begin{itemize}
+    \item \keyword{Competence-Enhancing}: Builds on existing knowledge → incumbents have advantage
+    \item \keyword{Competence-Destroying}: Requires new capabilities → startups have advantage (clean slate)
+\end{itemize}
+
+\subsection{Technological Discontinuity}
+\keyword{Definition}: Dramatic breakthrough that makes existing tech obsolete
+
+\textbf{Why Companies Choose It:}
+\begin{itemize}
+    \item Overcome competitive stagnation
+    \item Access new markets/capabilities
+    \item Leapfrog competitors
+    \item Respond to market shifts
+\end{itemize}
+
+\textbf{Types:}
+\begin{itemize}
+    \item \concept{Competence-enhancing}: Leverages existing skills
+    \item \concept{Competence-destroying}: Requires new expertise
+\end{itemize}
+
+\textbf{Impact on Startups:}
+\begin{itemize}
+    \item Opportunity window for new entrants
+    \item Incumbents' advantages neutralized
+    \item Market uncertainty → experimentation phase
+\end{itemize}
+
+\section{2. Dominant Design \& Lifecycle}
+
+\subsection{Dominant Design Phases}
+\begin{enumerate}
+    \item \keyword{Fluid Phase}: Multiple competing designs, high uncertainty, product performance focus
+    \item \keyword{Transitional Phase}: Design standards emerge, competition intensifies
+    \item \keyword{Specific Phase}: One design dominates, shift to process innovation \& cost reduction
+\end{enumerate}
+
+\subsection{Why Dominant Design Matters}
+\begin{itemize}
+    \item Reduces uncertainty for customers \& producers
+    \item Enables economies of scale \& network effects
+    \item Compatibility with ecosystem/infrastructure
+    \item Signals stability to mainstream market
+\end{itemize}
+
+\subsection{When Dominant Design May NOT Emerge}
+\begin{itemize}
+    \item High customization needs (different segments need different designs)
+    \item Rapid technological change prevents standardization
+    \item Strong network effects lock in multiple competing standards
+    \item Regulatory fragmentation across markets
+    \item Low switching costs → continuous experimentation
+\end{itemize}
+
+\subsection{Choosing Dominant Design (Startup)}
+\begin{itemize}
+    \item Customer acceptance \& reduced adoption risk
+    \item Compatibility with existing systems
+    \item Cost \& scalability for mass market
+    \item Performance reliability benchmarks
+    \item Network effects \& ecosystem leverage
+\end{itemize}
+
+\section{3. Technology Adoption Lifecycle}
+
+\subsection{Adoption Segments}
+\begin{enumerate}
+    \item \keyword{Innovators} (2.5\%): Tech enthusiasts, high risk tolerance
+    \item \keyword{Early Adopters} (13.5\%): Visionaries, willing to experiment
+    \item \keyword{Early Majority} (34\%): Pragmatists, need proven solutions
+    \item \keyword{Late Majority} (34\%): Conservatives, adopt when necessary
+    \item \keyword{Laggards} (16\%): Skeptics, resist change
+\end{enumerate}
+
+\subsection{Crossing the Chasm}
+\begin{itemize}
+    \item \keyword{The Gap}: Between Early Adopters \& Early Majority
+    \item \keyword{Why Hard}: Early majority demands reliability, references, established standards; startups lack credibility
+    \item \keyword{How Dominant Design Helps}: Reduces uncertainty, signals stability, builds trust, enables ecosystem
+\end{itemize}
+
+\section{4. Technology Hype Cycle}
+
+\subsection{5 Stages}
+\begin{enumerate}
+    \item \keyword{Innovation Trigger}: Breakthrough sparks interest
+    \item \keyword{Peak of Inflated Expectations}: Unrealistic hype, many experiments
+    \item \keyword{Trough of Disillusionment}: Reality fails expectations, failures occur
+    \item \keyword{Slope of Enlightenment}: Practical applications emerge, \concept{dominant design often emerges here}
+    \item \keyword{Plateau of Productivity}: Mainstream adoption, standards solidify
+\end{enumerate}
+
+\textbf{Relationship with Dominant Design:} Competing designs in early stages → dominant design stabilizes market during Slope/Plateau → reduces uncertainty → enables scale
+
+\section{5. Value Chain vs Value Network}
+
+\subsection{Value Chain (Porter)}
+\begin{itemize}
+    \item \keyword{Linear model}: Sequential activities adding value
+    \item \concept{Primary activities}: Inbound logistics, operations, outbound logistics, marketing/sales, service
+    \item \concept{Support activities}: Infrastructure, HR, tech development, procurement
+    \item \textbf{Focus}: Internal efficiency, cost reduction
+    \item \textbf{Example}: Manufacturing (raw materials → production → distribution → retail)
+\end{itemize}
+
+\subsection{Value Network}
+\begin{itemize}
+    \item \keyword{Network model}: Multiple players co-create value
+    \item Interdependent relationships, not linear
+    \item Value created through interactions \& connections
+    \item \textbf{Focus}: Ecosystem collaboration, network effects
+    \item \textbf{Example}: Platform (app developers + users + payment providers all create value together)
+\end{itemize}
+
+\subsection{Key Differences}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Value Chain} & \textbf{Value Network} \\
+\hline
+Linear flow & Multi-directional \\
+Single firm focus & Ecosystem focus \\
+Sequential activities & Simultaneous interactions \\
+Efficiency-driven & Network effects-driven \\
+\hline
+\end{tabular}
+
+\section{6. Value Proposition Canvas}
+
+\subsection{Customer Profile}
+\begin{itemize}
+    \item \keyword{Jobs}: Tasks customers accomplish (functional, social, emotional)
+    \item \keyword{Pains}: Obstacles, risks, negative emotions
+    \item \keyword{Gains}: Desired outcomes, benefits, aspirations
+\end{itemize}
+
+\subsection{Value Map}
+\begin{itemize}
+    \item \keyword{Products/Services}: What you offer
+    \item \keyword{Pain Relievers}: How you eliminate/reduce pains
+    \item \keyword{Gain Creators}: How you create benefits
+\end{itemize}
+
+\subsection{Achieving Fit}
+\begin{itemize}
+    \item Align value map with customer profile
+    \item Address important jobs, alleviate major pains, create meaningful gains
+    \item = \keyword{Product-Market Fit (PMF)}
+\end{itemize}
+
+\subsection{Value Types}
+\begin{itemize}
+    \item \concept{Functional}: Solves practical problem
+    \item \concept{Emotional}: Makes customer feel better
+    \item \concept{Social}: Status, belonging, impression
+    \item \concept{Life-Changing}: Transforms customer's life
+\end{itemize}
+
+\section{7. Customer Development Process}
+
+\subsection{4 Stages}
+\begin{enumerate}
+    \item \keyword{Customer Discovery}: Test problem hypotheses, identify real pains/needs, get out of building
+    \item \keyword{Customer Validation}: Test solution with MVP, achieve repeatable sales model
+    \item \keyword{Customer Creation}: Scale demand, execute marketing/sales
+    \item \keyword{Company Building}: Transition to execution-focused organization
+\end{enumerate}
+
+\subsection{Key Principles}
+\begin{itemize}
+    \item \keyword{Get Out of Building}: Talk to real customers, not desk research
+    \item \keyword{Build-Measure-Learn}: Fast iteration cycles
+    \item \keyword{Pivot or Persevere}: Change strategy based on validated learning
+    \item \keyword{MVP}: Test assumptions with least effort
+\end{itemize}
+
+\subsection{Creating Value in Customer Dev}
+\begin{itemize}
+    \item Align value map with customer profile through interviews
+    \item Validate problem-solution fit before building
+    \item Iterate based on feedback to strengthen value proposition
+    \item Test with prototypes/wireframes in discovery phase
+    \item Build high-fidelity MVP in validation phase
+    \item Verify scalability \& repeatability of business model
+\end{itemize}
+
+\section{8. Lean Startup vs Waterfall}
+
+\subsection{Why Waterfall Fails for Startups}
+\begin{itemize}
+    \item Linear \& rigid → can't adapt to feedback
+    \item Late customer involvement → build wrong product
+    \item High waste if assumptions wrong
+    \item Assumes clear requirements upfront (unrealistic for innovation)
+\end{itemize}
+
+\subsection{Lean Advantages}
+\begin{itemize}
+    \item \keyword{Build-Measure-Learn loop}: Fast prototyping \& testing
+    \item Early customer involvement → validate assumptions
+    \item Flexible pivots based on feedback
+    \item Resource-efficient → focus on essential features
+    \item Reduces risk through validated learning
+    \item Supports experimentation \& iteration
+\end{itemize}
+
+\section{9. Open Innovation}
+
+\subsection{3 Innovation Flows}
+\begin{enumerate}
+    \item \keyword{Outside-In}: Bring external ideas/tech into company (licensing in, partnerships, crowdsourcing)
+    \item \keyword{Inside-Out}: Commercialize internal ideas externally (spin-offs, licensing out, selling IP)
+    \item \keyword{Coupled}: Combine both through alliances, joint ventures, co-creation
+\end{enumerate}
+
+\subsection{Open Source vs Proprietary}
+
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Open Source} & \textbf{Proprietary} \\
+\hline
+Community-driven innovation & Controlled development \\
+Lower costs (no licensing) & Revenue from licenses \\
+Transparency \& auditability & Trade secrets protected \\
+Faster iteration & Competitive advantage \\
+Interoperability \& standards & Lock-in strategy \\
+\hline
+\end{tabular}
+
+\subsection{Why Open Source Drives Innovation (4+ Reasons)}
+\begin{enumerate}
+    \item \keyword{Faster innovation}: Global community contributes improvements continuously
+    \item \keyword{Lower costs}: No licensing fees → allocate resources to differentiation
+    \item \keyword{Transparency}: Code auditability builds trust (critical for finance, healthcare)
+    \item \keyword{Interoperability}: Easier integration with existing systems via standards
+    \item \keyword{Flexibility}: Customize to specific needs without vendor lock-in
+    \item \keyword{Community support}: Faster bug fixes, security patches, feature development
+    \item \keyword{Talent attraction}: Developers prefer working with open technologies
+\end{enumerate}
+
+\subsection{Open Source Benefits for Startups}
+\begin{itemize}
+    \item \concept{Standardization}: Compliance with industry norms (e.g., Linux, PostgreSQL)
+    \item \concept{Interoperability}: Easy integration with existing systems
+    \item \concept{Community innovation}: Continuous improvements (security, performance)
+    \item \concept{Lower costs}: Allocate resources to core differentiation
+    \item \concept{Trust}: Code auditability for regulatory compliance
+\end{itemize}
+
+\subsection{Closed to Open Innovation Shift}
+
+\textbf{Reasons for Shift:}
+\begin{itemize}
+    \item Access external expertise \& reduce R\&D costs
+    \item Faster time-to-market through collaboration
+    \item Tap into global talent pool
+    \item Share development risk with ecosystem
+\end{itemize}
+
+\textbf{Risks:}
+\begin{itemize}
+    \item Loss of IP control \& competitive advantage
+    \item Quality control challenges with external contributors
+    \item Coordination overhead \& integration complexity
+    \item Risk of free-riding by competitors
+\end{itemize}
+
+\section{10. APIs \& Modularity}
+
+\subsection{API Types}
+\begin{enumerate}
+    \item \keyword{API as Product}: Core business offering (Stripe, Twilio, AWS)
+    \item \keyword{API Enhancing}: Adds functionality to existing products (Google Maps API)
+    \item \keyword{API Promoting}: Drives adoption \& ecosystem growth (Twitter API)
+\end{enumerate}
+
+\subsection{How APIs Enable Innovation}
+\begin{itemize}
+    \item \concept{Modularity}: Decouple components → independent development
+    \item \concept{Scalability}: Add features without rebuilding core system
+    \item \concept{Third-party integration}: External developers extend functionality
+    \item \concept{Ecosystem growth}: Network effects as more developers build on platform
+    \item \concept{Faster iteration}: Update modules independently
+\end{itemize}
+
+\subsection{Modularity in Software Architecture}
+\begin{itemize}
+    \item \keyword{Definition}: Breaking system into independent, interchangeable components
+    \item \keyword{Benefits}:
+    \begin{itemize}
+        \item Parallel development by different teams
+        \item Easier testing \& debugging
+        \item Component reusability across projects
+        \item Lower coupling → changes don't cascade
+        \item Enable third-party innovation via APIs
+    \end{itemize}
+    \item \keyword{Example}: Microservices architecture (authentication, payment, notification as separate modules)
+\end{itemize}
+
+\section{11. Platform Business Models}
+
+\subsection{Platform Ecosystem Model}
+\begin{itemize}
+    \item \keyword{Integrator Platform}: Mediates between external innovators \& customers
+    \item Controls transactions \& interactions
+    \item Benefits from network effects
+    \item Monetizes through fees, subscriptions, data
+\end{itemize}
+
+\subsection{Key Players in Platform}
+\begin{itemize}
+    \item \concept{Producers}: Create value (app developers, content creators)
+    \item \concept{Consumers}: Use value (end users)
+    \item \concept{Platform Owner}: Provides infrastructure \& governance
+    \item \concept{Complementors}: Enhance platform value (device makers, payment providers)
+    \item \concept{Regulators}: Ensure compliance \& safety
+\end{itemize}
+
+\subsection{Platform Types}
+\begin{enumerate}
+    \item \keyword{Transaction platforms}: Facilitate exchanges (Uber, Airbnb, eBay)
+    \item \keyword{Innovation platforms}: Enable third-party development (iOS, Android, AWS)
+    \item \keyword{Integrated platforms}: Combine both (Apple ecosystem)
+\end{enumerate}
+
+\subsection{Platform Monetization}
+\begin{itemize}
+    \item Transaction fees (commission on each sale)
+    \item Subscription fees (premium features)
+    \item Advertising revenue (targeted ads)
+    \item Freemium model (free basic, paid premium)
+    \item Data monetization (insights, analytics)
+\end{itemize}
+
+\section{12. Crowdsourcing}
+
+\subsection{4 Types}
+\begin{enumerate}
+    \item \keyword{Knowledge Discovery}: Tap distributed expertise (InnoCentive - scientific problems)
+    \item \keyword{Broadcast Search}: Post problems, best solution wins (Kaggle - data science competitions)
+    \item \keyword{Peer-Vetted Creative}: Community evaluates ideas (Threadless - t-shirt designs)
+    \item \keyword{Distributed Human Intelligence Tasks}: Micro-tasks at scale (Amazon MTurk - labeling, surveys)
+\end{enumerate}
+
+\subsection{Challenges}
+\begin{itemize}
+    \item Quality control \& reliability of contributions
+    \item Intellectual property ownership disputes
+    \item Participant motivation \& retention
+    \item Coordination costs \& management overhead
+    \item Free-riding \& unequal contribution
+\end{itemize}
+
+\subsection{Benefits}
+\begin{itemize}
+    \item Access to diverse expertise globally
+    \item Cost-effective compared to in-house R\&D
+    \item Faster problem-solving through parallel efforts
+    \item Identify innovative solutions from unexpected sources
+\end{itemize}
+
+\section{13. Lead Users}
+
+\subsection{Who They Are}
+\begin{itemize}
+    \item Experience needs ahead of market (future-oriented)
+    \item High benefit from solutions (strong motivation)
+    \item Often innovate solutions themselves (proactive)
+\end{itemize}
+
+\subsection{Why Valuable for Sustainable Innovation}
+\begin{itemize}
+    \item Provide insights into future market needs
+    \item Co-create products \& provide early feedback
+    \item Accelerate adoption as opinion leaders
+    \item Reduce uncertainty \& validate design for scalability
+    \item Test extreme use cases that normal users won't encounter
+\end{itemize}
+
+\subsection{Why Normal Users Less Effective (5 Reasons)}
+\begin{enumerate}
+    \item \keyword{Lack vision for future needs}: Focus on immediate problems, not emerging trends
+    \item \keyword{Limited technical expertise}: Can't suggest advanced/disruptive solutions → incremental feedback only
+    \item \keyword{Lower risk appetite}: Prefer proven solutions, avoid untested tech → slow radical innovation
+    \item \keyword{Incremental feedback only}: Minor improvements, not breakthrough ideas
+    \item \keyword{Biased by dominant designs}: Accustomed to current standards → resist creative thinking
+\end{enumerate}
+
+\section{14. Knowledge Sharing in Startups}
+
+\subsection{How It Drives Innovation}
+\begin{itemize}
+    \item \concept{Cross-pollination of ideas}: Different perspectives spark creativity
+    \item \concept{Faster problem-solving}: Collective intelligence reduces bottlenecks
+    \item \concept{Reduced duplication}: Share learnings to avoid repeated mistakes
+    \item \concept{Skill development}: Team learns from each other
+    \item \concept{Organizational learning}: Capture \& reuse tacit knowledge
+\end{itemize}
+
+\subsection{Mechanisms/Practices for Knowledge Sharing}
+\begin{enumerate}
+    \item \keyword{Cross-functional teams}: Break silos, share domain expertise
+    \item \keyword{Regular knowledge-sharing sessions}: Sprint demos, brown bags, tech talks
+    \item \keyword{Documentation culture}: Wikis, runbooks, design docs
+    \item \keyword{Mentorship \& pair programming}: Tacit knowledge transfer
+    \item \keyword{Retrospectives}: Capture lessons learned from projects
+    \item \keyword{Internal communities of practice}: Groups focused on specific domains
+    \item \keyword{Open communication tools}: Slack channels, forums for async sharing
+\end{enumerate}
+
+\section{15. Coopetition}
+
+\subsection{Definition}
+Collaboration with competitors instead of pure disruption
+
+\subsection{Why Startups Choose It}
+\begin{itemize}
+    \item \keyword{High entry barriers}: Costly infrastructure, regulations → partnerships needed
+    \item \keyword{Shared resources}: Access to distribution, tech, customer base
+    \item \keyword{Network effects}: Faster adoption \& ecosystem growth through collaboration
+    \item \keyword{Risk reduction}: Lower financial \& market uncertainty
+    \item \keyword{Complementary strengths}: Startup innovation + incumbent scale/credibility
+\end{itemize}
+
+\subsection{Examples}
+\begin{itemize}
+    \item Fintech startups partnering with banks (access to customers + regulatory compliance)
+    \item EV startups using established automakers' charging networks
+    \item SaaS companies integrating with competitors to serve customers better
+\end{itemize}
+
+\section{16. Organizational Structures}
+
+\subsection{Mechanistic Structure}
+\begin{itemize}
+    \item High formalization, centralized decisions
+    \item Rigid hierarchy, clearly defined roles
+    \item Efficient for stability, routine tasks
+    \item Limits creativity \& flexibility
+\end{itemize}
+
+\subsection{Organic Structure}
+\begin{itemize}
+    \item Low formalization, decentralized decisions
+    \item Flexible processes, collaborative
+    \item Encourages adaptability \& innovation
+\end{itemize}
+
+\subsection{Making Mechanistic Innovative}
+\begin{enumerate}
+    \item \keyword{Cross-functional teams}: Encourage collaboration across departments
+    \item \keyword{Reduce formalization}: Allow flexibility in processes
+    \item \keyword{Promote risk-taking}: Failure viewed as learning, not punishment
+    \item \keyword{Allocate innovation time}: e.g., Google's ``20\% time''
+    \item \keyword{Reward creativity}: Incentives for innovative ideas
+    \item \keyword{Skunk Works teams}: Small, autonomous groups for disruptive projects
+    \item \keyword{Flatten hierarchy}: Reduce approval layers for faster decisions
+\end{enumerate}
+
+\section{17. Startup Failure Factors}
+
+\subsection{Top 3 Reasons}
+\begin{enumerate}
+    \item \keyword{Lack of Product-Market Fit}: Product doesn't solve real customer needs → poor adoption. Built without validating demand.
+    \item \keyword{Insufficient Capital}: Run out of cash before achieving scale. High burn rates, long R\&D cycles (hardware/deep-tech).
+    \item \keyword{Weak Business Model}: No clear revenue model, mispricing, unclear monetization → unsustainable operations.
+\end{enumerate}
+
+\subsection{Other Contributing Factors}
+\begin{itemize}
+    \item Poor team dynamics \& founder conflicts
+    \item Inability to pivot when assumptions fail
+    \item Intense competitive pressure
+    \item Premature scaling before PMF
+    \item Ignoring customer feedback
+\end{itemize}
+
+\section{18. Business Model Canvas}
+
+\subsection{Key Components}
+
+\textbf{Customer Segments:} Who are you serving?
+\begin{itemize}
+    \item Mass market, niche, segmented, diversified, multi-sided
+\end{itemize}
+
+\textbf{Value Propositions:} What value do you deliver?
+\begin{itemize}
+    \item Newness, performance, customization, design, brand, price, convenience, risk reduction
+\end{itemize}
+
+\textbf{Key Resources:} What assets required?
+\begin{itemize}
+    \item \concept{Tangible}: Physical (facilities, equipment), Financial (cash, credit)
+    \item \concept{Intangible}: Intellectual (patents, IP, data), Human (skills, expertise, talent)
+\end{itemize}
+
+\textbf{Key Activities:} What do you do?
+\begin{itemize}
+    \item Production, problem-solving, platform/network management
+\end{itemize}
+
+\textbf{Revenue Streams:} How do you make money?
+\begin{itemize}
+    \item Asset sale, usage fee, subscription, licensing, advertising, freemium
+\end{itemize}
+
+\subsection{Why Customer Segments \& Value Props Critical}
+\begin{enumerate}
+    \item \keyword{Focus resources}: Target right customers, avoid wasting effort
+    \item \keyword{Achieve PMF}: Clear value prop aligned with segment needs
+    \item \keyword{Differentiation}: Stand out from competitors in specific segments
+    \item \keyword{Scalability}: Repeatable model for similar customers
+    \item \keyword{Revenue model}: Pricing \& monetization fit customer willingness to pay
+\end{enumerate}
+
+\section{19. Diffusion of Innovation}
+
+\subsection{Diffusion Strategies for Tech Startups}
+\begin{enumerate}
+    \item \keyword{Target early adopters}: Identify visionaries willing to take risks, use as reference customers
+    \item \keyword{Build credibility}: Case studies, testimonials, proof of concept with reputable customers
+    \item \keyword{Reduce adoption barriers}: Free trials, freemium model, easy onboarding
+    \item \keyword{Leverage network effects}: Incentivize referrals, viral loops, community building
+    \item \keyword{Partner with complementors}: Integrate with established platforms/ecosystems
+    \item \keyword{Educate market}: Content marketing, webinars, thought leadership to build awareness
+    \item \keyword{Align with dominant design}: Reduce perceived risk for mainstream adopters
+\end{enumerate}
+
+\subsection{Barriers to Innovation Implementation}
+\begin{enumerate}
+    \item \keyword{Organizational inertia}: Resistance to change, ``not invented here'' syndrome, fear of disrupting existing business
+    \item \keyword{Resource constraints}: Insufficient budget, talent shortage, competing priorities
+    \item \keyword{Lack of leadership support}: Innovation not prioritized, risk-averse culture
+    \item \keyword{Poor communication}: Silos prevent knowledge sharing, misaligned incentives
+\end{enumerate}
+
+\section{20. Agentic AI vs Autonomous}
+
+\subsection{Agentic AI}
+\begin{itemize}
+    \item \keyword{Proactive \& goal-driven}: Pursues objectives independently
+    \item \keyword{Adaptive reasoning}: Adjusts strategy based on environment
+    \item \keyword{Multi-step planning}: Breaks down complex tasks
+    \item \textbf{Example}: AI research assistant formulating hypotheses \& designing experiments
+\end{itemize}
+
+\subsection{Autonomous Systems}
+\begin{itemize}
+    \item \keyword{Reactive \& task-specific}: Executes predefined tasks
+    \item \keyword{Rule-based}: Follows programmed instructions
+    \item \keyword{Limited adaptability}: Within narrow scope
+    \item \textbf{Example}: Self-driving car following traffic rules
+\end{itemize}
+
+\section{21. General Purpose Technology}
+
+\subsection{Characteristics of GPT}
+\begin{itemize}
+    \item Wide applicability across sectors
+    \item Continuous improvement over time
+    \item Spawns complementary innovations
+    \item Transforms entire economies
+    \item \textbf{Examples}: Electricity, internet, steam engine
+\end{itemize}
+
+\subsection{Can Generative AI be GPT?}
+
+\textbf{YES - Supporting Arguments:}
+\begin{enumerate}
+    \item \keyword{Wide applicability}: Content creation, coding, design, research, customer service across all industries
+    \item \keyword{Continuous improvement}: Rapid iteration, models improving exponentially
+    \item \keyword{Complementary innovations}: New tools, applications, business models emerging
+    \item \keyword{Productivity transformation}: Automating knowledge work at scale
+\end{enumerate}
+
+\textbf{Counterarguments (if needed):}
+\begin{itemize}
+    \item Still early stage, adoption not yet universal
+    \item Economic transformation impact unclear
+\end{itemize}
+
+\section{22. EV Types (if relevant)}
+
+\subsection{Battery Electric Vehicle (BEV)}
+\begin{itemize}
+    \item 100\% electric, no combustion engine
+    \item Zero tailpipe emissions
+    \item \textbf{Example}: Tesla Model 3, Nissan Leaf
+\end{itemize}
+
+\subsection{Plug-in Hybrid (PHEV)}
+\begin{itemize}
+    \item Electric motor + combustion engine
+    \item Can run on electric only (limited range), then switches to gas
+    \item \textbf{Example}: Toyota Prius Prime, Chevrolet Volt
+\end{itemize}
+
+\subsection{Range-Extended EV (REEV)}
+\begin{itemize}
+    \item Primarily electric, small engine as generator (doesn't drive wheels)
+    \item Extends range when battery depleted
+    \item \textbf{Example}: BMW i3 with range extender
+\end{itemize}
+
+\section{23. Exam Answer Templates}
+
+\subsection{2-Mark Question (2-3 lines)}
+\begin{itemize}
+    \item Define concept in 1 line
+    \item Key reason/application in 1-2 lines
+    \item \textbf{Example}: ``PMF is degree to which product satisfies market demand. Value Prop Canvas achieves it by aligning customer jobs/pains/gains with pain relievers \& gain creators.''
+\end{itemize}
+
+\subsection{5-Mark Question}
+\begin{itemize}
+    \item 2-3 key points with brief explanation
+    \item Each point: 1-2 lines
+    \item Use bullet format
+    \item \textbf{Example}: See Section 1 questions in answer key
+\end{itemize}
+
+\subsection{10-Mark Scenario}
+\begin{itemize}
+    \item Apply framework clearly
+    \item 4-5 bullet points
+    \item Each point: claim + reasoning + scenario application
+    \item Use keywords marker looks for
+    \item \textbf{Example}: See Section 2 \& 3 questions in answer key
+\end{itemize}
+
+\section{24. Key Exam Keywords}
+
+\subsection{Innovation Type}
+disruptive, sustaining, low-end, new-market, competence-destroying, competence-enhancing, radical, incremental
+
+\subsection{Adoption}
+chasm, early adopters, mainstream, pragmatists, proven solution, references, credibility
+
+\subsection{Design}
+dominant design, standardization, compatibility, network effects, economies of scale, interoperability
+
+\subsection{Customer Dev}
+MVP, pivot, validated learning, get out of building, problem-solution fit, PMF, iteration
+
+\subsection{Value Prop}
+jobs-pains-gains, pain relievers, gain creators, functional/emotional/social value, fit
+
+\subsection{Lean}
+Build-Measure-Learn, iterate, waste reduction, customer feedback loops, fast experimentation
+
+\subsection{Open Innovation}
+outside-in, inside-out, coupled, ecosystem, interoperability, collaboration
+
+\subsection{Platform}
+network effects, multi-sided, transaction fees, ecosystem, complementors
+
+\section{25. Quick Reference Frameworks}
+
+\subsection{When Analyzing Innovation Type}
+\begin{enumerate}
+    \item Does it target overserved customers with cheaper solution? → \concept{Low-end disruption}
+    \item Does it create new market for non-consumers? → \concept{New-market disruption}
+    \item Does it improve along existing dimensions? → \concept{Sustaining}
+    \item Does it make existing capabilities obsolete? → \concept{Competence-destroying}
+\end{enumerate}
+
+\subsection{When Analyzing Platform Ecosystem}
+\begin{enumerate}
+    \item Identify key players (producers, consumers, complementors)
+    \item Show mediation role of platform
+    \item Explain network effects
+    \item Discuss monetization strategy
+\end{enumerate}
+
+\subsection{When Analyzing Customer Development}
+\begin{enumerate}
+    \item Discovery: What problem? Get out of building, test hypotheses
+    \item Validation: Does solution work? MVP, test sell, positioning
+    \item Pivot considerations: What's wrong? How to address?
+    \item Use Build-Measure-Learn terminology
+\end{enumerate}
+
+\subsection{When Analyzing Value Proposition}
+\begin{enumerate}
+    \item Customer jobs (what trying to do?)
+    \item Pains (what frustrations?)
+    \item Gains (what benefits desired?)
+    \item How product addresses each
+\end{enumerate}
+
+\section{26. Common Question Patterns}
+
+\subsection{``What type of innovation is X?''}
+\begin{itemize}
+    \item State innovation type clearly
+    \item Provide 2 reasons with explanation
+    \item Reference scenario specifics
+\end{itemize}
+
+\subsection{``How can X help achieve Y?''}
+\begin{itemize}
+    \item Briefly define X
+    \item List mechanisms/ways (3-4 points)
+    \item Connect to outcome Y
+\end{itemize}
+
+\subsection{``Why do startups fail / choose coopetition / etc?''}
+\begin{itemize}
+    \item List 3-5 clear reasons
+    \item Each reason: 1-2 line explanation
+    \item Use scenario context if given
+\end{itemize}
+
+\subsection{``Explain difference between X and Y''}
+\begin{itemize}
+    \item Define both briefly
+    \item Highlight 3-4 key differences
+    \item Use table if helpful
+    \item Provide example for each
+\end{itemize}
+
+\end{multicols}
+\end{document}

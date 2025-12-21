@@ -1,0 +1,16 @@
+.DS_Store
+
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Large data files
+*.zip
+*.npy
+*.RData
+*.RDataTmp
+
+# R project user files
+.Rproj.user/
+.Rhistory

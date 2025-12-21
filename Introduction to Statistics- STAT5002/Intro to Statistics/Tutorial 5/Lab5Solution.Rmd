@@ -1,0 +1,301 @@
+---
+title: "STAT5002 Lab5 Solution"
+subtitle: "Introduction to Statistics"
+author: "University of Sydney STAT5002"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+
+# Simulating Chance
+
+## Simulating an unfair die (sample with replacement)
+
+A six-sided die is loaded in such a way that every even number is twice as likely to occur as every odd
+number. The die is tossed once.
+
+(A) Fill out the following probability distribution.
+
+---
+
+| $X$| 1   | 2   | 3.  | 4   | 5   | 6   |
+|:---|:--- |:--- |:--- |:--- |:--- |:--- |
+|    | 1/9 | 2/9 | 1/9 | 2/9 | 1/9 | 2/9 |
+---
+
+(B) What is the probability that a number (strictly) less than 4 occurs?
+
+    Answer: $P (1) + P (2) + P (3) = 4/9$.
+
+(C) Simulate (b) using 10,000 experiments.
+
+```{r}
+# Write your code here
+x=c(1,2,2,3,4,4,5,6,6)
+toss=sample(x,10000,replace=TRUE)
+table(toss)
+sum(toss<4)
+```
+
+
+## MATH1005 Data (optional, sample without replacement)
+
+In Semester 2 2022, MATH1005 had 928 students. In the MATH1005 survey data set, we only have 281 observations.
+Hence, we only have a sample of the  MATH1005 cohort  in S2, 2022.
+
+Using a simulation we will solve the following exercise:
+
+- **Assume that, out of the 928 students, 427 are female and 501 are male. When picking randomly 281 students out of 928, what is the probability that more than 50% of the sample are female?**
+
+To do this, implement the following steps:
+
+- Use the ``sample`` function to draw without replacement a sample of 281 from a population with 427 `1`'s and 501 `0`'s.  Call it ``my.sample``.
+    - *Hint 1: Use ``?sample`` to open the help file of the sample function*.
+    - *Hint 2: The population (x) can be written as ``c(rep(1,427), rep(0,501))``*.
+    
+```{r}
+### Write your code here
+population = c(rep(1,427), rep(0,501))
+my.sample = sample(population,281)
+```
+
+- Apply the ``mean`` function on ``my.sample``. This gives you the proportion of `1`'s (= females) in your draw.  Call the result ``prop.female``.
+
+```{r}
+### Write your code here
+prop.female = mean(my.sample)
+```
+
+- Write ``female.5 = prop.female > 0.5``. The variable `female.5` tells you whether more than 50% are female in the draw (`TRUE`) or not (`FALSE`).
+
+```{r}
+### Write your code here
+female.5 = prop.female > 0.5
+female.5
+```
+
+- Create a function for one draw:
+
+```{r}
+drawing = function(){
+  ### Write your code here
+  
+  population = c(rep(1,427), rep(0,501))
+  my.sample = sample(population,281)
+  prop.female = mean(my.sample)
+  female.5 = prop.female > 0.5
+        # paste all the previous code (from the simulation task) here    
+  return(female.5) 
+}           
+```
+
+- Type `drawing()` and get the result of one draw. You can press the "Run current chunk" button several times.
+
+```{r}
+drawing()
+```
+- It seems that `FALSE` (i.e. less than 50% are female) happens quite often.
+
+- Use the ``replicate`` function to repeat the draw 10,000 times. Call the result ``drawings`` (type  `` drawings = replicate(10000,drawing()) `` )
+- Note: you can use `set.seed` function to make your results reproducible. Why are the results not reproducible otherwise?
+
+```{r}
+### Write your code here
+drawings = replicate(10000,drawing())
+```
+
+- Take the mean of ``drawings`` via the ``mean`` function. 
+```{r}
+### Write your code here
+mean(drawings)
+```
+- The result is the desired probability. That is, **from a population of 928 students, where 427 are female, a random sample of 281 students has approximately this probability of having more than 50% females**.
+
+
+
+# Box Model 
+
+## <i class="fa fa-th-list"></i> Summary
+
+The **box model** models the sum (or mean) of $n$ random draws from a population. The population is the "box", and the collection of draws forms the "sample".
+
+(1) **The Box**
+
+As the box represents a population, we use `popsd(box)`, where we write our own function `popsd()` to compute the "population SD" of the box:
+```{r}
+popsd_short = function(x) sqrt( mean(x^2)-(mean(x)^2))
+```
+
+The above is the short form of defining a function in one line. It is the same as
+
+```{r}
+popsd = function(x) {
+  pop = sqrt( mean(x^2)-(mean(x)^2))
+  return(pop)
+}
+```
+
+
+|Focus|By hand|In R|Symbol |
+|--------------|-----|--|-------|
+|Mean of the Box|Calculate the the average| `mean(box)`|$\mu$ |
+|SD of the Box|Calculate the population sd|  `popsd(box)`|$\sigma$ |
+
+(2) **The Sample**
+
+We can focus on either the sum (or mean) of the sample.
+
+|Focus|Expected Value |Standard Error |
+|----|----|----|
+|Sum of the Sample| $n \mu$  |$\sqrt{n} \sigma$ |
+|Mean of the Sample| $\mu$ |  $\sigma/\sqrt{n}$|
+
+
+For each calculation, work out the answer "by hand", and then check your answers in R.
+
+## Simple box model for multiple choice questions  {-}
+
+Model the following scenario: the multiple choice component of your final exam contains 20 questions, each with one correct answer and three incorrect answers. A correct answer is worth 1 mark and an incorrect answer is worth 0 marks. 
+
+Would it be unusual to pass (score at least 50% in) the multiple choice section by randomly guessing? 
+
+**Draw the box model**
+
+```
+       |              |
+	   |  0  0  0  1  |
+	   +--------------+
+```
+## Calculate the mean and SD of the box
+
+In a box with only 0s and 1s, the mean is the proportion of 1s, which is 0.25 here.
+
+The *definition* of the (population) SD is given by
+
+$$ SD = \sqrt{ \frac14 \left[ (-0.25)^2 + (-0.25)^2 + (-0.25)^2 + (0.75)^2\right]} =\sqrt{\frac14\left[\frac1{16}+\frac1{16} + \frac1{16} + \frac9{16}\right]} = \sqrt{\frac14\times\frac{12}{16}} = \sqrt{\frac3{16}}= \frac{\sqrt 3}4\,.$$
+
+The (population) SD of the box can also be calculated using the formula
+$$ SD = 
+\sqrt{ \text{mn. sq. }\ -\ (\text{mean})^2 }$$
+The mean and mean square are the same (since 0s and 1s are unchanged by squaring) so 
+$$SD = \sqrt{ \frac14 - \frac1{16} } = \sqrt{\frac3{16}}=\frac{\sqrt 3}4\,.$$
+
+Finally, to check using R:
+```{r, message = F, warning = F}
+box = c(0,0,0,1)
+mu=mean(box)
+mu
+sig=popsd(box)
+sig
+sqrt(3)/4
+```
+
+## Calculate the $E(S)$ and  $SE(S)$ where $S$ is the sum of draws from the box
+
+We have $\mu=\frac14$ and $\sigma = \frac{\sqrt 3}4\approx0.433$, and also the sample size is $n=20$.
+
+We have the general formula
+$$ E(S) = n\mu = 20\times \frac14 = 5\,.$$
+We also have
+$$ SE(S) = \sigma \sqrt n = \frac{\sqrt 3}4 \times \sqrt{20} = \frac{\sqrt{60}}4=\frac{\sqrt{15}}2\,.$$
+
+Using R we have
+```{r}
+n = 20
+E.S = n*mu
+E.S
+SE.S = sig*sqrt(n)
+SE.S
+sqrt(15)/2
+```
+
+## How many standard errors is the observed value away from the expected value? 
+
+Here, the "observed value" is $s=10$, that is the event where we "pass" (even though we randomly guess). 
+
+So we really want $P(S\geq 10)$. The value 10 is 5 above the expected value. This is
+
+```{r}
+5/SE.S
+```
+standard errors above the expected value.
+
+
+## Assuming the box of all possible sums has a normal shape, would it be unusual to pass by randomly guessing? 
+
+We need to know a little more than just the expected value and standard error. If we assume in addition that the histogram of all possible sums is normal, we can use a normal approximation. If the list of all possible sums has a normal-shaped histogram, with
+	mean $\mu=\frac12$ and SD $\sigma=\frac{\sqrt{15}}2$, the proportion of values more than 2.582
+	SDs greater than the mean can be found using `pnorm()`.
+
+```{r}
+1-pnorm(5/SE.S)
+```
+An equivalent command is
+```{r}
+pnorm(5/SE.S, lower.tail=F)
+```
+In either case we see the chance of getting 10 or more correct when randomly guessing is about 1 in 200. This is very small, so it is (in this sense) "highly unlikely" that random guessing will result in a pass.
+
+
+## Statistical Thinking 1
+
+If we decided to model the above scenario using the **mean** $\bar X$ instead of the **sum** $S$, which parts would change, and which parts would stay the same? Why?
+
+- **Mean and SD of box**
+These are unchanged. We have the same box as before.
+```{r}
+
+```
+
+- **$E(\bar X)$ and $SE(\bar X)$**
+These both change. Now the box of all possible averages has mean $\mu$ and SD $\frac{\sigma}{\sqrt n}$. These are also the expected value and standard error of the random sample mean $\bar X$.
+
+$$E(\bar X) = \mu = \frac14\,.$$
+
+$$SE(\bar X) = \frac{\sigma}{\sqrt n} = \frac{\sqrt{3}}4 \times \frac1{\sqrt{20}} = \sqrt{\frac{3}{320}} = \frac{\sqrt 3}{8\sqrt 5}\,.$$
+```{r}
+# write code here
+E.Xbar = mu
+E.Xbar
+SE.Xbar = sig/sqrt(20)
+SE.Xbar
+sqrt(3)/(8*sqrt(5))
+```
+
+- **Number of SE away from expected value**
+This is unchanged. In detail: now passing is getting an average of 0.5 or more.
+How many SEs above the expected value is this?
+```{r}
+# write code here
+(0.5-E.Xbar)/SE.Xbar
+```
+This is the same as when considering the sum.
+
+## Statistical Thinking 2
+
+- Assuming the box of all possible sums has a normal shape, would it be more or less unusual to pass the multiple choice section if there were 100 questions instead of 20?
+
+*Solution:* It is more difficult. To see this, consider the average, or proportion of correct answers. This will still have the same expected value of $\mu=0.25$. Passing will still need 0.50 or more. But now, the $SE(\bar X) = \frac{\sigma}{\sqrt n}$ is less, since the denominator is bigger. So 0.5 is more SEs above the expectation, there will be a smaller chance of being that much higher than the expectation.
+
+In detail, the new SE is
+```{r}
+# write code here
+SE.Xbar.100 = sig/sqrt(100)
+SE.Xbar.100
+```
+So now, passing corresponds to being
+```{r}
+(0.5-0.25)/SE.Xbar.100
+```
+standard errors above the expected value. Using a normal approxmation again, this has (approximate) chance
+```{r}
+pnorm((0.5-0.25)/SE.Xbar.100, lower.tail=F)
+```
+Much smaller!

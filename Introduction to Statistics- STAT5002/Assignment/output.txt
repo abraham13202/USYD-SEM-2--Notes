@@ -1,0 +1,267 @@
+========== Q1: Unfair and Unknown Dice ==========
+
+Q1(a): Expected value and standard error
+-------------------------------------------
+P(value >= 3) = 0.5555556 = 0.5555556 
+Expected value E[S] = 45 
+Standard error SE[S] = 4.472136 
+
+Q1(b): 97% prediction interval
+-------------------------------------------
+z-critical value: 2.17009 
+97% Prediction Interval: [ 35.29506 , 54.70494 ]
+Rounded: [ 35.3 , 54.7 ]
+
+Simulation with 5000 runs:
+Simulated mean: 45.0428 
+Simulated SD: 4.457459 
+Simulated 97% interval (2.5th to 97.5th percentile): 35 to 55 
+Proportion within theoretical interval: 0.9688 
+
+Q1(c): Smallest p for odd values
+-------------------------------------------
+Observed: 24 odd out of 99 rolls
+Sample proportion: 0.2424242 
+95% confidence interval (one-sided): 0.1731444 1 
+Smallest p consistent with data: 0.1731 
+
+Q1(d): Chi-square test - Die B vs Die A
+-------------------------------------------
+Observed frequencies: 10 27 5 33 9 15 
+Expected frequencies: 22 22 22 11 11 11 
+
+Chi-square statistic: 66.63636 
+Degrees of freedom: 5 
+p-value: 5.127252e-13 
+Critical value at alpha = 0.01: 15.08627 
+
+Verification with chisq.test():
+
+	Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 66.636, df = 5, p-value = 5.127e-13
+
+
+========== Q2: Caffeine Effect ==========
+
+Q2(a): Hypotheses
+-------------------------------------------
+Let mu_d = population mean difference (PRE - POST)
+H0: mu_d = 0 (caffeine has no effect)
+H1: mu_d > 0 (caffeine reduces reaction time)
+
+Q2(b): Test selection
+-------------------------------------------
+Test: Paired t-test (one-sided, right-tailed)
+Justification:
+- Same athletes measured twice (paired design)
+- Testing if caffeine REDUCES reaction time (one-sided)
+- Small sample size (n=16), assume normality
+
+Q2(c): Assumption checking
+-------------------------------------------
+Differences (PRE - POST): 11 7 6 8 8 -2 7 9 6 6 5 2 7 -2 6 1 
+Mean difference: 5.3125 
+SD of differences: 3.718759 
+
+Shapiro-Wilk test for normality:
+W = 0.8876777 , p-value = 0.05119248 
+Conclusion: No evidence against normality (p > 0.05)
+
+null device 
+          1 
+Plots saved to Q2_assumption_plots.pdf
+
+Q2(d): Test statistic and p-value
+-------------------------------------------
+Sample size n = 16 
+Mean difference = 5.3125 
+SD of differences = 3.718759 
+SE of differences = 0.9296897 
+t-statistic = 5.714272 
+Degrees of freedom = 15 
+p-value (one-sided) = 2.049378e-05 
+
+At alpha = 0.05:
+Critical value = 1.75305 
+Rejection region: t > 1.75305 
+
+Q2(e): Conclusion
+-------------------------------------------
+p-value = 0 < 0.05
+Decision: Reject H0
+Conclusion: There is statistically significant evidence that
+the caffeine gel reduces reaction time at the 5% significance level.
+
+Q2(f): Bootstrap simulation
+-------------------------------------------
+Bootstrap completed with 10000 resamples
+Bootstrap mean of t-statistics: 6.420317 
+Bootstrap SD of t-statistics: 2.626418 
+
+null device 
+          1 
+Histogram saved to Q2_bootstrap_histogram.pdf
+
+Q2(g): Bootstrap p-value and conclusion
+-------------------------------------------
+Bootstrap p-value = 0.5318 
+Theoretical p-value = 2.049378e-05 
+
+Bootstrap p-value >= 0.05
+Decision: Fail to reject H0
+Conclusion: The bootstrap simulation suggests insufficient evidence
+that caffeine reduces reaction time at the 5% significance level.
+
+========== Q3: Caffeine Effect and Self-report ==========
+
+HATPC Framework for Two-Sample t-test
+=======================================
+
+H - HYPOTHESES:
+Let mu_A = population mean caffeine effect for alert group
+Let mu_NA = population mean caffeine effect for not-alert group
+H0: mu_A = mu_NA (no difference in caffeine effect)
+H1: mu_A != mu_NA (caffeine effect differs between groups)
+
+A - ASSUMPTIONS:
+1. Both samples are independent random samples
+2. Differences in each group are normally distributed
+3. Equal variances (we'll use Welch's t-test for robustness)
+
+Alert group differences: 11 7 8 8 7 9 6 5 7 6 
+Not-alert group differences: 6 -2 6 2 -2 1 
+
+Summary statistics:
+Alert group: n = 10 , mean = 7.4 , SD = 1.712698 
+Not-alert group: n = 6 , mean = 1.833333 , SD = 3.600926 
+
+T - TEST STATISTIC:
+Pooled SD = 2.552776 
+SE (pooled) = 1.318248 
+t-statistic = 4.222777 
+Degrees of freedom = 14 
+
+P - P-VALUE:
+p-value (two-sided) = 0.00085199 
+Significance level alpha = 0.05
+
+C - CONCLUSION:
+Critical value (two-sided, alpha=0.05) = +/- 2.144787 
+Rejection region: |t| > 2.144787 
+
+Decision: Reject H0 (p = 9e-04 < 0.05)
+Conclusion: There is statistically significant evidence that
+the caffeine effect differs between athletes who felt alert
+and those who did not feel alert at the 5% significance level.
+
+Verification with t.test():
+
+	Two Sample t-test
+
+data:  diff_alert and diff_notalert
+t = 4.2228, df = 14, p-value = 0.000852
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 2.739306 8.394027
+sample estimates:
+mean of x mean of y 
+ 7.400000  1.833333 
+
+
+========== Q4: Advertising and Sales ==========
+
+Q4(a): Linear regression model
+-------------------------------------------
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.7304  -3.7440   0.7107   3.9750   5.9593 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  19.9510     2.5545   7.810 3.45e-07 ***
+x             1.8991     0.1944   9.771 1.27e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.119 on 18 degrees of freedom
+Multiple R-squared:  0.8414,	Adjusted R-squared:  0.8326 
+F-statistic: 95.47 on 1 and 18 DF,  p-value: 1.274e-08
+
+
+
+Interpretation of coefficients:
+Intercept (beta_0) = 19.95 thousand cups
+Interpretation: When advertising budget is $0, the predicted sales are
+approximately 19.95 thousand cups ( 19951 cups).
+
+Slope (beta_1) = 1.9 thousand cups per thousand dollars
+Interpretation: For each additional $1,000 spent on advertising,
+the predicted sales increase by approximately 1.9 thousand cups ( 1899 cups).
+Equivalently: For each additional $1 spent, sales increase by about 1.9 cups.
+
+Q4(b): Checking assumptions
+-------------------------------------------
+
+Warning message:
+In title(...) :
+  conversion failure on '√|Residuals|' in 'mbcsToSbcs': for √ (U+221A)
+null device 
+          1 
+Diagnostic plots saved to Q4_diagnostic_plots.pdf
+
+null device 
+          1 
+Scatterplot saved to Q4_scatterplot.pdf
+
+Formal assumption tests:
+
+1. NORMALITY OF RESIDUALS:
+Shapiro-Wilk test: W = 0.9273455 , p-value = 0.1372667 
+Conclusion: No evidence against normality (p > 0.05)
+The normality assumption appears to be satisfied.
+
+2. LINEARITY:
+Visual inspection of:
+- Scatterplot shows a general linear trend initially, but appears to
+  flatten or decline at higher advertising budgets (potential non-linearity)
+- Residuals vs Fitted plot should show random scatter around zero
+  If there's a pattern (curve), linearity is violated
+
+3. HOMOSCEDASTICITY (constant variance):
+Visual inspection of:
+- Residuals vs Fitted: spread should be roughly constant
+- Scale-Location plot: should show horizontal trend
+
+Correlation between x and y: 0.9173 
+R-squared: 0.8414 
+
+Q4(c): Other variables that could affect sales
+-------------------------------------------
+Two other variables that could affect weekly coffee sales:
+
+1. WEATHER/TEMPERATURE:
+   - Coffee consumption typically increases in colder weather
+   - Seasonal variations affect customer behavior
+   - Could measure: average weekly temperature or weather conditions
+
+2. DAY OF WEEK / HOLIDAYS:
+   - Weekdays vs weekends may have different sales patterns
+   - Public holidays, exam periods, or special events affect foot traffic
+   - Could measure: number of weekdays/weekend days, or holiday indicator
+
+Additional possibilities:
+- Competitor promotions or pricing
+- Store location foot traffic
+- Product launches or menu changes
+- Economic indicators (consumer confidence, employment)
+
+
+========== ALL ANALYSES COMPLETE ==========
+
+Workspace saved to STAT5002_Assignment_Workspace.RData

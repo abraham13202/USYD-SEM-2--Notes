@@ -1,0 +1,159 @@
+---
+title: "STAT5002 Lab12 Worksheet"
+subtitle: "Linear regressions"
+author: "University of Sydney STAT5002"
+date: 
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+# Simple linear regression 
+
+You need the data file `AutumnCleaned.csv` to load the variables needed for this question. We will use the following variables.
+
+  * `X9am.temperature` (**daily temperature measured at 9 am**)
+  * `Minimum.temperature` (**minimum daily temperature**) 
+  
+Please beware that the variable names are **case sensitive**.
+
+```{r}
+data = read.csv("data/AutumnCleaned.csv", header = T)
+### the following displays the dimension of the data
+dim(data)
+T9am = data$X9am.temperature
+Tmin = data$Minimum.temperature
+```
+
+We can use the function `lm()` to fit a linear regression model for predicting minimum daily temperature ($Y$) using daily temperature measured at 9 am ($x$). The following code shows the scatter plot of the data, the fitted linear regression line, and the residual plot. 
+
+```{r}
+###
+par(mfrow=c(1,2))
+plot(T9am, Tmin, xlab="x: 9am temperature", ylab="y: min temperature")
+lm1 = lm(Tmin~T9am)
+abline(lm1, col="red")
+plot(T9am, lm1$residuals, xlab="x: 9am temperature", ylab="residuals")
+```
+
+
+We want to test if the daily temperature measured at 9 am ($x$) has a **positive** linear association with the minimum daily temperature ($Y$). In the following, we want to first carry out these steps by "hand", and then compare our result with R. 
+
+```{r}
+# A linear model is fitted: 
+lm1
+```
+
+## Hypotheses
+
+- What are the null and alternative hypotheses.
+
+## Checking assumptions
+
+- What are the assumptions we need to check here?
+- Use appropriate graphical summaries to check them? 
+
+```{r}
+# Write your code here
+
+```
+
+## Test statistic
+
+- What is the degrees of freedom of Student's $t$-distribution here? 
+- What is the value of $b_1$?
+- Calculate the estimated standard error and the observed value of the test statistic "by hand" (without using `summary()`).
+
+```{r}
+# Write your code here
+
+```
+
+## P-value and conclusion.
+
+- Calculate the P-value.
+- What is your conclusion at the 1% level of significance? 
+
+```{r}
+# Write your code here
+
+```
+
+## Validate your result using `summary()`
+
+- Use the function `summary()` to validate your results.
+
+```{r}
+# Write your code here
+
+```
+
+## Calculate a 95% confidence interval for the true slope. 
+
+```{r}
+# Write your code here
+
+```
+
+# Multiple linear regression
+
+The effect of body height (`H`, in inches) and body weight (`W`, in pounds) on catheter length (`L`, in centimetres) was studied in a sample of $n = 12$ children with congenital heart disease. Because selecting an appropriate catheter length is critical for safe and effective cardiac procedures in pediatric patients, a multiple linear regression model was used to examine whether these physical measurements (`H` and `W`) can help predict the required catheter length (`L`). A data set is given as follows. 
+
+```{r}
+H = c(42.8, 63.5, 37.5, 39.5, 45.5, 38.5, 43, 22.5, 37, 23.5,
+33, 58)
+W = c(40, 93.5, 35.5, 30, 52, 17, 38.5, 8.5, 33, 9.5, 21, 79)
+L = c(37, 49.5, 34.5, 36, 43, 28, 37, 20, 33.5, 30.5, 38.5, 47)
+dat = data.frame(H, W, L)
+dim(dat)
+str(dat)
+```
+
+
+## Plot the pairwise scatter plots and calculate the pairwise correlation coefficients. 
+- Check the scatter plots and the correlation coefficients. What are your observations regarding the associations among the three variables?
+- Do we need to be concerned about the effect of multicollinearity in this dataset?
+
+```{r}
+# Write your code here
+
+```
+
+## Using R, fit a multiple linear regression model.
+
+- Write down the multiple linear regression model. How can you interpret the fitted model?
+- Based on the summary of the multiple linear regression model, are the independent variables `H` and `W` significant for predicting the required catheter length (`L`), after adjusting for each other? You can use a 5% level of significance. 
+
+```{r}
+# Write your code here
+
+```
+
+## Model comparison
+
+The height variable is correlated with the weight (which makes sense). If using the weight variable `W` alone can make a good prediction on the the catheter length `L`, we may not need to use the multiple linear regression model. Let's examine this. 
+
+- Build a simple linear regression model predicting the catheter length `L` using weight `W`. 
+- Write down the fitted simple linear regression model and interpret the model.
+- What numerical summary can be used to compare the performance between the multiple linear regression model and the simple linear regression model?
+- Calculate the numerical summaries for both models (reading from `summary()`), what is your conclusion? 
+
+```{r}
+# Write your code here
+
+```
+

@@ -1,0 +1,1317 @@
+%% STAT5003 Comprehensive Exam Cheatsheet
+%% Computational Statistical Methods
+%% University of Sydney
+
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{upquote}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm}
+
+% Redefine section commands
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries\color{blue!70!black}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries\color{blue!50!black}}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Compact lists
+\setlist{nolistsep}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% Custom colors
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}
+\definecolor{myblue}{RGB}{51,102,187}
+\definecolor{myred}{RGB}{220,50,47}
+\definecolor{mygreen}{RGB}{0,150,80}
+
+% Code formatting
+\lstset{
+    basicstyle=\ttfamily\tiny,
+    breaklines=true,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    xleftmargin=2pt,
+    xrightmargin=2pt,
+}
+
+% Custom box for important formulas
+\newtcolorbox{formulabox}[1][]{
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=2pt,
+  right=2pt,
+  top=2pt,
+  bottom=2pt
+}
+
+% Custom box for warnings/tips
+\newtcolorbox{tipbox}[1][]{
+  colback=red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=2pt,
+  right=2pt,
+  top=2pt,
+  bottom=2pt
+}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{center}
+     \Large{\textbf{STAT5003 Comprehensive Exam Cheatsheet}} \\
+     \small{Computational Statistical Methods | University of Sydney | Final Exam 2025}
+\end{center}
+
+\begin{multicols}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+% ============================================================
+\section{Performance Metrics}
+% ============================================================
+
+\subsection{Regression Metrics}
+
+\begin{formulabox}[Key Formulas]
+\textbf{MSE:} $\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$ \\
+\textbf{RSS:} $\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$ \\
+\textbf{R²:} $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$ \\
+\textbf{Adj. R²:} $1 - \frac{(1-R^2)(n-1)}{n-p-1}$
+\end{formulabox}
+
+\textbf{Key Points:}
+\begin{itemize}[leftmargin=*]
+    \item R² always increases with more predictors
+    \item Use Adjusted R² for model comparison
+    \item MSE is scale-dependent
+    \item Lower RSS $\neq$ better model (overfitting)
+\end{itemize}
+
+\subsection{Classification Metrics}
+
+\begin{formulabox}[Confusion Matrix]
+\begin{tabular}{l|cc}
+ & Pred Neg & Pred Pos \\ \hline
+Act Neg & TN & FP \\
+Act Pos & FN & TP
+\end{tabular}
+\end{formulabox}
+
+\begin{formulabox}[Essential Formulas]
+\textbf{Accuracy:} $\frac{TP + TN}{Total}$ \\[2pt]
+\textbf{Precision:} $\frac{TP}{TP + FP}$ \\[2pt]
+\textbf{Recall/Sensitivity:} $\frac{TP}{TP + FN}$ \\[2pt]
+\textbf{Specificity:} $\frac{TN}{TN + FP}$ \\[2pt]
+\textbf{F1 Score:} $\frac{2 \times Precision \times Recall}{Precision + Recall}$ \\[2pt]
+\textbf{Cohen's Kappa:} $\frac{p_o - p_e}{1 - p_e}$
+\end{formulabox}
+
+\textbf{Cohen's Kappa Interpretation:}
+\begin{itemize}[leftmargin=*]
+    \item $< 0$: No agreement
+    \item $0.0-0.20$: Slight
+    \item $0.21-0.40$: Fair
+    \item $0.41-0.60$: Moderate
+    \item $0.61-0.80$: Substantial
+    \item $0.81-1.00$: Almost perfect
+\end{itemize}
+
+\textbf{ROC \& AUC:}
+\begin{itemize}[leftmargin=*]
+    \item AUC = 0.5: Random (useless)
+    \item AUC = 0.5-0.7: Poor
+    \item AUC = 0.7-0.8: Acceptable
+    \item AUC = 0.8-0.9: Good
+    \item AUC $> 0.9$: Excellent
+\end{itemize}
+
+\subsection{Imbalanced Data}
+
+\begin{tipbox}[CRITICAL: When Accuracy Misleads]
+Example: 1\% disease prevalence \\
+Predict "no disease" for all $\Rightarrow$ 99\% accuracy! \\
+\textbf{Better metrics:} Precision, Recall, F1, AUC, Kappa
+\end{tipbox}
+
+\textbf{Solutions:}
+\begin{enumerate}[leftmargin=*]
+    \item Use F1, AUC, Cohen's Kappa
+    \item Oversample minority class
+    \item Undersample majority class
+    \item SMOTE (synthetic samples)
+    \item Adjust classification threshold
+    \item Use class weights
+\end{enumerate}
+
+% ============================================================
+\section{Regression Models}
+% ============================================================
+
+\subsection{Linear Regression}
+
+\begin{formulabox}[Model]
+$Y = \beta_0 + \beta_1X_1 + \cdots + \beta_pX_p + \varepsilon$
+\end{formulabox}
+
+\textbf{Objective:} Minimize $\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+lm(y ~ x1 + x2 + x3, data=df)
+\end{lstlisting}
+
+\textbf{Assumptions:} Linearity, Independence, Homoscedasticity, Normality
+
+\textbf{Pros:} Simple, interpretable, fast \\
+\textbf{Cons:} Linear only, sensitive to outliers, overfits
+
+\subsection{Ridge Regression (L2)}
+
+\begin{formulabox}[Objective]
+$\min \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}\beta_j^2$
+\end{formulabox}
+
+\textbf{Constraint:} $\sum_{j=1}^{p}\beta_j^2 \leq s$
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+library(glmnet)
+glmnet(X, y, alpha=0, lambda=value)
+\end{lstlisting}
+
+\textbf{Key Points:}
+\begin{itemize}[leftmargin=*]
+    \item Shrinks coefficients toward zero (never exactly zero)
+    \item All features retained
+    \item Reduces variance at cost of bias
+    \item Good when all predictors useful
+\end{itemize}
+
+\subsection{Lasso Regression (L1)}
+
+\begin{formulabox}[Objective]
+$\min \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j=1}^{p}|\beta_j|$
+\end{formulabox}
+
+\textbf{Constraint:} $\sum_{j=1}^{p}|\beta_j| \leq s$
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+glmnet(X, y, alpha=1, lambda=value)
+\end{lstlisting}
+
+\textbf{Key Points:}
+\begin{itemize}[leftmargin=*]
+    \item Sets some coefficients \textbf{exactly to zero}
+    \item \textbf{Feature selection} as bonus
+    \item Sparse models
+    \item Better with many irrelevant features
+\end{itemize}
+
+\subsection{Ridge vs Lasso}
+
+\begin{tabular}{|p{2.5cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Feature} & \textbf{Ridge} & \textbf{Lasso} \\ \hline
+Penalty & L2 (squared) & L1 (absolute) \\ \hline
+Feature select & No & Yes \\ \hline
+Coefficients & $\to 0$ & $= 0$ \\ \hline
+Geometry & Circle & Diamond \\ \hline
+When to use & All useful & Many irrelevant \\ \hline
+\end{tabular}
+
+\subsection{Feature Selection}
+
+\textbf{Methods:}
+\begin{enumerate}[leftmargin=*]
+    \item Best Subset: Try all $2^p$ combinations
+    \item Forward: Start empty, add best
+    \item Backward: Start full, remove worst
+\end{enumerate}
+
+\textbf{Selection Criteria:}
+\begin{itemize}[leftmargin=*]
+    \item Adjusted R² (higher better)
+    \item AIC: $2p - 2\ln(L)$ (lower better)
+    \item BIC: $\ln(n)p - 2\ln(L)$ (lower better)
+\end{itemize}
+
+% ============================================================
+\section{Classification Models}
+% ============================================================
+
+\subsection{Logistic Regression}
+
+\begin{formulabox}[Model]
+$P(Y=1|X) = \frac{1}{1+e^{-X\beta}}$ \\[4pt]
+$\log\left(\frac{p}{1-p}\right) = X\beta$
+\end{formulabox}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+glm(y ~ x1+x2, data=df, family=binomial)
+\end{lstlisting}
+
+\textbf{Pros:} Interpretable, probabilistic, works well \\
+\textbf{Cons:} Linear log-odds, can't capture complex patterns
+
+\subsection{LDA (Linear Discriminant Analysis)}
+
+\begin{formulabox}[Bayes Formula]
+$P(Y=k|X) = \frac{\pi_k f_k(X)}{\sum_{l=1}^{K}\pi_l f_l(X)}$
+\end{formulabox}
+
+\textbf{Assumptions:}
+\begin{itemize}[leftmargin=*]
+    \item Normal distribution within classes
+    \item \textbf{Same covariance matrix} across classes
+    \item Different means
+\end{itemize}
+
+\textbf{R Code:} \texttt{lda(y \textasciitilde{} x1+x2, data=df)}
+
+\subsection{QDA (Quadratic Discriminant Analysis)}
+
+\textbf{Key Difference:} Each class has \textbf{different covariance}
+
+\textbf{Decision Boundary:} Quadratic (curved)
+
+\textbf{R Code:} \texttt{qda(y \textasciitilde{} x1+x2, data=df)}
+
+\textbf{Parameters (p features, K classes):}
+\begin{itemize}[leftmargin=*]
+    \item LDA: $Kp + p(p+1)/2$
+    \item QDA: $Kp + Kp(p+1)/2$ (more flexible)
+\end{itemize}
+
+\subsection{Model Comparison Table}
+
+\begin{tabular}{|p{2cm}|p{1.5cm}|p{2cm}|}
+\hline
+\textbf{Method} & \textbf{Boundary} & \textbf{Assumes} \\ \hline
+Logistic & Linear & None on X \\ \hline
+LDA & Linear & Normal, same $\Sigma$ \\ \hline
+QDA & Quadratic & Normal, diff $\Sigma$ \\ \hline
+\end{tabular}
+
+\subsection{k-Nearest Neighbors (kNN)}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Choose k
+    \item Find k closest training points
+    \item Majority vote (classification) or average (regression)
+\end{enumerate}
+
+\textbf{R Code:} \texttt{knn(train, test, cl, k=5)}
+
+\begin{tipbox}[Key Parameter: k]
+\textbf{Small k:} Low bias, high variance (overfitting) \\
+\textbf{Large k:} High bias, low variance (underfitting)
+\end{tipbox}
+
+\textbf{Important:} 
+\begin{itemize}[leftmargin=*]
+    \item Lazy learner (no training phase)
+    \item Non-parametric
+    \item \textbf{Sensitive to scale $\Rightarrow$ STANDARDIZE}
+\end{itemize}
+
+\textbf{Pros:} Simple, non-linear, no training \\
+\textbf{Cons:} Slow prediction, scale-sensitive
+
+\subsection{Support Vector Machines (SVM)}
+
+\textbf{Objective:} Find hyperplane maximizing margin
+
+\textbf{Key Concepts:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Support vectors:} Closest points to boundary
+    \item \textbf{Margin:} Distance to nearest point
+    \item \textbf{C parameter:} Trade-off control
+    \begin{itemize}
+        \item Large C: Hard margin (low bias, high var)
+        \item Small C: Soft margin (high bias, low var)
+    \end{itemize}
+\end{itemize}
+
+\textbf{Kernels:}
+\begin{itemize}[leftmargin=*]
+    \item Linear: $K(x,x') = x^Tx'$
+    \item Polynomial: $K(x,x') = (1+x^Tx')^d$
+    \item RBF: $K(x,x') = \exp(-\gamma\|x-x'\|^2)$
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+svm(y~., data=train, kernel="radial", 
+    cost=C, gamma=g)
+\end{lstlisting}
+
+% ============================================================
+\section{Tree-Based Methods}
+% ============================================================
+
+\subsection{Decision Trees}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Find best split (max info gain)
+    \item Recursively split
+    \item Stop at depth/min samples
+\end{enumerate}
+
+\textbf{Splitting Criteria:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Classification:} Gini or Entropy
+    \begin{itemize}
+        \item Gini: $\sum_{k=1}^{K}p_k(1-p_k)$
+    \end{itemize}
+    \item \textbf{Regression:} Minimize $\sum(y_i - \bar{y}_{node})^2$
+\end{itemize}
+
+\textbf{R Code:} \texttt{rpart(y \textasciitilde{} ., data=df, method="class")}
+
+\textbf{Pros:} Interpretable, handles non-linear, no scaling \\
+\textbf{Cons:} High variance, overfits, greedy
+
+\subsection{Bagging (Bootstrap Aggregating)}
+
+\begin{formulabox}[Formula]
+$\hat{f}_{bag}(x) = \frac{1}{B}\sum_{b=1}^{B}\hat{f}_b^*(x)$
+\end{formulabox}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Create B bootstrap samples
+    \item Train tree on each
+    \item Average (regression) or vote (classification)
+\end{enumerate}
+
+\textbf{Out-of-Bag (OOB) Error:}
+\begin{itemize}[leftmargin=*]
+    \item Each bootstrap: $\sim$63\% data used
+    \item Remaining $\sim$37\% for validation
+    \item OOB error $\approx$ test error estimate
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+randomForest(y~., data=df, mtry=p)
+# mtry=p (all features) for bagging
+\end{lstlisting}
+
+\textbf{Key:} Reduces variance, doesn't increase bias
+
+\subsection{Random Forest}
+
+\textbf{Difference from Bagging:} At each split:
+\begin{itemize}[leftmargin=*]
+    \item Randomly sample $m$ features (typically $m = \sqrt{p}$)
+    \item Choose best split from these $m$
+    \item Decorrelates trees $\Rightarrow$ better
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+randomForest(y~., data=df, 
+    mtry=sqrt(p), ntree=500)
+\end{lstlisting}
+
+\textbf{Hyperparameters:}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{ntree}: More is better (diminishing returns)
+    \item \texttt{mtry}: $\sqrt{p}$ (class), $p/3$ (regression)
+    \item Max depth, min samples per leaf
+\end{itemize}
+
+\textbf{Variable Importance:} Error increase when permuted
+
+\textbf{Pros:} Very accurate, handles high-D, OOB error \\
+\textbf{Cons:} Less interpretable, slower
+
+\subsection{Boosting}
+
+\textbf{Core Idea:} Build trees sequentially, each correcting errors
+
+\textbf{Gradient Boosting:}
+\begin{enumerate}[leftmargin=*]
+    \item Fit tree to data
+    \item Fit next tree to \textbf{residuals}
+    \item Add: $\hat{f}(x) = \sum_{b=1}^{B}\lambda\hat{f}_b(x)$
+\end{enumerate}
+
+\textbf{Key Hyperparameters:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{B/n\_estimators:} Number of trees
+    \item \textbf{$\lambda$/learning\_rate:} Shrinkage (0.01-0.1)
+    \item \textbf{max\_depth:} Tree complexity (3-6 typical)
+    \item \textbf{subsample:} Fraction of data per tree
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+library(gbm)
+gbm(y~., data=df, n.trees=100, 
+    interaction.depth=3, shrinkage=0.01)
+\end{lstlisting}
+
+\textbf{Pros:} Extremely powerful, often best \\
+\textbf{Cons:} Easy to overfit, needs careful tuning
+
+\subsection{Bagging vs Boosting Comparison}
+
+\begin{tabular}{|p{2.5cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Aspect} & \textbf{Bagging/RF} & \textbf{Boosting} \\ \hline
+Tree building & Parallel & Sequential \\ \hline
+Sampling & Bootstrap & Weighted \\ \hline
+Goal & $\downarrow$ Variance & $\downarrow$ Bias+Var \\ \hline
+Overfit risk & Low & High \\ \hline
+Test error & OOB & Needs CV \\ \hline
+Learning rate & N/A & Critical \\ \hline
+\end{tabular}
+
+% ============================================================
+\section{Dimensionality Reduction}
+% ============================================================
+
+\subsection{PCA (Principal Component Analysis)}
+
+\textbf{Objective:} Find directions of maximum variance
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Center data (subtract mean)
+    \item Compute covariance matrix
+    \item Find eigenvectors (PCs)
+    \item Project onto top k components
+\end{enumerate}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+pca <- prcomp(X, center=TRUE, scale=TRUE)
+summary(pca)  # Variance explained
+pca$rotation  # Loadings
+pca$x         # Scores
+\end{lstlisting}
+
+\textbf{Key Concepts:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Loadings:} Feature contribution to PC
+    \item \textbf{Scores:} New coordinates
+    \item \textbf{Variance explained:} \% per PC
+    \item \textbf{Cumulative:} Sum up to PC k
+\end{itemize}
+
+\textbf{Choosing \# PCs:}
+\begin{itemize}[leftmargin=*]
+    \item Scree plot (elbow)
+    \item Cumulative variance $> 80-90\%$
+    \item CV of downstream model
+\end{itemize}
+
+\textbf{Pros:} Preserves variance, orthogonal, interpretable \\
+\textbf{Cons:} Linear only, scale-dependent
+
+\subsection{t-SNE}
+
+\textbf{Objective:} Preserve local structure (neighbors stay close)
+
+\textbf{Key Parameter:} Perplexity (5-50, $\sim$neighbors)
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+library(Rtsne)
+tsne <- Rtsne(X, dims=2, perplexity=30)
+plot(tsne$Y)
+\end{lstlisting}
+
+\textbf{Pros:} Excellent viz, captures non-linear, preserves clusters \\
+\textbf{Cons:} Non-deterministic, can't transform new data, slow
+
+\subsection{PCA vs t-SNE}
+
+\begin{tabular}{|p{3cm}|p{1.2cm}|p{1.2cm}|}
+\hline
+\textbf{Use Case} & \textbf{PCA} & \textbf{t-SNE} \\ \hline
+Feature reduction & \checkmark & $\times$ \\ \hline
+Visualization & \checkmark & \checkmark \checkmark \\ \hline
+Global structure & \checkmark & $\times$ \\ \hline
+Local structure & $\times$ & \checkmark \\ \hline
+Interpretability & \checkmark & $\times$ \\ \hline
+Transform new data & \checkmark & $\times$ \\ \hline
+Speed & Fast & Slow \\ \hline
+\end{tabular}
+
+\begin{tipbox}[Exam Tip]
+Modeling $\Rightarrow$ PCA \\
+Visualization only $\Rightarrow$ t-SNE
+\end{tipbox}
+
+% ============================================================
+\section{Clustering}
+% ============================================================
+
+\subsection{K-Means}
+
+\begin{formulabox}[Objective]
+$\min \sum_{k=1}^{K}\sum_{i \in C_k}\|x_i - \mu_k\|^2$
+\end{formulabox}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Choose k, initialize centroids
+    \item Repeat:
+    \begin{itemize}
+        \item Assign points to nearest centroid
+        \item Update centroids to mean
+    \end{itemize}
+\end{enumerate}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+kmeans(X, centers=k, nstart=25)
+\end{lstlisting}
+
+\textbf{Choosing k:}
+\begin{itemize}[leftmargin=*]
+    \item Elbow method (within-SS vs k)
+    \item Silhouette score
+    \item Gap statistic
+\end{itemize}
+
+\textbf{Pros:} Simple, fast, scales well \\
+\textbf{Cons:} Must specify k, spherical clusters, sensitive to init/outliers/scale
+
+\subsection{Hierarchical Clustering}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Each point = cluster
+    \item Merge closest two clusters
+    \item Repeat until one cluster
+    \item Cut dendrogram at height
+\end{enumerate}
+
+\textbf{Linkage Methods:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Complete:} Max distance
+    \item \textbf{Single:} Min distance
+    \item \textbf{Average:} Average distance
+    \item \textbf{Ward's:} Min within-cluster variance
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+dist_mat <- dist(X)
+hc <- hclust(dist_mat, method="complete")
+plot(hc)
+clusters <- cutree(hc, k=3)
+\end{lstlisting}
+
+\textbf{Pros:} Don't need k upfront, dendrogram shows structure \\
+\textbf{Cons:} Slow O($n^2$), can't undo merges
+
+\subsection{K-Means vs Hierarchical}
+
+\begin{tabular}{|p{2.5cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Aspect} & \textbf{K-Means} & \textbf{Hierarchical} \\ \hline
+Specify k & Before & After (cut) \\ \hline
+Speed & Fast O(n) & Slow O($n^2$) \\ \hline
+Large data & Good & Struggles \\ \hline
+Deterministic & No (init) & Yes \\ \hline
+Shapes & Spherical & Any \\ \hline
+Visual & Scatter & Dendrogram \\ \hline
+\end{tabular}
+
+% ============================================================
+\section{Resampling Methods}
+% ============================================================
+
+\subsection{Cross-Validation}
+
+\textbf{k-Fold CV:}
+\begin{enumerate}[leftmargin=*]
+    \item Split data into k equal folds
+    \item For each fold i:
+    \begin{itemize}
+        \item Train on k-1 folds
+        \item Test on fold i
+    \end{itemize}
+    \item Average k errors
+\end{enumerate}
+
+\begin{formulabox}[CV Error]
+$CV_{(k)} = \frac{1}{k}\sum_{i=1}^{k}MSE_i$
+\end{formulabox}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+library(caret)
+trainControl(method="cv", number=10)
+\end{lstlisting}
+
+\textbf{Common k:} 5 or 10 (most common), n (LOOCV)
+
+\textbf{Bias-Variance Trade-off:}
+\begin{itemize}[leftmargin=*]
+    \item Small k (5): Higher bias, lower variance, faster
+    \item Large k (n): Lower bias, higher variance, slower
+    \item \textbf{k=10 is sweet spot}
+\end{itemize}
+
+\textbf{Repeated CV:}
+\begin{lstlisting}[language=R]
+trainControl(method="repeatedcv", 
+             number=10, repeats=5)
+\end{lstlisting}
+
+\subsection{Bootstrap}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Sample n obs. with replacement
+    \item Repeat B times (100-1000)
+    \item Estimate statistic on each
+    \item Use distribution for inference
+\end{enumerate}
+
+\begin{formulabox}[Standard Error]
+$\hat{SE}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}(\hat{\theta}^{*b} - \bar{\theta}^*)^2}$
+\end{formulabox}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+library(boot)
+boot_stat <- function(data, indices) {
+  return(mean(data[indices]))
+}
+boot(data=my_data, statistic=boot_stat, 
+     R=1000)
+\end{lstlisting}
+
+\textbf{Key:} $\sim$63.2\% data used per sample, $\sim$36.8\% for validation
+
+\textbf{Pros:} Works for any statistic, no assumptions \\
+\textbf{Cons:} Can be biased for test error, computationally intensive
+
+\subsection{CV vs Bootstrap}
+
+\begin{tabular}{|p{2.5cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Aspect} & \textbf{CV} & \textbf{Bootstrap} \\ \hline
+Purpose & Model eval & Uncertainty \\ \hline
+Test error & Accurate & Slight bias \\ \hline
+Variance est. & No & Yes \\ \hline
+Cost & Medium & High \\ \hline
+Model select & Yes & Caution \\ \hline
+\end{tabular}
+
+% ============================================================
+\section{Statistical Methods}
+% ============================================================
+
+\subsection{Maximum Likelihood Estimation (MLE)}
+
+\textbf{Concept:} Find $\theta$ that maximizes P(data|$\theta$)
+
+\begin{formulabox}[Likelihood]
+$L(\theta|x) = \prod_{i=1}^{n}f(x_i|\theta)$ \\[4pt]
+$\ell(\theta|x) = \sum_{i=1}^{n}\log f(x_i|\theta)$
+\end{formulabox}
+
+\textbf{Process:}
+\begin{enumerate}[leftmargin=*]
+    \item Write likelihood
+    \item Take log
+    \item Differentiate w.r.t. $\theta$
+    \item Set to zero, solve
+\end{enumerate}
+
+\textbf{Example (Normal):} 
+$\hat{\mu} = \bar{x}$, $\hat{\sigma}^2 = \frac{1}{n}\sum(x_i-\bar{x})^2$
+
+\subsection{Kernel Density Estimation (KDE)}
+
+\begin{formulabox}[Formula]
+$\hat{f}(x) = \frac{1}{nh}\sum_{i=1}^{n}K\left(\frac{x-X_i}{h}\right)$
+\end{formulabox}
+
+\textbf{Kernel Properties:}
+\begin{itemize}[leftmargin=*]
+    \item $K(x) \geq 0$ (non-negative)
+    \item $K(-x) = K(x)$ (symmetric)
+    \item $\int K(x)dx = 1$ (unit measure)
+\end{itemize}
+
+\textbf{Bandwidth h:}
+\begin{itemize}[leftmargin=*]
+    \item Small: Undersmooth (high var, low bias)
+    \item Large: Oversmooth (low var, high bias)
+    \item Rule: $h = 1.06\hat{\sigma}n^{-1/5}$
+\end{itemize}
+
+\textbf{R Code:}
+\begin{lstlisting}[language=R]
+density(data, bw="nrd0", kernel="gaussian")
+\end{lstlisting}
+
+% ============================================================
+\section{Simulation Methods}
+% ============================================================
+
+\subsection{Monte Carlo}
+
+\textbf{Purpose:} Estimate expectations via simulation
+
+\begin{formulabox}[Core Formula]
+$E[g(X)] = \int g(x)f(x)dx \approx \frac{1}{N}\sum_{i=1}^{N}g(X_i)$
+\end{formulabox}
+
+\textbf{Algorithm:}
+\begin{enumerate}[leftmargin=*]
+    \item Sample $X_1, \ldots, X_N$ from f(x)
+    \item Compute $g(X_i)$ for each
+    \item Average: $\hat{E}[g(X)]$
+\end{enumerate}
+
+\textbf{Sampling Methods:}
+
+\textbf{1. Inverse Transform:}
+$X = F^{-1}(U)$ where $U \sim Uniform(0,1)$
+
+\textbf{2. Acceptance-Rejection:}
+\begin{enumerate}[leftmargin=*]
+    \item Sample x from easy q(x)
+    \item Sample u $\sim$ Uniform(0,1)
+    \item If $u < f(x)/(M \cdot q(x))$, accept
+    \item Else reject, repeat
+\end{enumerate}
+
+\textbf{Pseudocode Template:}
+\begin{lstlisting}[language=R]
+n_sims <- 10000
+results <- numeric(n_sims)
+
+for (i in 1:n_sims) {
+  # Generate sample
+  x <- rnorm(n, mean=mu, sd=sigma)
+  # Compute statistic
+  results[i] <- mean(x)
+}
+
+estimate <- mean(results)
+ci <- quantile(results, c(0.025, 0.975))
+\end{lstlisting}
+
+\subsection{MCMC (Markov Chain Monte Carlo)}
+
+\textbf{Purpose:} Sample from complex distributions
+
+\textbf{Key Idea:} Create Markov chain with target as stationary distribution
+
+\textbf{Metropolis-Hastings:}
+\begin{enumerate}[leftmargin=*]
+    \item Start with $x_0$
+    \item For i = 1 to N:
+    \begin{itemize}
+        \item Propose $x^*$ from $q(x^*|x_{i-1})$
+        \item Compute: $\alpha = \min\left(1, \frac{f(x^*)q(x_{i-1}|x^*)}{f(x_{i-1})q(x^*|x_{i-1})}\right)$
+        \item With prob $\alpha$: $x_i = x^*$, else $x_i = x_{i-1}$
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Pseudocode:}
+\begin{lstlisting}[language=R]
+target <- function(x) { dnorm(x,0,1) }
+proposal_sd <- 1
+n_iter <- 10000
+samples <- numeric(n_iter)
+samples[1] <- 0
+
+for (i in 2:n_iter) {
+  proposal <- samples[i-1] + 
+              rnorm(1, 0, proposal_sd)
+  acceptance_ratio <- target(proposal) / 
+                      target(samples[i-1])
+  if (runif(1) < acceptance_ratio) {
+    samples[i] <- proposal
+  } else {
+    samples[i] <- samples[i-1]
+  }
+}
+samples_final <- samples[1001:n_iter]
+\end{lstlisting}
+
+\textbf{Important:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Burn-in:} Discard initial samples
+    \item \textbf{Thinning:} Keep every kth
+    \item Check convergence (trace plots)
+\end{itemize}
+
+% ============================================================
+\section{Bias-Variance Trade-off}
+% ============================================================
+
+\begin{formulabox}[Fundamental Equation]
+\textbf{Total Error} = Bias$^2$ + Variance + Irreducible Error
+\end{formulabox}
+
+\textbf{Bias:} Error from wrong assumptions (underfitting) \\
+\textbf{Variance:} Error from sensitivity to data (overfitting)
+
+\subsection{Model Complexity vs Error}
+
+\begin{center}
+\textbf{Low Complexity} $\Rightarrow$ High Bias, Low Variance \\
+\textbf{High Complexity} $\Rightarrow$ Low Bias, High Variance
+\end{center}
+
+\subsection{High Bias (Underfitting)}
+
+\textbf{Signs:}
+\begin{itemize}[leftmargin=*]
+    \item High training error
+    \item High test error
+    \item Training $\approx$ test error
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}[leftmargin=*]
+    \item More complex model
+    \item More features
+    \item Reduce regularization
+    \item More training time
+\end{itemize}
+
+\subsection{High Variance (Overfitting)}
+
+\textbf{Signs:}
+\begin{itemize}[leftmargin=*]
+    \item Low training error
+    \item High test error
+    \item Large gap: training vs test
+\end{itemize}
+
+\textbf{Solutions:}
+\begin{itemize}[leftmargin=*]
+    \item Simpler model
+    \item More data
+    \item Feature selection
+    \item Regularization
+    \item Early stopping
+    \item Ensemble (bagging)
+\end{itemize}
+
+\subsection{Complexity Controls by Model}
+
+\begin{tabular}{|p{2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+\textbf{Model} & \textbf{$\uparrow$ Complex} & \textbf{$\downarrow$ Complex} \\ \hline
+LinReg & Add features & Regularize \\ \hline
+kNN & $\downarrow$ k & $\uparrow$ k \\ \hline
+Tree & $\uparrow$ depth & $\downarrow$ depth \\ \hline
+RF & More trees & Fewer trees \\ \hline
+Boosting & More iter & Fewer iter \\ \hline
+SVM & $\uparrow$ C & $\downarrow$ C \\ \hline
+\end{tabular}
+
+% ============================================================
+\section{Common Workflow Mistakes}
+% ============================================================
+
+\begin{tipbox}[EXAM GOLD - Spot These Errors!]
+These are the most common mistakes tested!
+\end{tipbox}
+
+\subsection{1. Data Leakage}
+
+\textbf{WRONG:}
+\begin{lstlisting}[language=R]
+X_scaled <- scale(X)  # Use all data
+train_test_split(X_scaled)
+\end{lstlisting}
+
+\textbf{CORRECT:}
+\begin{lstlisting}[language=R]
+split_data()  # Split first
+scaler <- preProcess(train)  # Fit on train
+train_scaled <- predict(scaler, train)
+test_scaled <- predict(scaler, test)
+\end{lstlisting}
+
+\textbf{Common Sources:}
+\begin{itemize}[leftmargin=*]
+    \item Imputation using full data
+    \item Feature selection on full data
+    \item Scaling before split
+    \item Any transform using global stats
+\end{itemize}
+
+\subsection{2. Validation Set Reuse}
+
+\textbf{WRONG:}
+\begin{itemize}[leftmargin=*]
+    \item Tune many hyperparameters on validation
+    \item Report validation accuracy as final
+\end{itemize}
+
+\textbf{CORRECT:}
+\begin{itemize}[leftmargin=*]
+    \item Use validation/CV for tuning
+    \item Final eval on held-out test set
+    \item Never touch test until final
+\end{itemize}
+
+\subsection{3. Feature Selection Bias}
+
+\textbf{WRONG:}
+\begin{lstlisting}[language=R]
+top_features <- select(X, y)  # All data
+train_test_split(X[, top_features])
+\end{lstlisting}
+
+\textbf{CORRECT:}
+\begin{lstlisting}[language=R]
+train_test_split(X)  # Split first
+top <- select(X_train, y_train)  # Train only
+\end{lstlisting}
+
+\subsection{4. Temporal Leakage}
+
+\textbf{WRONG:}
+\begin{itemize}[leftmargin=*]
+    \item Randomly shuffle time series
+    \item Use future to predict past
+\end{itemize}
+
+\textbf{CORRECT:}
+\begin{itemize}[leftmargin=*]
+    \item Time-based splits
+    \item Train on past, test on future
+    \item Never shuffle time-dependent data
+\end{itemize}
+
+\subsection{5. Overfitting Detection}
+
+\textbf{Red Flags:}
+\begin{itemize}[leftmargin=*]
+    \item Training acc $\gg$ Test acc
+    \item 100 features, 50 observations
+    \item Perfect training performance
+\end{itemize}
+
+\textbf{Example:}
+\begin{lstlisting}
+Training Error: 0.02
+Test Error: 0.45
+-> Clear overfitting!
+\end{lstlisting}
+
+\subsection{6. Proper CV with Preprocessing}
+
+\textbf{WRONG:}
+\begin{lstlisting}[language=R]
+X_pca <- prcomp(X)$x[, 1:5]  # All data
+cv_results <- cross_validate(X_pca, y)
+\end{lstlisting}
+
+\textbf{CORRECT:}
+\begin{lstlisting}[language=R]
+for each fold:
+  pca <- prcomp(train_fold)  # Train only
+  train_pca <- pca$x[, 1:5]
+  test_pca <- predict(pca, test_fold)
+  # Train and evaluate
+\end{lstlisting}
+
+\subsection{7. Imbalanced Data}
+
+\textbf{WRONG:}
+\begin{itemize}[leftmargin=*]
+    \item Report only accuracy on 99:1 data
+    \item Ignore class imbalance
+\end{itemize}
+
+\textbf{CORRECT:}
+\begin{itemize}[leftmargin=*]
+    \item Use F1, AUC, Kappa
+    \item Oversample/undersample
+    \item Use class weights
+    \item Stratified CV
+\end{itemize}
+
+\subsection{8. Multiple Testing}
+
+\textbf{WRONG:}
+\begin{itemize}[leftmargin=*]
+    \item Try 100 models
+    \item Report best (p $< 0.05$)
+    \item Claim significance
+\end{itemize}
+
+\textbf{CORRECT:}
+\begin{itemize}[leftmargin=*]
+    \item Adjust for multiple comparisons
+    \item Use separate validation
+    \item Pre-specify hypotheses
+    \item Report all attempts
+\end{itemize}
+
+% ============================================================
+\section{R Code Quick Reference}
+% ============================================================
+
+\subsection{Data Splitting}
+\begin{lstlisting}[language=R]
+library(caret)
+set.seed(123)
+idx <- createDataPartition(y, p=0.8)
+train <- data[idx, ]
+test <- data[-idx, ]
+\end{lstlisting}
+
+\subsection{Preprocessing}
+\begin{lstlisting}[language=R]
+# Standardization
+preproc <- preProcess(train, 
+    method=c("center","scale"))
+train_scaled <- predict(preproc, train)
+test_scaled <- predict(preproc, test)
+
+# Missing data
+preproc <- preProcess(train, 
+    method="medianImpute")
+\end{lstlisting}
+
+\subsection{Models}
+\begin{lstlisting}[language=R]
+# Linear Regression
+lm(y ~ ., data=train)
+
+# Logistic
+glm(y ~ ., data=train, family=binomial)
+
+# Ridge/Lasso
+library(glmnet)
+glmnet(X, y, alpha=0)  # Ridge
+glmnet(X, y, alpha=1)  # Lasso
+
+# LDA/QDA
+library(MASS)
+lda(y ~ ., data=train)
+qda(y ~ ., data=train)
+
+# kNN
+library(class)
+knn(train[,-1], test[,-1], train$y, k=5)
+
+# SVM
+library(e1071)
+svm(y ~ ., data=train, kernel="radial")
+
+# Decision Tree
+library(rpart)
+rpart(y ~ ., data=train)
+
+# Random Forest
+library(randomForest)
+randomForest(y ~ ., data=train, ntree=500)
+
+# GBM
+library(gbm)
+gbm(y ~ ., data=train, n.trees=100)
+
+# XGBoost
+library(xgboost)
+xgboost(data=X, label=y, nrounds=100)
+\end{lstlisting}
+
+\subsection{Cross-Validation}
+\begin{lstlisting}[language=R]
+library(caret)
+ctrl <- trainControl(method="cv", number=10)
+model <- train(y ~ ., data=train, 
+               method="rf", trControl=ctrl)
+\end{lstlisting}
+
+\subsection{Metrics}
+\begin{lstlisting}[language=R]
+# Confusion Matrix
+library(caret)
+confusionMatrix(pred, actual)
+
+# ROC/AUC
+library(pROC)
+roc_obj <- roc(actual, pred_probs)
+auc(roc_obj)
+
+# Classification
+library(MLmetrics)
+Accuracy(y_pred, y_true)
+Precision(y_pred, y_true)
+Recall(y_pred, y_true)
+F1_Score(y_pred, y_true)
+\end{lstlisting}
+
+\subsection{Clustering \& Dimensionality}
+\begin{lstlisting}[language=R]
+# K-means
+kmeans(X, centers=3, nstart=25)
+
+# Hierarchical
+hc <- hclust(dist(X), method="complete")
+cutree(hc, k=3)
+
+# PCA
+pca <- prcomp(X, center=TRUE, scale=TRUE)
+
+# t-SNE
+library(Rtsne)
+Rtsne(X, dims=2, perplexity=30)
+\end{lstlisting}
+
+% ============================================================
+\section{Exam Strategy}
+% ============================================================
+
+\subsection{For "Compare \& Contrast"}
+\begin{enumerate}[leftmargin=*]
+    \item State algorithmic difference
+    \item Compare assumptions
+    \item Compare flexibility
+    \item When to use each
+    \item Bias-variance trade-off
+    \item Computational considerations
+\end{enumerate}
+
+\subsection{For "Workflow Critique"}
+\textbf{Look for:}
+\begin{itemize}[leftmargin=*]
+    \item ❌ Preprocessing before split
+    \item ❌ Using test set multiple times
+    \item ❌ Feature selection on full data
+    \item ❌ Wrong CV implementation
+    \item ❌ Ignoring class imbalance
+    \item ❌ Wrong metrics
+    \item ❌ Temporal leakage
+    \item ❌ Overfitting ignored
+\end{itemize}
+
+\subsection{For "Classification Eval"}
+\begin{enumerate}[leftmargin=*]
+    \item Calculate all metrics
+    \item Consider class imbalance
+    \item Interpret in context
+    \item Suggest appropriate metric
+    \item Check if performance adequate
+\end{enumerate}
+
+\subsection{For "Pseudocode"}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{<1>} often = n\_simulations
+    \item \texttt{<2>} often = random generation
+    \item \texttt{<3>} often = condition
+    \item \texttt{<4>} often = calculation
+    \item Think: "What is this estimating?"
+\end{itemize}
+
+\subsection{For "R Output Interpretation"}
+\begin{itemize}[leftmargin=*]
+    \item Compare metrics appropriately
+    \item Consider bias-variance
+    \item Look for overfitting
+    \item Suggest improvements
+    \item Remember: train error $\leq$ test error
+\end{itemize}
+
+% ============================================================
+\section{Key Formulas to Memorize}
+% ============================================================
+
+\begin{formulabox}[Must-Know Metrics]
+\textbf{Accuracy} = $\frac{TP + TN}{Total}$ \\[4pt]
+\textbf{Precision} = $\frac{TP}{TP + FP}$ \\[4pt]
+\textbf{Recall} = $\frac{TP}{TP + FN}$ \\[4pt]
+\textbf{F1} = $\frac{2 \times Prec \times Rec}{Prec + Rec}$ \\[4pt]
+\textbf{Specificity} = $\frac{TN}{TN + FP}$
+\end{formulabox}
+
+\begin{formulabox}[Model Error]
+\textbf{Total Error} = Bias$^2$ + Variance + Irreducible \\[4pt]
+\textbf{MSE} = $\frac{1}{n}\sum(y_i - \hat{y}_i)^2$ \\[4pt]
+\textbf{R²} = $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$
+\end{formulabox}
+
+\begin{formulabox}[Key Distributions]
+\textbf{Logistic:} $P(Y=1|X) = \frac{1}{1+e^{-X\beta}}$ \\[4pt]
+\textbf{Normal:} $f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+\end{formulabox}
+
+% ============================================================
+\section{Final Tips}
+% ============================================================
+
+\begin{tipbox}[Critical Rules]
+\textbf{1.} Always split FIRST, then preprocess \\
+\textbf{2.} Never touch test set until final \\
+\textbf{3.} Imbalanced data: F1/AUC/Kappa \\
+\textbf{4.} Standardize for: kNN, SVM, PCA \\
+\textbf{5.} CV for selection, not test set \\
+\textbf{6.} Overfitting: train $\ll$ test \\
+\textbf{7.} PCA for modeling, t-SNE for viz \\
+\textbf{8.} Ridge keeps all, Lasso selects \\
+\textbf{9.} Boosting $>$ overfitting than bagging \\
+\textbf{10.} Context matters for metrics!
+\end{tipbox}
+
+\begin{center}
+\textbf{\Large{Good Luck! 🍀}}
+\end{center}
+
+\end{multicols}
+
+\end{document}

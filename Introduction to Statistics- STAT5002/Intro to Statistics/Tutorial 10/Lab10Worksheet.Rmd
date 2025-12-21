@@ -1,0 +1,163 @@
+---
+title: "STAT5002 Lab10 Worksheet"
+subtitle: "Two-sample T-test"
+author: "University of Sydney STAT5002"
+date: 
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+
+# Data processing
+
+In the first part of this lab, we demonstrate some basic data processing steps using the file `IDCJAC0009_066036_1800_Data.csv`. This section is intended solely to illustrate how to prepare the original dataset, so that you can use the processed data to generate additional examples for your own practice. 
+
+```{r}
+mgc = read.csv("IDCJAC0009_066036_1800_Data.csv")
+```
+
+The code below determines monthly totals of rainfall (note that `na.rm=T` ignores NAs, treating them as zero); rows are years, columns are months:
+
+```{r}
+rf = mgc$Rainfall.amount..millimetres.
+monthly.rf = tapply(rf, list(mgc$Year, mgc$Month), sum, na.rm=T)
+```
+
+The rainfall was only recorded May 1904 -- Dec 1925, then Jan 1966 -- Oct 1970, then Aug 2001 to the present. Let us extract the rainfall for the month of May in the two periods 1904-1925 and 2002-2024:
+
+
+```{r}
+yrs = as.numeric(rownames(monthly.rf))
+yr.19 = (yrs < 1926)
+yr.20 = (yrs > 2001)
+may.19 = monthly.rf[yr.19,5]
+may.19
+may.20 = monthly.rf[yr.20,5]
+may.20
+```
+
+
+We will use `may.19` and `may.20` in the rest of sections to investigate if the differences in mean rainfall significant. 
+
+
+# Classical two-sample T-test
+
+## Hypotheses
+
+Formally state the hypotheses being considered here. (Hint: is this a one-sided or two-sided test?)
+
+## Checking assumptions
+
+State the additional assumptions underlying the use of the Classical two-sample T-test, and check the assumptions using graphical summaries.
+
+```{r}
+# Write your code here
+
+```
+
+## Pooled estimates
+
+First determine the sample sizes, sample means, and sample SDs for `may.19` and `may.20`. Then determine the pooled estimated standard deviation and the standard error of the difference.
+
+```{r}
+# Write your code here
+
+```
+
+## Test statistic
+
+Determine the test distribution and the observed value of T-statistic.
+
+```{r}
+# Write your code here
+
+```
+
+
+## P-value and conclusion 
+
+Is the apparent mean difference significantly different from zero at the 5% significance level? 
+
+```{r}
+# Write your code here
+
+```
+
+
+## Critical region of rejection
+
+What is the critical region of rejection for a 5% significance level? 
+
+```{r}
+# Write your code here
+
+```
+
+
+
+# Welch test
+
+## Assumption
+
+This test relaxes one of the assumptions of the Classical two-sample T-test. Which one exactly?
+
+## Standard error
+
+This test uses a different estimate of the standard error of the mean difference, compared to the Classical two-sample T-test. Determine the value of this estimated standard error.
+
+
+```{r}
+# Write your code here
+
+```
+
+## T-test
+
+Use the built-in R function `t.test()` to perform Welch's test with the 10% significance level. Note that you can set this by choosing the confidence level `conf.level = 0.90`. What is the P-value? how does it compare with the classical two-sample T-test?
+
+```{r}
+# Write your code here
+
+```
+
+# Simulation-based two-sample T-test
+
+## Simulate test statistics 
+
+- Use a bootstrap simulation to simulate 10,000 samples of the Welch statistic, plot the histogram of the test statistics, and compare with the Student's T distribution with d.o.f.  34.859 (which is the one used in Welch's test). 
+
+- Note that we need to define two surrogate boxes  `box.19 = may.19-mean(may.19)` and `box.20 = may.20-mean(may.20)`. Why are the means subtracted off?
+
+```{r}
+# Write your code here
+
+```
+
+
+## P-value
+
+We use the simulated values of the Welch statistic to approximate the distribution
+of the test statistic when the null hypothesis is true. What is a simulation-based
+P-value? You can use an observed Welch statistic $1.4473$ here (obtained by `t.test()`).
+
+```{r}
+# Write your code here
+
+```
+
+

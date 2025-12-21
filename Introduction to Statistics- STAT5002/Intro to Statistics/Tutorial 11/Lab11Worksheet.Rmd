@@ -1,0 +1,213 @@
+---
+title: "STAT5002 Lab11 Worksheet"
+subtitle: "Chi-square test and T-test"
+author: "University of Sydney STAT5002"
+date: 
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+
+
+# Does Psychiatric Diagnosis Depend on Social Class?
+
+The table below (taken from *The Analysis of Contingency Tables, B. Everitt*, Table 3.13, p56) shows how 284 consecutively admitted patients to a psychiatric hospital were classified with respect to social class and diagnosis:
+
+We want to use R to perform a chi-square test of independence on the table taken from *The Analysis of Contingency Tables, B. Everitt* (Table 3.13, p56). We use the following code to create a matrix `Oi` contains the data in the table. 
+
+- Create 4 vectors `neur`, `depr`, `pdis` and `schz` containing the values of each column.
+```{r}
+neur = c(45, 10, 17)
+depr = c(25, 45, 21)
+pdis = c(21, 24, 18)
+schz = c(18, 22, 18)
+```
+- Use `cbind()` to form these into a matrix called `Oi`, and give the rows nice names/labels
+
+```{r}
+Oi = cbind(neur, depr, pdis, schz)
+rownames(Oi) = c("SC1", "SC2", "SC3")
+Oi
+```
+
+
+## State the null and alternative hypotheses
+
+## Compute a matrix consisting of expected frequencies
+
+You need to compute row sums, column sums and hence a matrix `Ei` of corresponding expected frequencies *under the assumption that diagnosis and social class are independent*. \\
+
+Hint: You can use the functions `rowSums()` and `colSums()` for row sums and column sums, respectively.
+
+```{r}
+# Write your code here
+
+```
+
+
+## Check assumptions, you may need to use the exptected frequencies
+
+## Compute the value of Pearson's chi-squared statistic for testing independence
+
+```{r}
+# Write your code here
+
+```
+
+
+## Obtain an (approximate) P-value and the critical region of rejection for 1% level of significance. 
+
+What is the correct degrees of freedom to be used here?
+
+```{r}
+# Write your code here
+
+```
+
+## What is your conclusion based on the P-value
+
+
+## Check your work above using the R function `chisq.test()`.
+
+```{r}
+# Write your code here
+
+```
+
+# More T-tests: Tied Ridging in Ethiopia 
+
+The following R commands load and summaries the data in the file `TiedRidging.csv` and extract variables needed for this question and the next question. 
+
+```{r} 
+TiedRidging <- read.csv("data/TiedRidging.csv")
+head(TiedRidging)
+dim(TiedRidging)
+str(TiedRidging)
+table(TiedRidging$Variety)
+
+yieldA =  TiedRidging$Yield[TiedRidging$Variety=="A"]
+nA = length(yieldA)
+nA
+
+yieldB =  TiedRidging$Yield[TiedRidging$Variety=="B"]
+nB = length(yieldB)
+nB
+```
+
+
+## 1-Sample t-test
+
+We are interested in finding out whether the yield of the tied ridge plot (Variety A) is significantly greater than that of a traditional yield which is 2.6 tons/hectare for this area. Use a hypothesis test to provide a recommendation to Ethiopian farmers.
+
+
+### State the null and alternative hypotheses
+
+Introduce a parameter and express your null and alternative hypotheses in terms of this parameter. 
+  
+### Check assumptions using graphical summaries
+
+```{r}
+# Write your code here
+
+```
+
+### What is the observed value of the test statistic? What values of test statistic argue against $H_0$?
+     
+```{r}
+# Write your code here
+
+```
+
+### Calculate P-value and the critical region of rejection for the 5\% level of significance
+
+```{r}
+# Write your code here
+
+```
+
+### What is your conclusion?
+
+### Calculate the two-sided 95% confidence interval
+
+Considering the consistency defined by the two-sided 95% prediction interval, calculate the two-sided 95% confidence interval.
+
+```{r}
+# Write your code here
+
+
+```
+
+### Check your working above using the R function `t.test()`.
+
+You can use `t.test(x, mu=2.6, alt="greater")` to perform a one-sample t-test with $H_0: \mu = 2.6$ and one-sided alternative $H_1: \mu > 2.6$. Compare your calculation above with the result of `t.test()`. Why there are differences in the confidence interval? 
+
+```{r}
+# Write your code here
+
+
+```
+
+## 2-Sample t-test
+
+Now test whether the yields for the 2 varieties (A and B) are different from each other.  Check all your assumptions so that you can choose which t-test is appropriate.  What would be your recommendation to Ethiopian farmers? **Note**: you may use `t.test()`.
+
+
+### State the null and alternative hypotheses
+
+Introduce parameters and express your null and alternative hypotheses in terms of these parameters. 
+  
+### Check assumptions using graphical summaries and numerical summaries
+
+You should also use numerical summaries to detect which $t$-test should be used here. 
+
+```{r}
+# Write your code here
+
+```
+
+### Calculate the test Statistic
+
+
+```{r}
+# Write your code here
+
+```
+
+### Use `t.test()` to obtain P-value and draw conclusion at the 5% level of significance. What is your conclusion based on them?
+
+
+```{r}
+# Write your code here
+
+```
+
+
+### Calculate the P-value and 95% confidence interval using simulation.
+    
+- Simulate 10,000 Welch statistics. 
+- Calculate the P-value based on simulated Welch statistics and the observed value of Welch statistic
+- Calculate the 95% confidence interval based on the simulated Welch statistics and the observed difference of sample means. 
+
+
+```{r}
+# Write your code here
+
+
+```
+
+

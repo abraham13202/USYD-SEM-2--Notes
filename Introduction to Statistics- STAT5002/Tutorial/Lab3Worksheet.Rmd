@@ -1,0 +1,329 @@
+---
+title: "STAT5002 Lab3 Worksheet"
+subtitle: "Introduction to Statistics"
+author: "University of Sydney STAT5002"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+<style>
+h3 { /* Header 3 */
+    font-size: 18px
+}
+</style>
+
+# <i class="fa fa-th-list"></i> Summary {-}
+
+- It is vital that you draw a *quick sketch* of the Normal curve that you are considering, *before* you attempt any calculations.
+- We use R to find an area under the Normal curve. Historically, 'Stats Tables' were used.
+- The *area under the curve* up to point $x$, represents the *chance* (or "probability") of getting a value less than or equal to $x$.
+
+
+# Import data and more plotting tricks
+
+## Data
+
+We continue using the data set collected in MATH1005 in S2, 2022. Make sure you have the data-file `math1005_cleaned.csv`  in your data folder within your STAT5002 folder.
+
+
+- **Import** the data into a variable called `math1005`. Then we isolate the height variable and remove `NA`s from it. 
+
+```{r}
+math1005 = read.csv("math1005_cleaned.csv")
+str(math1005)
+height = na.omit(math1005$Height)
+```
+
+## Plot normal curve
+
+The code `curve(dnorm(x, m, s), xlim = c(a, b), add=TRUE)` plots a normal curve with mean m and SD s in the domain $(a,b)$ on the x axis. The option `add=TRUE` let you add a normal curve to an existing plot. See the following for an example. 
+
+```{r}
+### here is an example
+curve(dnorm(x, 0, 0.5), xlim = c(-10, 5), col = "red")
+curve(dnorm(x, -2, 2), xlim = c(-10, 5), col = "blue", add=TRUE)
+```
+
+
+## Plotting area under a normal curve (in case you are curious)
+
+The following code sketches a Normal Curve with mean 40 and SD 15. The red shaded area represents $P(X < 18)$. The blue shaded area represents $P(60 < X < 80)$. 
+
+```{r}
+# Plot the normal distribution curve
+curve(dnorm(x, 40, 15), from = -20, to = 100, ylab = "Density", main = "N(40,225)")
+
+# Define x and y values for the distribution
+x <- seq(-20, 100, length = 1000)
+y <- dnorm(x, 40, 15)
+
+# Shade area to the left of x = 18 (red)
+x_left <- x[x <= 18]
+y_left <- y[x <= 18]
+polygon(c(min(x_left), x_left, 18), c(0, y_left, 0), col = "red", border = NA)
+
+# Shade area between x = 60 and x = 80 (blue)
+x_middle <- x[x >= 60 & x <= 80]
+y_middle <- y[x >= 60 & x <= 80]
+polygon(c(60, x_middle, 80), c(0, y_middle, 0), col = "blue", border = NA)
+```
+
+
+# Basics of Normal curve
+
+We treat the collected heights as a sample of heights of students in U Syd. We want to fit a normal curve to the histogram of this height sample using the sample mean and sample SD. 
+
+
+Now, plot the histogram of height and then plot the normal curve (defined by the sample mean and sample SD) on top of it. Is the normal curve a reasonable approximation to the histogram in this example? 
+
+```{r}
+### Write your code here
+m <- mean(height)
+s <- sd(height)
+hist(height, freq = F)
+curve(dnorm(x, m, s), xlim = c(140, 200), add = TRUE)
+```
+
+
+## Proportion and quantiles under normal curve
+
+- Under the normal curve, are there more students under 160 cm than students taller than 190 cm? Write R code in the following to calculate this. 
+
+```{r}
+### Write your code here
+pnorm(160, m,s)
+1-pnorm(190,m,s)
+#
+```
+
+- Under the normal curve, what is the 23% percentile of the student heights? Write R code in the following to calculate this. 
+
+```{r}
+### Write your code here
+#
+qnorm(0.23,m,s)
+```
+
+# <i class="fas fa-football-ball"></i> Australian men's AFL team and heights
+
+In the Australian Football League (AFL) recruiters tend to look for tall male players. We want to use the heights of male students in MATH1005, S2 2002 as a sample to model the Australian male height. 
+
+## Data modelling
+
+Select the heights of male students from the data set. Plot a histogram of the selected heights. Construct a normal curve to approximate the histogram of male heights in `math1005`. Plot the resulting histogram and then plot the normal curve on top of it. If you have issues with obtaining the mean and SD, you can use mean = $178.84$ and SD = $6.53$,
+
+```{r}
+### Write your code here
+# Select heights of male students
+male_heights <- math1005$Height[math1005$Gender == "Male"]
+
+# Calculate mean and SD (or use given values if needed)
+m_male <- mean(male_heights, na.rm = TRUE)
+s_male <- sd(male_heights, na.rm = TRUE)
+
+# If you have issues, uncomment these lines:
+# m_male <- 178.84
+# s_male <- 6.53
+
+# Plot histogram and normal curve
+hist(male_heights, freq = F)
+curve(dnorm(x, m_male, s_male), add = TRUE)
+```
+
+## Using R
+
+For each of the following questions, try to use only `pnorm` and `qnorm` to calculate the answer. You can also apply the plotting tricks above to draw the corresponging area under the normal curve. 
+
+1. According to this [article](https://thatsamkid.com/2020/10/26/the-long-and-short-of-it/), the average height of AFL players is 188cm. What is the chance of finding an Australian man taller than 188cm?  
+
+```{r}
+### Write your code here
+
+# Calculate P(X > 188) = 1 - P(X ≤ 188)
+prob_taller_188 <- 1 - pnorm(188, m_male, s_male)
+
+# Display result
+cat("Probability of an Australian man being taller than 188cm:", round(prob_taller_188, 4))
+
+# Plot the distribution with shaded area
+curve(dnorm(x, m_male, s_male), from = 160, to = 200, 
+      ylab = "Density", main = "P(Height > 188cm)")
+
+# Shade the area above 188cm
+x <- seq(188, 200, length = 100)
+y <- dnorm(x, m_male, s_male)
+polygon(c(188, x, 200), c(0, y, 0), col = "red", border = NA)
+
+# Add vertical line at 188cm
+abline(v = 188, col = "blue", lwd = 2, lty = 2)
+```
+
+2. The tallest AFL player in history is [Aaron Sandilands](https://en.wikipedia.org/wiki/Aaron_Sandilands) at 211cm tall. What is the chance of finding a man of height greater than Aaron Sandilands? 
+
+```{r}
+### Write your code here
+# Probability of finding a man taller than Aaron Sandilands (211cm)
+prob_taller_211 <- 1- pnorm(211, m_male, s_male)
+cat("Probability of finding a man taller than Aaron Sandilands (211cm):", prob_taller_211 * 100, "%")
+
+```
+
+3. What percentage of Australian men are between 170 and 180cm? 
+
+```{r}
+### Write your code here
+prob_between_170_180 <- pnorm(180, 178.84, 6.53) - pnorm(170, 178.84, 6.53)
+cat("Percentage of Australian men between 170 and 180cm:", prob_between_170_180 * 100, "%")
+```
+
+4. What percentage of Australian men are you taller than?
+
+```{r}
+### Write your code here
+# Probability of finding a man between 170cm and 180cm
+prob_between_170_180 <- pnorm(180, 178.84, 6.53) - pnorm(170, 178.84, 6.53)
+cat("Percentage of Australian men between 170 and 180cm:", prob_between_170_180 * 100, "%")
+```
+
+5. If 90\% of Australian men are below a certain height, what is that height?
+
+```{r}
+### Write your code here
+
+```
+
+6. If 40\% of Australian men are above a certain height, what is that height?
+
+```{r}
+### Write your code here
+
+```
+
+7. What is the interquartile range of heights of Australian men?
+
+```{r}
+### Write your code here
+
+```
+
+## Standard units
+
+For the above questions 1 to 4, answer the questions again by converting the values to standard units and using the standard normal curve.
+
+1. What is the chance of finding an Australian man taller than 188cm?  
+
+```{r}
+### Write your code here
+# Convert 188cm to standard units (Z-score)
+z_188 <- (188 - 178.84) / 6.53
+cat("Z-score for 188cm:", z_188, "   ")
+
+# Find probability using standard normal distribution
+prob_taller_188_std <- 1- pnorm(z_188)
+cat("Percentage of Australian men taller than 188cm:", prob_taller_188_std * 100, "%")
+```
+
+2. What is the chance of finding a man of height greater than 211cm? 
+
+```{r}
+### Write your code here
+
+```
+
+3. What percentage of Australian men are between 170 and 180cm? 
+
+```{r}
+### Write your code here
+
+```
+
+4. What percentage of Australian men are you taller than?
+
+```{r}
+### Write your code here
+
+```
+
+## Calculating by hand
+
+**Use the 68%-95%-99.7% rule to calculate the following by hand.**
+
+- What percentage of Australian men are shorter than 198.43cm? 
+- What percentage of Australian men are taller than 165.78cm? 
+- What percentage of Australian men are between 172.31cm and 191.9cm? 
+- What is the 97.5th percentile of heights of Australian men? 
+- What is the 2.5th percentile of heights of Australian men? 
+- Write down an interval which contains 95% of the heights. 
+
+# Correlation coefficient
+
+We want to explore the association between shoesize and height. Now we want to use all data points in `math1005`. 
+
+## First attempt
+
+- What is the correlation coefficient of the two variables? - use `cor`. Hint: the argument use = "complete" will ignore NA values.
+
+```{r}
+### Write your code here
+
+```
+
+- Produce a **scatterplot** using the ``plot`` function.
+
+```{r}
+### Write your code here
+plot(height$math, ShoeSize$math1005_cleaned)
+```  
+
+- How would you describe the association between shoesize and height? Hint: Some might response using a different shoe size convention, perhaps using EU instead of US. The majority of students reported US shoesize.
+
+**Answer:** 
+
+
+## Removing outliers
+
+Since the majority of students reported US shoesize, let's discard data points with shoesize > 20 as outliers, and then repeat the above procedure, what is your finding?
+
+```{r}
+### Write your code here
+Sselect <- !is.na(math1005$ShoeSize) & !is.na(math1005$Height) & math1005$ShoeSize <= 20
+height <- math1005$Height[Sselect]
+shoe <- math1005$ShoeSize[Sselect]
+plot(shoe, height)
+```  
+
+**Answer:** 
+
+
+## More about correlation coefficient
+
+Using the data without outliers, verifying the following properties of the correlation coefficient using R. 
+
+- Verify that the correlation coefficient is not affected by interchanging the variables (**symmetry**).
+
+```{r}
+### Write your code here
+
+```
+
+- The conversion from US shoesize to EU shoesize approximately follows the formula `EU ShoeSize` = `US ShoeSize` x 1.27 + 30. Now transform the cleaned shoesizes (assuming they are US sizes) into EU sizes. Then verify that the correlation coefficient is shift and scale invariant.  
+
+```{r}
+### Write your code here
+
+```

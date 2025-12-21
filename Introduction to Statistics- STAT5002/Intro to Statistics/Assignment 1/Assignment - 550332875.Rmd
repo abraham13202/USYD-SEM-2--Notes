@@ -1,0 +1,634 @@
+---
+title: "Assignment - 550332875"
+output: html_document
+date: "2025-05-25"
+---
+
+### Question 1 (30 points)
+
+##### An automotive engineer wants to determine whether a new type of tire provides better vehicle braking deceleration (in metres per second squared, m/s2) compared to the standard tire. Twenty vehicles are randomly selected from the production line. Each vehicle is tested twice: once with the new tire (test.A) and once with the standard tire (test.B). The paired results (New Tire vs Standard Tire) are shown below:
+
+```{r}
+test.A = c(5.90, 5.26, 2.97, 7.15, 10.06, 11.87, 1.94, 6.27, 6.81, 4.08, 8.13, 15.18, 8.82, 3.87, 5.23, 11.29, 7.92, 12.82, 7.20, 10.03)
+test.B = c(6.07, 4.89, 2.92, 7.00, 9.99, 11.70, 1.94, 5.86, 6.95, 4.03, 7.76, 15.02, 9.08, 3.73, 4.88, 10.81, 8.05, 12.96, 7.10, 10.07)
+```
+
+##### You may copy the above data into R and use R to assist with the calculations (without using built-in functions for hypothesis tests). Please clearly explain each step of your calculation and its interpretation.
+
+##### (a) Introduce appropriate parameters and state the null and alternative hypotheses.
+
+##### Answer : 
+
+Let \( D_i = A_i - B_i \) be the difference in braking deceleration for vehicle \( i \) (where \( A_i \) is the new tire's value and \( B_i \) is the standard tire's value). 
+
+Let \( \mu_D \) be the population mean of the differences. 
+
+Null Hypothesis  \( H_{0}: \mu_D = 0 \) (There is no difference in mean braking deceleration for new tires and standard tires.) 
+
+Alternative Hypothesis  \(H_{1}: \mu_D > 0 \)(The new tire has greater braking deceleration on average.)
+
+##### (b) What statistical test should be used to test these hypotheses? Justify your choice.
+
+##### Answer : 
+
+We utilize a paired sample t-test. The rationale for this is: each car is subject to two tests, in two respective conditions, resulting in two related sets of samples. We are assessing the mean difference between two related samples. We will check the normality of the differences to use as a test for the assumptions for the t-test.  Therefore, using a one-tailed t-test is appropriate in examining whether the new tire will have a difference in terms of better stopping.
+
+##### (c) Use appropriate graphical summaries to assess whether the necessary assumptions for applying the chosen test are satisfied.
+
+##### Answer : 
+
+We require to examine if the distribution of the differences is normal; this is a requirement in order for the paired t-test to be valid. 
+
+
+```{r}
+diffs <- test.A - test.B
+
+n <- length(diffs)
+mean_diff <- mean(diffs)
+sd_diff <- sd(diffs)
+
+# Histogram
+hist(diffs, main = "Histogram of Differences (New - Standard)", 
+     xlab = "Difference (m/s²)", col = "lightblue", breaks = 8)
+
+# Q-Q Plot
+qqnorm(diffs, main = "Q-Q Plot of Differences")
+qqline(diffs, col = "red")
+
+```
+
+Analysis: 
+The histogram indicates a mild right-skewed distribution with most of the differences grouped close to zero with a longer tail of positive values. Additionally, the distribution is not completely bell-shaped, but it has some reasonable symmetry about the center. The Q-Q plot also indicates some discrepancies in terms of the theoretical normal line with a few noticeable points. The significance of the discrepancies in particular is that there are a few points in the upper tail that fall above the line and there are few points in the lower tail that falls below the line. When aggregated, the general trend in points suggests that most lie reasonably close to the theoretical line, but overall, we know that the assumption of normality is not perfectly satisfied. Reasonably, however, the evidence is not strong enough to ignore the use of the paired t-test as the deviations from normality are not large and t-tests are known to perform moderately well under some deviations of normality, especially with around 20 samples.
+
+##### (d) Compute the observed test statistic and P-value. In your answer, clearly state the distribution of the test statistic and indicate which values of the statistic argue against the null hypothesis.
+
+##### Answer : 
+
+Let's compute the test statistic and P-value for a paired t-test manually.
+
+```{r}
+
+# t-statistic
+t_obs <- mean_diff * sqrt(n) / sd_diff 
+
+# One-sided P-value
+p_value <- pt(t_obs, df = n - 1, lower.tail = FALSE)
+n
+mean_diff
+sd_diff
+t_obs
+p_value
+
+```
+
+Results:
+
+Sample mean difference: 0.0995
+
+Sample standard deviation : 0.2136765
+
+t-statistic : 2.082483
+
+P-value:  0.0255262
+
+Distribution: The test statistic follows a t-distribution with 19 degrees of freedom.
+Interpretation: Large positive values of𝑡(i.e., far in the right tail) argue against **H₀** and in favor of **H₁**.
+
+##### (e) What is your conclusion based on the calculated P-value?
+
+##### Answer : 
+
+We compare the P-value = 0.0255 to the significance level α=0.05:
+Since P < 0.05, we reject the null hypothesis **H₀**.
+Conclusion: There is evidence that the new tire has better braking performance than the standard tire at the α = 0.05 level of significance.
+The positive value test statistic (t=2.082) indicates that performance of the new tire is better than the standart tire, on average.
+
+
+##### (f) Perform a bootstrap simulation (with 10,000 repetitions) to simulate the test statistic, and plot the histogram of the simulated statistics. Does the histogram of the simulated test statistics agree with the theoretical test distribution used above?
+
+##### Answer : 
+
+To support our result, we simulate the sampling distribution of the mean difference using 10,000 bootstrap samples.
+
+```{r}
+
+set.seed(123)
+B <- 10000
+bootstrap_stats <- numeric(B)
+
+for (i in 1:B) {
+  resample <- sample(diffs, replace = TRUE)
+  bootstrap_stats[i] <- mean(resample)
+}
+
+hist(bootstrap_stats, 
+     main = "Bootstrap Distribution of Mean Differences", 
+     xlab = "Mean Difference", col = "lightgreen", breaks = 30)
+abline(v = mean_diff, col = "red", lwd = 2)  # mark observed mean
+
+
+```
+
+Interpretation:
+
+The bootstrap histogram appears to be bell-shaped and approximately symmetric.
+
+The observed mean difference (≈ 0.0995) is located far enough in the upper tail, consistent with our t-test results.
+
+This supports the validity of the normal approximation used in the t-test.
+
+
+##### (g) What is the P-value based on the simulated test statistics?
+
+##### Answer : 
+
+We now calculate the one-sided bootstrap P-value, i.e., the proportion of bootstrap samples where the mean difference is greater than or equal the observed value.
+
+```{r}
+
+
+# One-sided P-value: proportion of bootstrap means >= observed mean
+p_bootstrap <- mean(bootstrap_stats >= mean_diff)
+p_bootstrap
+
+
+```
+
+Bootsrap p-value = 0.5057 which is greater than the observed p-value (0.0255262)
+
+Therefore based on the above conclusion we can state that the new tire provides significantly better braking performance than the standard tire.
+
+
+### Question 2 (25 point)
+
+##### A school administrator is investigating whether a new online tutoring program leads to a difference in student performance compared to a traditional in-person tutoring method. Students are randomly assigned to two groups: Group A (Online Tutoring) and Group B (In-Person Tutoring). The normalised student performance indicators for these two groups are shown as follows.
+
+
+```{r}
+
+group.A = c(5.54, 4.41, 6.35, 5.04, 7.33, 6.47, 4.08, 6.00, 7.39, 5.53, 1.54, 6.16, 4.23, 2.36, 5.09, 5.10, 5.33, 3.75, 6.49, 2.13, 5.44, 7.74, 3.80)
+
+group.B = c(4.31, 6.20, 5.25, 2.14, 3.26, 1.47, 2.24, 4.20, 3.56, 3.68, 7.02, 2.94,
+5.49, 3.37, 4.59, 3.05, 5.24)
+
+```
+
+##### You may copy the above data into R and use R to assist with the calculations, but do not use built-in functions for hypothesis tests except in Part (e). Please clearly explain each step of your calculation and its interpretation.
+
+##### (a) State the null and alternative hypotheses to test whether two programs have the same effect on the student performance. In answering, introduce appropriate parameters, as well as a null and alternative hypothesis in terms of these parameters.
+
+##### Answer : 
+
+Let:
+\( \mu_A \) : the mean normalized student performance under Online Tutoring (Group A)
+
+\( \mu_B \) : the mean normalized student performance under In-Person Tutoring (Group B)
+
+
+We are trying to ascertain if these two means are the same or different.
+
+Hypotheses:
+Null Hypothesis \( H_{0}\): \( \mu_A \) = \( \mu_B \)
+
+If we are able to accept this null hypothesis we would conclude there is not a difference in average performance under online tutoring and in-person tutoring.
+
+Alternative Hypothesis \( H_{1}\):  \( \mu_A \) ≠ \( \mu_B \)
+
+If we are able to accept this alternative hypothesis we would conclude that there is a difference in average performance between two forms of tutoring.
+
+This is a two-tailed test, as we will be looking for a difference regardless if it one is larger or smaller than other.
+
+
+##### (b) Use appropriate graphical and numerical summaries to assess whether the necessary assumptions for applying the classical two-sample t-test are satisfied.
+
+##### Answer : 
+
+The classical two-sample t-test has two main assumptions: 
+
+1) That each group’s data is approximately normally distributed. 
+
+2) That the groups have equal variances (consistency of variances). 
+
+We will evaluate these assumptions with graphical and numerical methods.
+
+```{r}
+
+# Boxplot
+boxplot(group.A, group.B, names = c("Online", "In-Person"), main = "Boxplot of Performance", ylab = "Performance")
+
+# QQ plots for normality
+qqnorm(group.A,main = "Online Tutoring"); qqline(group.A, col="blue", lwd=2)
+qqnorm(group.B,main = "In-person Tutoring"); qqline(group.B, col="red", lwd=2)
+
+sd(group.A)  
+sd(group.B)  
+
+```
+
+Interpretation: 
+Boxplots:The Online group has a higher median and interquartile range.But Both distributions appear roughly symmetric (the median is centered in the box) and not heavily skewed, and there are no extreme outliers.The spread (IQR) seems wider for the Online group.
+
+QQ plots: The data points approximately follow the line for both, there are slight deviations in the tail for online tutoring but nothing extreme, after comparing both of them, the assumption of normality is reasonably satisfied. 
+
+Standard deviations: They are nearly the same (~1.5), thus the assumption of equal variance seems satisfied. 
+
+Overall: The data meets the assumptions for using the classical two sample t-test.
+
+##### (c) Write down the formula for the test statistic of the classical two-sample t-test, and calculate the observed test statistic. Show your working step by step, rounding each step to three decimal places.
+
+##### Answer : 
+
+
+We use the formula for the test statistic for the classical two-sample t-test assuming equal variances:
+
+$$
+t = \frac{\bar{X}_A - \bar{X}_B}{s_p \cdot \sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}
+$$
+
+Where:
+
+- $\bar{X}_A$ and $\bar{X}_B$ are the sample means,
+- $s_p$ is the pooled standard deviation:
+
+
+$$
+s_p = \sqrt{ \frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2} }
+$$
+
+```{r}
+nA <- length(group.A)  
+nB <- length(group.B) 
+
+meanA <- mean(group.A)  
+meanB <- mean(group.B)  
+
+sdA <- sd(group.A)  
+sdB <- sd(group.B)  
+
+# Pooled standard deviation
+sp <- sqrt(((nA - 1)*sdA^2 + (nB - 1)*sdB^2) / (nA + nB - 2))  
+
+
+# Test statistic
+t_stat <- (meanA - meanB) / (sp * sqrt(1/nA + 1/nB))  
+
+nA
+nB
+meanA
+meanB
+sdA
+sdB
+sp
+t_stat
+```
+
+We are testing whether the two groups have the same mean. The test statistic for the classical two-sample t-test (assuming equal variances) is given by:
+
+$$
+t = \frac{\bar{X}_A - \bar{X}_B}{s_p \cdot \sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}
+$$
+
+Where:
+- $\bar{X}_A = 5.1$ is the mean of group A,
+- $\bar{X}_B = 4.000588$ is the mean of group B,
+- $n_A = 23$, $n_B = 17$ are the sample sizes,
+- $s_A = 1.64911$, $s_B = 1.499781$ are the sample standard deviations,
+- The pooled standard deviation is:
+
+$$
+s_p = \sqrt{ \frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2} } = \sqrt{ \frac{(22)(1.64911)^2 + (16)(1.499781)^2}{38} } = 1.587947
+$$
+
+
+Substituting into the formula for the test statistic:
+
+$$
+t = \frac{5.1 - 4.000588}{1.587947 \cdot \sqrt{\frac{1}{23} + \frac{1}{17}}} = \frac{1.099412}{0.508004} = 2.164625
+$$
+
+
+##### (d) Construct the critical region of rejection at the 5% level of significance. What is your conclusion of the hypothesis test based on the critical region?
+
+##### Answer : 
+
+To determine whether to reject the null hypothesis, we define the rejection region at the 5% significance level (two-tailed test). The null hypothesis is rejected if the absolute value of the test statistic exceeds the critical value from the t-distribution:
+
+$$
+|t| > t_{0.025, \, df}
+$$
+
+The degrees of freedom are:
+
+$$
+df = n_A + n_B - 2
+$$
+
+```{r}
+
+df <- nA + nB - 2
+t_critical <- qt(0.975, df)
+
+
+abs(t_stat) > t_critical
+
+
+if (abs(t_stat) > t_critical) {
+  cat("Reject the null hypothesis: There is a significant difference in performance.\n")
+} else {
+  cat("Fail to reject the null hypothesis: No significant difference detected.\n")
+}
+
+cat("t-statistic:", round(t_stat, 3), "\n")
+cat("Critical t-value:", round(t_critical, 3), "\n")
+cat("Degrees of freedom:", df, "\n")
+
+
+```
+
+
+##### (e) Now conduct a Welch test using R, what is the computed P-value, how does it compare with the classical two-sample t-test?
+
+##### Answer : 
+
+The Welch's t-test is used when the two groups are assumed to have **unequal variances**. The test statistic is given by:
+
+$$
+t = \frac{\bar{X}_A - \bar{X}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}
+$$
+
+
+The **degrees of freedom** for Welch’s test are approximated using the Welch–Satterthwaite equation:
+
+$$
+df = \frac{\left( \frac{s_A^2}{n_A} + \frac{s_B^2}{n_B} \right)^2}
+{\frac{\left( \frac{s_A^2}{n_A} \right)^2}{n_A - 1} + \frac{\left( \frac{s_B^2}{n_B} \right)^2}{n_B - 1}}
+$$
+
+
+Now we use R to conduct Welch’s t-test, which allows for unequal variances.
+
+```{r}
+t.test(group.A, group.B, var.equal = FALSE)
+
+```
+Alternate Implementation:
+
+
+```{r}
+
+# Welch t-statistic
+numerator <- meanA - meanB
+se <- sqrt((sdA^2 / nA) + (sdB^2 / nB))
+t_welch <- numerator / se
+
+# Degrees of freedom 
+df_welch <- ((sdA^2 / nA + sdB^2 / nB)^2) /
+  (((sdA^2 / nA)^2) / (nA - 1) + ((sdB^2 / nB)^2) / (nB - 1))
+
+# Two-tailed p-value
+p_value <- 2 * pt(-abs(t_welch), df = df_welch)
+
+
+cat("Welch t-statistic:", round(t_welch, 4), "\n") # Using round method to round up the digits upto the digits mentioned next to it.
+cat("Degrees of freedom:", round(df_welch, 3), "\n")
+cat("P-value:", round(p_value, 5), "\n")
+
+```
+
+Since the p-value < 0.05, we again reject the null hypothesis at the 5% significance level.
+
+There is statistically significant evidence that the new online tutoring program (Group A) leads to different average performance compared to the in-person program (Group B). Based on the sample means, the online program appears to result in higher average performance.
+
+
+### Question 3 (25 point)
+
+##### Consider the table below, which shows the number of individuals in each of four age groups (under 18, 18–29, 30–49, 50+) who prefer one of three device types: laptop, desktop, or tablet. The data comes from a survey on technology usage preferences:
+
+                                          Laptop  Desktop   Tablet  Total
+                                Under 18  12      6         12      30
+                                18–29     14      10        6       30
+                                30–49     16      12        12      40
+                                50+       8       16        6       30
+                                Total     50      44        36      130
+
+##### We are interested in testing whether device preference (laptop, desktop, or tablet) is independent of age group. Follow the steps below to perform a chi-squared test to investigate this without using built-in functions for hypothesis tests such as chisq.test().
+
+##### (a) State the null and alternative hypotheses.
+
+##### Answer : 
+
+Let,
+
+Null Hypothesis (H₀): Device preference is independent of age group.
+
+Alternative Hypothesis (H₁): Device preference is not independent of age group (i.e., there is an association between age group and device preference).
+
+##### (b) Set up the table of expected frequencies.
+
+##### Answer : 
+
+To calculate the expected frequencies we use the below formula:
+
+
+$$
+E_{ij} = \frac{(Row\ Total)_i \times (Column\ Total)_j}{Grand\ Total}
+$$
+
+Our Observed Table: 
+```{r, echo=FALSE}
+
+# Loading the knitr package
+library(knitr)
+
+# Creating the table data frame
+obs_table <- data.frame(
+  `Age Group` = c("Under 18", "18–29", "30–49", "50+", "Total"),
+  Laptop = c(12, 14, 16, 8, 50),
+  Desktop = c(6, 10, 12, 16, 44),
+  Tablet = c(12, 6, 12, 6, 36),
+  Total = c(30, 30, 40, 30, 130)
+)
+
+# Display the table
+kable(obs_table, caption = "Observed Frequencies with Row and Column Totals")
+
+```
+
+
+
+Let's calculate the expected frequencies:
+
+
+```{r, echo=FALSE}
+
+
+# Create the expected frequency table with formulas and values
+expected_table <- data.frame(
+  `Age Group` = c("Under 18", "18–29", "30–49", "50+", "**Total**"),
+  `Laptop (E)` = c(
+    "$\\frac{30 \\times 50}{130} = 11.54$",
+    "$\\frac{30 \\times 50}{130} = 11.54$",
+    "$\\frac{40 \\times 50}{130} = 15.38$",
+    "$\\frac{30 \\times 50}{130} = 11.54$",
+    "50"
+  ),
+  `Desktop (E)` = c(
+    "$\\frac{30 \\times 44}{130} = 10.15$",
+    "$\\frac{30 \\times 44}{130} = 10.15$",
+    "$\\frac{40 \\times 44}{130} = 13.54$",
+    "$\\frac{30 \\times 44}{130} = 10.15$",
+    "44"
+  ),
+  `Tablet (E)` = c(
+    "$\\frac{30 \\times 36}{130} = 8.31$",
+    "$\\frac{30 \\times 36}{130} = 8.31$",
+    "$\\frac{40 \\times 36}{130} = 11.08$",
+    "$\\frac{30 \\times 36}{130} = 8.31$",
+    "36"
+  ),
+  Total = c("30", "30", "40", "30", "130")
+)
+
+# Render the table
+kable(expected_table, escape = FALSE, caption = "Expected Frequencies of Device Preference by Age Group")
+
+
+```
+
+
+##### (c) Discuss whether the necessary assumptions for applying the chi-squared test are satisfied.
+
+##### Answer : 
+
+For a chi-squared test to be valid, the following conditions must be satisfied:
+
+Independence of observations:
+Each individual is only counted once and belongs to one age group and one device preference.
+
+Expected cell counts ≥ 5:
+
+Based on the obtained results from the previous answers
+All expected values are > 5
+
+Since both conditions are met, we can apply the chi-squared test.
+
+##### (d) Compute the observed test statistic.
+
+##### Answer : 
+
+
+The Chi-squared test statistic is calculated as:
+
+$$
+\chi^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+
+```{r}
+# Observed frequencies
+observed <- matrix(c(
+  12, 6, 12,   # Under 18
+  14, 10, 6,   # 18–29
+  16, 12, 12,  # 30–49
+  8, 16, 6     # 50+
+), nrow = 4, byrow = TRUE)
+
+# Expected frequencies
+expected <- matrix(c(
+  11.54, 10.15, 8.31,
+  11.54, 10.15, 8.31,
+  15.38, 13.54, 11.08,
+  11.54, 10.15, 8.31
+), nrow = 4, byrow = TRUE)
+
+# Computing the Chi-squared statistic manually
+chi_sq <- sum((observed - expected)^2 / expected)
+
+
+chi_sq
+
+```
+
+
+
+Below is the table of observed values (O), expected values (E), and individual contributions to the Chi-squared statistic:
+
+| Age Group | Device  | Obs (O) | Exp (E) | $\frac{(O - E)^2}{E}$  |
+|-----------|---------|---------|---------|------------------------|
+| Under 18  | Laptop  | 12      | 11.54   | 0.0176                 |
+|           | Desktop | 6       | 10.15   | 1.697                  |
+|           | Tablet  | 12      | 8.31    | 1.638                  |
+| 18–29     | Laptop  | 14      | 11.54   | 0.529                  |
+|           | Desktop | 10      | 10.15   | 0.002                  |
+|           | Tablet  | 6       | 8.31    | 0.643                  |
+| 30–49     | Laptop  | 16      | 15.38   | 0.025                  |
+|           | Desktop | 12      | 13.54   | 0.175                  |
+|           | Tablet  | 12      | 11.08   | 0.075                  |
+| 50+       | Laptop  | 8       | 11.54   | 1.085                  |
+|           | Desktop | 16      | 10.15   | 3.352                  |
+|           | Tablet  | 6       | 8.31    | 0.643                  |
+
+Summing all values:
+
+$$
+\chi^2 = 0.0176 + 1.697 + 1.638 + 0.529 + 0.002 + 0.643 + 0.025 + 0.175 + 0.075 + 1.085 + 3.352 + 0.643 = 9.89
+$$
+
+
+##### (e) Construct the critical region of rejection at the 5% level of significance. What is your conclusion of the hypothesis test? Justify your answer.
+
+
+##### Answer : 
+
+### (e) Construct the Critical Region and Conclusion
+
+We compare the test statistic to the critical value from the Chi-squared distribution.
+
+Degrees of freedom:
+
+$$
+df = (r - 1)(c - 1) = (4 - 1)(3 - 1) = 6
+$$
+
+
+
+```{r}
+
+# Degrees of freedom
+df <- (4 - 1) * (3 - 1)
+
+# 5% significance level (right-tail)
+critical_value <- qchisq(0.95, df)
+
+# Output
+critical_value
+
+
+```
+
+
+At the 5% significance level:
+
+$$
+\chi^2_{0.05, 6} = 12.592
+$$
+
+Our computed value of $\chi^2$ is:
+
+$$
+\chi^2 = 9.898673
+$$
+
+As $9.898673 < 12.592$, we **fail to reject the null hypothesis**.
+
+Therefore,There is **not enough evidence** at the 5% significance level to conclude that **device preference is dependent on age group**.
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+

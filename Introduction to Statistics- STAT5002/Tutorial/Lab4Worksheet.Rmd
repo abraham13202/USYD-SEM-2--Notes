@@ -1,0 +1,248 @@
+---
+title: "STAT5002 Lab4 Worksheet"
+subtitle: "Introduction to Statistics"
+author: "University of Sydney STAT5002"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    css: 
+      - https://use.fontawesome.com/releases/v5.0.6/css/all.css
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+# Linear regression
+
+## Import data
+
+In this workshop, we will use simulated climate data based on real data from the Bureau of Meteorology at Canterbury Racecourse AWS {station 066194} collected in 2023. The simulated data contains several different daily measurements throughout Autumn (March-May).
+
+We will use the following variables.
+
+  * `X3pm.temperature` (**daily temperature measured at 3 pm**)
+  * `Maximum.temperature` (**maximum daily temperature**)
+  * `X9am.temperature` (**daily temperature measured at 9 am**)
+  * `Minimum.temperature` (**minimum daily temperature**) 
+  
+The temperature data are measured in Celsius. Please beware that the variable names are **case sensitive**.
+
+**`Task 1:`** Download the data file `AutumnCleaned.csv` in your `data` folder within your `STAT5002` folder. Then **import** the csv file into a variable called `data`:
+
+```{r}
+### write your code here. 
+data=read.csv("AutumnCleaned.csv", header=T)
+```
+
+**`Task 2:`** How many observations are there? How many variables are there?
+```{r}
+summary(data)
+```
+
+
+## Scatter plot
+    
+Generate a scatter plot for the the daily temperature observed at 3 pm (`X3pm.temperature`) and the observed daily maximum temperature (`Maximum.temperature`), with `X3pm.temperature` ($X$) on the horizontal axis and `Maximum.temperature` ($Y$) on the vertical axis.
+
+```{r}
+plot(data$X3pm.temperature, data$Maximum.temperature,
+    xlab = "3pm Temperature (°C)",
+    ylab = "Maximum Temperature (°C)")
+```
+
+    
+Generate another scatter plot for the daily temperature observed at 9 am (`X9am.temperature`) and the observed daily minimum temperature (`Minimum.temperature`), with `X9am.temperature` ($X$) on the horizontal axis and `Minimum.temperature` ($Y$) on the vertical axis.
+
+```{r}
+plot(data$X9am.temperature, data$Minimum.temperature,
+    xlab = "9am Temperature (°C)",
+    ylab = "Minimum Temperature (°C)")
+```
+
+
+**Comment on and compare these associations based on the scatter plot.** 
+    
+```{r}
+### Write your code here
+###
+
+```
+
+## Linear model
+
+Using the function `lm()` to build a linear model for predicting daily maximum temperature (`Maximum.temperature`) given the temperature observed at 3 pm (`X3pm.temperature`). 
+
+Generate a scatter plot for `X3pm.temperature` and `Maximum.temperature`. 
+
+Plot the resulting regression line on top of the scatter plot using `abline()`. 
+
+Predict the value of daily maximum temperature given a value of $X=33$ for the temperature observed at 3 pm. 
+
+Use the function `points(X, Y, col="red", cex=3, pch=19)` to plot the predict value $Y$ (together with the predictor $X$), where the options `col="red", cex=3, pch=19` specify the color, the marker size, and the mark type, respectively. 
+
+```{r}
+# Build linear model
+model <- lm(Maximum.temperature ~ X3pm.temperature, data = data)
+
+# Generate scatter plot
+plot(data$X3pm.temperature, data$Maximum.temperature, 
+     xlab = "3pm Temperature (°C)", 
+     ylab = "Maximum Temperature (°C)")
+
+# Add regression line
+abline(model)
+
+# Predict and plot the point
+points(33, predict(model, newdata = data.frame(X3pm.temperature = 33)), 
+       col="red", cex=3, pch=19)
+```
+
+
+## Residual plot
+
+Generate the residual plot of the linear model built above. Comment on if the regression line is a good fit. 
+
+```{R}
+```
+
+```{r}
+# Generate residual plot
+plot(fitted(model), residuals(model),
+    xlab = "Fitted Values",
+    ylab = "Residuals",
+    main = "Residual Plot")
+
+# Add horizontal line at y=0
+abline(h = 0, col = "red", lty = 2)
+```
+
+```{R}
+### Write your code here
+```
+
+
+```{R}
+```
+
+
+## Coefficient of determination
+
+Compared to the baseline prediction, what percentage of variation in the response variable `Maximum.temperature` can be explained by the linear regression model fitted above. 
+
+```{R}
+### Write your code here
+# Get R-squared value
+r_squared <- summary(model)$r.squared
+print(paste("R-squared:", round(r_squared, 4)))
+
+# Convert to percentage
+percentage_explained <- r_squared * 100
+print(paste("Percentage of variation explained:", round(percentage_explained, 2), "%"))
+
+```
+
+
+## Verification of the coefficient of determination
+
+Recall that the coefficient of determination of the regression line is
+\[
+1 - \frac{\text{SSE}}{\text{SST}}, \quad \text{SSE} = \sum_{i = 1}^n (y_i - a - b x_i)^2, \quad \text{SST} = \sum_{i = 1}^n (y_i - \bar{y})^2
+\]
+where $a$ and $b$ are the intercept and the slope of the regression line, respectively. We want to verify that the coefficient of determination can be indeed be written as squared correlation coefficient ($r^2$) in R.
+
+**`Task 1:`** Compute the sum of squared residuals/errors (SSE) of the fitted linear model and the total sum of squares of the dependent variable `X3pm.temperature`. 
+
+
+```{r}
+### Write your code here
+# SSE: Sum of Squared Errors (residuals)
+SSE <- sum(residuals(model)^2)
+print(paste("SSE (Sum of Squared Errors):", round(SSE, 4)))
+
+# SST: Total Sum of Squares
+y_mean <- mean(data$Maximum.temperature)
+SST <- sum((data$Maximum.temperature - y_mean)^2)
+print(paste("SST (Total Sum of Squares):", round(SST, 4)))
+
+# Verify coefficient of determination formula: 1 - SSE/SST
+r_squared_manual <- 1 - SSE/SST
+print(paste("R-squared (manual calculation):", round(r_squared_manual, 4)))
+
+# Compare with R's built-in R-squared
+r_squared_builtin <- summary(model)$r.squared
+print(paste("R-squared (built-in):", round(r_squared_builtin, 4)))
+```
+
+**`Task 2:`** Compute the coefficient of determination using the above formula, and compare it with $r^2$, do they agree? 
+
+```{r}
+### Write your code here
+# Task 2: Compute coefficient of determination and compare with r^2
+
+# Coefficient of determination using the formula: 1 - SSE/SST
+coeff_determination <- 1 - SSE/SST
+print(paste("Coefficient of determination (1 - SSE/SST):", round(coeff_determination, 4)))
+
+# Compute correlation coefficient between X3pm.temperature and Maximum.temperature
+correlation <- cor(data$X3pm.temperature, data$Maximum.temperature)
+print(paste("Correlation coefficient (r):", round(correlation, 4)))
+
+# Compute r^2 (squared correlation coefficient)
+r_squared_correlation <- correlation^2
+print(paste("r^2 (squared correlation):", round(r_squared_correlation, 4)))
+
+# Compare the two values
+print(paste("Do they agree?", round(coeff_determination, 6) == round(r_squared_correlation, 6)))
+
+# Show the difference
+difference <- abs(coeff_determination - r_squared_correlation)
+print(paste("Difference:", round(difference, 8)))
+```
+
+## Additional tasks (on your own time)
+
+You can also build the linear model for the pair of variables `Minimum.temperature` and `X9am.temperature`, and then check the quality of fit using the residual plot and the coefficient of determination.
+
+# Simulating chance
+
+In an experiment, three fair dice are thrown independently. What is the chance of getting a total equal to 6? 
+
+Write R code to simulate 1000 experiments and report your result. 
+
+You should compare your result with other students or repeat your experiments with different random seeds, what do you observe? 
+
+```{r, fig.height=4}
+### Write your code here
+# Build linear model for 9am temperature vs minimum temperature
+model2 <- lm(Minimum.temperature ~ X9am.temperature, data = data)
+
+# Generate scatter plot
+plot(data$X9am.temperature, data$Minimum.temperature,
+     xlab = "9am Temperature (°C)",
+     ylab = "Minimum Temperature (°C)")
+
+# Add regression line
+abline(model2)
+
+# Generate residual plot
+plot(fitted(model2), residuals(model2),
+     xlab = "Fitted Values",
+     ylab = "Residuals",
+     main = "Residual Plot for 9am vs Minimum Temperature")
+abline(h = 0, col = "red", lty = 2)
+
+# Get coefficient of determination
+r_squared2 <- summary(model2)$r.squared
+print(paste("R-squared:", round(r_squared2, 4)))
+print(paste("Percentage of variation explained:", round(r_squared2 * 100, 2), "%"))
+```
+ 
